@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Savi_Thrift.Persistence.Context
 {
-    internal class SaviDbContext
+    public class SaviDbContext 
     {
     }
 }
