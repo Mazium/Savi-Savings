@@ -1,15 +1,29 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Domain.Entities.Helper;
+using Savi_Thrift.Infrastructure.Services;
+using Savi_Thrift.Persistence.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
+
+
+
+
+builder.Services.AddTransient<IEmailServices, EmailServices>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,3 +37,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
