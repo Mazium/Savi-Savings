@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Savi_Thrift.Persistence.Context;
 
@@ -11,9 +12,10 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    partial class SaviDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231223055456_EntityUpdate")]
+    partial class EntityUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
