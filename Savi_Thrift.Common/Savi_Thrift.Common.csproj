@@ -15,4 +15,8 @@
     <PackageReference Include="MimeKit" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Savi_Thrift.Domain\Savi_Thrift.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

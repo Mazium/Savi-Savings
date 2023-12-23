@@ -11,20 +11,25 @@ using NLog;
 using NLog.Web;
 using Microsoft.EntityFrameworkCore;
 using Savi_Thrift.Persistence.Context;
+using Microsoft.AspNetCore.Identity;
+using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Common.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
-{  
+{
     // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<SaviDbContext>().AddDefaultTokenProviders();
+    builder.Services.AddScoped<RoleManager<IdentityRole>>();
+    builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+    builder.Services.AddTransient<IEmailServices, EmailServices>();
 
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddTransient<IEmailServices, EmailServices>();
 
 
     builder.Services.AddControllers();
@@ -34,14 +39,19 @@ builder.Services.AddTransient<IEmailServices, EmailServices>();
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
-  var app = builder.Build();
+    var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Savi_Thrift v1"));
-}
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Savi_Thrift v1"));
+    }
+    using (var scope = app.Services.CreateScope())
+    {
+        var serviceProvider = scope.ServiceProvider;
+        Seeder.SeedRolesAndSuperAdmin(serviceProvider);
+    }
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
@@ -50,9 +60,9 @@ if (app.Environment.IsDevelopment())
 
     app.Run();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
-    logger.Error(ex, "Something is not right here");    
+    logger.Error(ex, "Something is not right here");
 }
 finally
 {
