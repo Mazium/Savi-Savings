@@ -9,12 +9,11 @@ namespace Savi_Thrift.Domain.Entities
 		public string Currency { get; set; } = string.Empty;
 		public string Reference { get; set; } = string.Empty;
 		public string PaystackCustomerCode { get; set; } = string.Empty;
-
-		[ForeignKey("AppUserId")]
-		public string UserId { get; set;} = string.Empty;
 		public string TransactionPin { get; set; } = string.Empty;
+		
+		[ForeignKey("AppUserId")]
+		public string UserId { get; set; } = string.Empty;
 		public ICollection<WalletFunding> WalletFundings { get; set; }
-
 
 		public string SetWalletID(string phoneNumber)
 		{

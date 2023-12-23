@@ -11,10 +11,10 @@ namespace Savi_Thrift.Domain.Entities
 		public Decimal Amount { get; set; }
 		public string Reference { get; set; } = string.Empty;
 
-		[ForeignKey("GroupId")]
-		public string GroupId { get; set; } = string.Empty;
-
 		[ForeignKey("AppUserId")]
 		public string UserId {  get; set; } = string.Empty;
+
+		[ForeignKey("GroupId")]
+		public string GroupId { get; set; } = string.Empty;
 	}
 }

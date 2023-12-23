@@ -15,7 +15,8 @@ namespace Savi_Thrift.Domain.Entities
 		public int MaxNumberOfParticipants { get; set; }
 		public DateTime CashoutDate { get; set; }
 		public DateTime NextDueDate { get; set; }
+		public FundFrequency FundFrequency { get; set; }
 		public ICollection<AppUser>? Users { get; set; }
-		public ICollection<GroupTransaction> GroupTransactions { get; set; }
+		public ICollection<GroupTransaction>? GroupTransactions { get; set; }
 	}
 }

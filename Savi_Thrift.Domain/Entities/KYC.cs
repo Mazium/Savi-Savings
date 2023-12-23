@@ -3,12 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Savi_Thrift.Domain.Entities
 {
-	public class KYC
+	public class KYC : BaseEntity
 	{
-		public string Id { get; set; }
-
-		[ForeignKey("AppUserId")]
-		public string UserId { get; set; }
 		public DateTime DateOfBirth { get; set; }
 		public Gender Gender { get; set; }
 		public string Occupation { get; set; } = string.Empty;
@@ -18,5 +14,7 @@ namespace Savi_Thrift.Domain.Entities
 		public string IdentificationNumber { get; set; } = string.Empty;
 		public string ProofOfAddressUrl { get; set; } = string.Empty;
 
+		[ForeignKey("AppUserId")]
+		public string AppUserId { get; set; } = string.Empty;
 	}
 }

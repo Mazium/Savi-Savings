@@ -5,8 +5,6 @@ namespace Savi_Thrift.Domain.Entities
 {
 	public class Saving : BaseEntity
 	{
-		[ForeignKey("WalletId")]
-		public string WalletId { get; set; } = string.Empty;
 		public string Title { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
 		public decimal GoalAmount { get; set; }
@@ -17,5 +15,8 @@ namespace Savi_Thrift.Domain.Entities
 		public DateTime TargetDate { get; set; }
 		public decimal AmountToAdd { get; set; }
 		public FundFrequency Frequency { get; set; }
+
+		[ForeignKey("WalletId")]
+		public string WalletId { get; set; } = string.Empty;
 	}
 }
