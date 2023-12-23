@@ -18,6 +18,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Savi_Thrift.Application\Savi_Thrift.Application.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Savi_Thrift.Domain\Savi_Thrift.Domain.csproj" />
   </ItemGroup>
 
