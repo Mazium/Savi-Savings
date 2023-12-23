@@ -2,13 +2,11 @@
 {
     public class Pagination
     {
-
         public async Task<PageResult<T>> PaginateAsync<T>(
             IEnumerable<T> data, Func<T, string> nameSelector, Func<T, int> idSelector, int page, int perPage)
         {
             perPage = perPage <= 0 ? 10 : perPage;
             page = page <= 0 ? 1 : page;
-
 
             var orderedData = OrderData(data, nameSelector, idSelector);
             var totalData = orderedData.Count();
