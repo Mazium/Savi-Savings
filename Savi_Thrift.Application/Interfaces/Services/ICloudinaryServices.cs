@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Savi_Thrift.Application.Interfaces.Services
+namespace Savi.Core.IServices
 {
-    internal class CloudinaryServices
+    public interface ICloudinaryServices<T> where T : class
     {
+        Task<string> UploadImage(string entityId, IFormFile file);
     }
 }
