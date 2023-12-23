@@ -1,15 +1,14 @@
-﻿﻿using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
-using Savi.Core.IServices;
-using Savi.Model.Entities;
 using Microsoft.Extensions.Configuration;
-using Savi.Data.Repositories.Interface;
 using Savi_Thrift.Application.Interfaces.Repositories;
+using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Domain.Entities;
 
-namespace Savi.Core.Services
-    {
-        public class CloudinaryServices<T> : ICloudinaryServices<T> where T : class
+namespace Savi_Thrift.Application
+{
+    public class CloudinaryServices<T> : ICloudinaryServices<T> where T : class
         {
             private readonly IGenericRepository<T> _repository;
             private readonly Cloudinary _cloudinary;
@@ -25,6 +24,7 @@ namespace Savi.Core.Services
                     cloudinarySettings.ApiSecret
                 ));
             }
+
             public async Task<string> UploadImage(string entityId, IFormFile file)
             {
                 var entity = _repository.GetByIdAsync(entityId);

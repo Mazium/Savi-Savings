@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Savi.Core.IServices
+namespace Savi_Thrift.Application.Interfaces.Services
 {
     public interface ICloudinaryServices<T> where T : class
     {
