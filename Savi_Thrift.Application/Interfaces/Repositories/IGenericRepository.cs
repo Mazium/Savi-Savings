@@ -11,7 +11,6 @@ namespace Savi_Thrift.Application.Interfaces.Repositories
         void UpdateAsync(T entity);
         void DeleteAsync(T entity);
         void DeleteAllAsync(List<T> entities);
-        Task<bool> ExistsAsync(Expression<Func<T, bool>> expression);
         void SaveChangesAsync();
     }
 }

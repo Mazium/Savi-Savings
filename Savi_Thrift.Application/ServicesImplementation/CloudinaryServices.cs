@@ -1,28 +1,18 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
-using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application
 {
     public class CloudinaryServices<T> : ICloudinaryServices<T> where T : class
         {
             private readonly IGenericRepository<T> _repository;
-            private readonly Cloudinary _cloudinary;
-            public CloudinaryServices(IGenericRepository<T> repository, IConfiguration configuration)
+            public CloudinaryServices(IGenericRepository<T> repository)
             {
                 _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
-                var cloudinarySettings = configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>();
-
-                _cloudinary = new Cloudinary(new Account(
-                    cloudinarySettings.CloudName,
-                    cloudinarySettings.ApiKey,
-                    cloudinarySettings.ApiSecret
-                ));
             }
 
             public async Task<string> UploadImage(string entityId, IFormFile file)
@@ -33,12 +23,19 @@ namespace Savi_Thrift.Application
                 {
                     return $"{typeof(T).Name} not found";
                 }
+
+                var cloudinary = new Cloudinary(new Account(
+                "dxaadkzlr",
+                "261756745827284",
+                "SGiYD5_wyF2WIEYSWT2S7b0fNLQ"
+                ));
+
                 var upload = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, file.OpenReadStream())
                 };
-                var uploadResult = await _cloudinary.UploadAsync(upload);
-                _repository.UpdateAsync(entity);
+                var uploadResult = await cloudinary.UploadAsync(upload);
+            _repository.UpdateAsync(entity);
                 try
                 {
                     _repository.SaveChangesAsync();

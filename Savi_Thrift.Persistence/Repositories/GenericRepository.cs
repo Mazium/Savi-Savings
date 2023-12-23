@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Savi_Thrift.Application.Interfaces.Repositories;
+﻿using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Persistence.Context;
 using System.Linq.Expressions;
 
@@ -27,12 +26,7 @@ namespace Savi_Thrift.Persistence.Repositories
         public void DeleteAsync(T entity)
         {
             _context.Set<T>().Remove(entity);
-        }
-
-        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> expression)
-        {
-            return await _context.Set<T>().AnyAsync(expression);
-        }
+        }     
 
         public List<T> FindAsync(Expression<Func<T, bool>> expression)
         {

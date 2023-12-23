@@ -11,14 +11,20 @@ using NLog;
 using NLog.Web;
 using Microsoft.EntityFrameworkCore;
 using Savi_Thrift.Persistence.Context;
+using CloudinaryDotNet;
+using Microsoft.Extensions.Options;
+using Savi_Thrift.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
-{  
+{
+
     // Add services to the container.
-builder.Services.AddControllers();
+    var configuration = builder.Configuration;
+    builder.Services.AddDependencies(configuration);
+    builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,6 +37,24 @@ builder.Services.AddTransient<IEmailServices, EmailServices>();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddSingleton(provider =>
+    {
+
+        var cloudinarySettings = provider.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+
+        Account cloudinaryAccount = new(
+
+            cloudinarySettings.CloudName,
+
+            cloudinarySettings.ApiKey,
+
+            cloudinarySettings.ApiSecret);
+
+        return new Cloudinary(cloudinaryAccount);
+
+    });
+
+
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
