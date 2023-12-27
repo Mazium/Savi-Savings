@@ -14,8 +14,11 @@ using Savi_Thrift.Persistence.Context;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
 using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Common.Utilities;
+using Savi_Thrift.Application;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
@@ -23,14 +26,14 @@ try
 
     // Add services to the container.
     var configuration = builder.Configuration;
-    builder.Services.AddDependencies(configuration);
     builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddTransient<IEmailServices, EmailServices>();
+    builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+    builder.Services.AddTransient<IEmailServices, EmailServices>();
+    builder.Services.AddScoped<ICloudinaryServices, CloudinaryServices>();
 
 
     builder.Services.AddControllers();

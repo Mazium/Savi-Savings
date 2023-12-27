@@ -13,7 +13,7 @@ namespace Savi_Thrift.Persistence.Extensions
             var cloudinarySettings = new CloudinarySettings();
             configuration.GetSection("CloudinarySettings").Bind(cloudinarySettings);
             services.AddSingleton(cloudinarySettings);
-            services.AddScoped(typeof(ICloudinaryServices<>), typeof(CloudinaryServices<>));
+            services.AddScoped(typeof(ICloudinaryServices), typeof(CloudinaryServices));
         }
     }
 }

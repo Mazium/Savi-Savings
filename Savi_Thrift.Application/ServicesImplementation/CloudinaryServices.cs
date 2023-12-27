@@ -1,53 +1,61 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Common.Utilities;
+using Savi_Thrift.Domain.Entities.Helper;
 
 namespace Savi_Thrift.Application
 {
-    public class CloudinaryServices<T> : ICloudinaryServices<T> where T : class
+    public class CloudinaryServices : ICloudinaryServices
+    {
+            private readonly Cloudinary _cloudinary;
+            private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration = ConfigurationHelper.GetConfigurationInstance();
+            private readonly CloudinaryConfig cloudinaryOptions = new CloudinaryConfig();
+
+         public CloudinaryServices()
+            {
+              _configuration.Bind(cloudinaryOptions.SectionName, cloudinaryOptions);
+              var account = new Account(
+                cloudinaryOptions.CloudName,
+                cloudinaryOptions.ApiKey,
+                cloudinaryOptions.ApiSecret
+                );
+
+             _cloudinary = new Cloudinary(account);
+         }
+
+        public async Task<CloudinaryUploadResponse> UploadImage(IFormFile fileToUpload)
         {
-            private readonly IGenericRepository<T> _repository;
-            public CloudinaryServices(IGenericRepository<T> repository)
+            try
             {
-                _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-
-            }
-
-            public async Task<string> UploadImage(string entityId, IFormFile file)
-            {
-                var entity = _repository.GetByIdAsync(entityId);
-
-                if (entity == null)
+                var uploadResult = new RawUploadResult();
+                using (var fileStream = fileToUpload.OpenReadStream())
                 {
-                    return $"{typeof(T).Name} not found";
+                    var UploadParams = new RawUploadParams()
+                    {
+                        File = new FileDescription(fileToUpload.FileName, fileStream)
+                    };
+                    uploadResult = await _cloudinary.UploadAsync(UploadParams);
                 }
-
-                var cloudinary = new Cloudinary(new Account(
-                "dxaadkzlr",
-                "261756745827284",
-                "SGiYD5_wyF2WIEYSWT2S7b0fNLQ"
-                ));
-
-                var upload = new ImageUploadParams
+                CloudinaryUploadResponse response = new CloudinaryUploadResponse
                 {
-                    File = new FileDescription(file.FileName, file.OpenReadStream())
+                    PublicId = uploadResult.PublicId,
+                    Url = uploadResult.Url.ToString(),
                 };
-                var uploadResult = await cloudinary.UploadAsync(upload);
-            _repository.UpdateAsync(entity);
-                try
-                {
-                    _repository.SaveChangesAsync();
-                    return uploadResult.SecureUrl.AbsoluteUri;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex}");
-                    return "Database update error occurred";
-                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex}");
+                return null;
             }
         }
-
     }
+
+}
 

@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Savi_Thrift.Common\Savi_Thrift.Common.csproj" />
     <ProjectReference Include="..\Savi_Thrift.Domain\Savi_Thrift.Domain.csproj" />
     <ProjectReference Include="..\Savi_Thrift.Persistence\Savi_Thrift.Persistence.csproj" />
   </ItemGroup>
