@@ -45,7 +45,7 @@ namespace Savi_Thrift.Controllers
         public async Task<IActionResult> CloudinaryTest(IFormFile image)
         {
               var imageToUpload = HttpContext.Request.Form.Files[0];
-              var response = _cloudinaryServices.UploadImage(imageToUpload);
+              var response = await _cloudinaryServices.UploadImage(imageToUpload);
            
               return Ok();
 

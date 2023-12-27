@@ -3,10 +3,9 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Savi_Thrift.Application.DTO;
-using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
-using Savi_Thrift.Domain.Entities.Helper;
+using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application
 {
@@ -14,7 +13,7 @@ namespace Savi_Thrift.Application
     {
             private readonly Cloudinary _cloudinary;
             private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration = ConfigurationHelper.GetConfigurationInstance();
-            private readonly CloudinaryConfig cloudinaryOptions = new CloudinaryConfig();
+            private readonly CloudinarySettings cloudinaryOptions = new CloudinarySettings();
 
          public CloudinaryServices()
             {
