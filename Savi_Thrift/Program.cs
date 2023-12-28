@@ -1,19 +1,13 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Savi_Thrift.Application.Interfaces.Services;
-using Savi_Thrift.Domain.Entities.Helper;
-using Savi_Thrift.Infrastructure.Services;
-using Savi_Thrift.Persistence.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
-using Microsoft.EntityFrameworkCore;
-using Savi_Thrift.Persistence.Context;
-using Microsoft.AspNetCore.Identity;
-using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
+using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Domain.Entities.Helper;
+using Savi_Thrift.Infrastructure.Services;
+using Savi_Thrift.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

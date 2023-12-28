@@ -22,12 +22,6 @@ namespace Savi_Thrift.Common.Utilities
                 await roleManager.CreateAsync(role);
             }
 
-            if (!await roleManager.RoleExistsAsync("Manager"))
-            {
-                var role = new IdentityRole("Manager");
-                await roleManager.CreateAsync(role);
-            }
-
             if (!await roleManager.RoleExistsAsync("User"))
             {
                 var role = new IdentityRole("User");
