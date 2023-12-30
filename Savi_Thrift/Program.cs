@@ -11,9 +11,10 @@ using NLog;
 using NLog.Web;
 using Microsoft.EntityFrameworkCore;
 using Savi_Thrift.Persistence.Context;
+using Savi_Thrift.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var configuration = builder.Configuration;
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
 {  
@@ -21,6 +22,8 @@ try
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
@@ -31,6 +34,8 @@ builder.Services.AddTransient<IEmailServices, EmailServices>();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddAuthentication();
+    builder.Services.ConfigureAuthentication(configuration);
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -43,6 +48,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Savi_Thrift v1"));
 }
     app.UseHttpsRedirection();
+
+    app.UseAuthentication();
 
     app.UseAuthorization();
 
