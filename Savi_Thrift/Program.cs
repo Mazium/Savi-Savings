@@ -13,10 +13,12 @@ using Microsoft.Extensions.Options;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Common.Utilities;
 using Savi_Thrift.Application;
+using Savi_Thrift.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
 
+var configuration = builder.Configuration;
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
 {
@@ -55,6 +57,8 @@ try
     });
 
 
+    builder.Services.AddAuthentication();
+    builder.Services.ConfigureAuthentication(configuration);
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -72,6 +76,8 @@ try
         Seeder.SeedRolesAndSuperAdmin(serviceProvider);
     }
     app.UseHttpsRedirection();
+
+    app.UseAuthentication();
 
     app.UseAuthorization();
 
