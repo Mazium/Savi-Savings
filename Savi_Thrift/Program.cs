@@ -8,13 +8,20 @@ using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain.Entities.Helper;
 using Savi_Thrift.Infrastructure.Services;
 using Savi_Thrift.Persistence.Context;
+using CloudinaryDotNet;
+using Microsoft.Extensions.Options;
+using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Common.Utilities;
+using Savi_Thrift.Application;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
 {
     // Add services to the container.
+    var configuration = builder.Configuration;
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -23,13 +30,31 @@ try
     builder.Services.AddScoped<RoleManager<IdentityRole>>();
     builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
     builder.Services.AddTransient<IEmailServices, EmailServices>();
-
+    builder.Services.AddScoped<ICloudinaryServices, CloudinaryServices>();
 
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Services.AddSingleton(provider =>
+    {
+
+        var cloudinarySettings = provider.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+
+        Account cloudinaryAccount = new(
+
+            cloudinarySettings.CloudName,
+
+            cloudinarySettings.ApiKey,
+
+            cloudinarySettings.ApiSecret);
+
+        return new Cloudinary(cloudinaryAccount);
+
+    });
+
+
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
