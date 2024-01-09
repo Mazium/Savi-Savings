@@ -4,9 +4,9 @@ namespace Savi_Thrift.Application.Interfaces.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        T GetByIdAsync(string id);
-        List<T> GetAll();
-        List<T> FindAsync(Expression<Func<T, bool>> expression);
+        Task<T> GetByIdAsync(string id);
+        Task<List<T>> GetAll();
+        Task<List<T>> FindAsync(Expression<Func<T, bool>> expression);
         void AddAsync(T entity);
         void UpdateAsync(T entity);
         void DeleteAsync(T entity);
