@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Savi_Thrift.Domain.Enums
+﻿namespace Savi_Thrift.Domain.Enums
 {
-    internal class Occupation
+    public enum Occupation
     {
+        Farmer,
+        HumanResources,
+        MarketingSpecialist,
+        Assistant,
+        Teacher,
+        Engineer,
+        ITProfessional,
+        SalesRepresenative,
+        Doctor,
+        Accountant,
+        Lawyer,
+        Banker,
+        Entrepreneur,
+        ProjectManager,
+        GraphicDesigner,
+        Others
     }
 }
