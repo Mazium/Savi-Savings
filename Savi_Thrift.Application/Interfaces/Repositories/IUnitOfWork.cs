@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Savi_Thrift.Application.Interfaces.Repositories
+﻿namespace Savi_Thrift.Application.Interfaces.Repositories
 {
-    internal class IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
+        IKycRepository KycRepository { get; }
+        int SaveChanges();
     }
 }
