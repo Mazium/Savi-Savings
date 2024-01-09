@@ -23,7 +23,7 @@ var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurre
 try
 {
     // Add services to the container.
-    var configuration = builder.Configuration;
+    //var configuration = builder.Configuration;
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
