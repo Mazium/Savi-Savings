@@ -16,7 +16,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
         Task<ApiResponse<bool>> DeleteKycById(string kycId);
         Task<ApiResponse<GetAllKycsDto>> GetAllKycs(int page, int perPage);
         Task<ApiResponse<KycResponseDto>> GetKycById(string kycId);
-        Task<ApiResponse<bool>> UpdateKyc(string kycId, KycRequestDto kycRequest);
+        Task<ApiResponse<KycResponseDto>> UpdateKyc(string kycId, KycRequestDto kycRequest);
         Task<ApiResponse<CloudinaryUploadResponse>> UploadIdentificationDocument(string kycId, IFormFile file);
         Task<ApiResponse<CloudinaryUploadResponse>> UploadProofOfAddressDocument(string kycId, IFormFile file);
     }
