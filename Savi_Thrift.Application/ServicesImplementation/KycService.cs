@@ -73,10 +73,69 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-        public Task<ApiResponse<PageResult<IEnumerable<KycResponseDto>>>> GetAllKycs(int page, int perPage)
+        public async Task<ApiResponse<GetAllKycsDto>> GetAllKycs(int page, int perPage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var kycs = _unitOfWork.KycRepository.GetAllKycs();
+                var kycDtos = _mapper.Map<List<KycResponseDto>>(kycs);
+
+                var pagedResult = await PagePagination<KycResponseDto>.GetPager(
+                    kycDtos,
+                    perPage,
+                    page,
+                    kyc => kyc.IdentificationDocumentUrl,
+                    kyc => kyc.IdentificationNumber
+                );
+
+                var response = new GetAllKycsDto
+                {
+                    Kycs = pagedResult.Data.ToList(),
+                    TotalCount = pagedResult.TotalCount,
+                    TotalPageCount = pagedResult.TotalPageCount,
+                    PerPage = pagedResult.PerPage,
+                    CurrentPage = pagedResult.CurrentPage
+                };
+
+                return ApiResponse<GetAllKycsDto>.Success(response, "KYCs retrieved successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting all KYCs");
+                return new ApiResponse<GetAllKycsDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+            }
         }
+
+
+        //public async Task<ApiResponse<GetAllKycsDto>> GetAllKycs(int page, int perPage)
+        //{
+        //    try
+        //    {
+        //        var kycs = _unitOfWork.KycRepository.GetAllKycs();
+        //        var kycDtos = _mapper.Map<List<KycResponseDto>>(kycs);
+        //        var pagedResult = await Pagination<KycResponseDto>.PaginateAsync (
+        //            kycDtos,
+        //            perPage,
+        //            page,
+        //            kyc => kyc.IdentificationDocumentUrl,
+        //            kyc => kyc.IdentificationNumber
+        //        );
+        //        var response = new GetAllKycsDto
+        //        {
+        //            Kycs = pagedResult.Data.ToList(),
+        //            TotalCount = pagedResult.TotalCount,
+        //            TotalPageCount = pagedResult.TotalPageCount,
+        //            PerPage = pagedResult.PerPage,
+        //            CurrentPage = pagedResult.CurrentPage
+        //        };
+        //        return new ApiResponse<GetAllKycsDto>(true, "KYCs retrieved successfully", StatusCodes.Status200OK, response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error occurred while getting all KYCs");
+        //        return new ApiResponse<GetAllKycsDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+        //    }
+        //}
 
         public Task<ApiResponse<KycResponseDto>> GetKycById(string kycId)
         {
