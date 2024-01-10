@@ -147,12 +147,32 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-        public Task<ApiResponse<CloudinaryUploadResponse>> UploadIdentificationDocument(string kycId, IFormFile file)
+        public async Task<ApiResponse<KycResponseDto>> UploadIdentificationDocument(string kycId, IFormFile file)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var kyc = await _unitOfWork.KycRepository.GetKycByIdAsync(kycId);
+                if (kyc == null)
+                {
+                    return ApiResponse<KycResponseDto>.Failed(false, "KYC not found.", StatusCodes.Status404NotFound, null);
+                }
+
+                var uploadResult = await _cloudinaryServices.UploadImage(file);
+                kyc.IdentificationDocumentUrl = uploadResult.Url;
+                _unitOfWork.KycRepository.UpdateKyc(kyc);
+                _unitOfWork.SaveChanges();
+
+                var responseDto = _mapper.Map<KycResponseDto>(kyc);
+                return ApiResponse<KycResponseDto>.Success(responseDto, "Identification document uploaded successfully.", StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error uploading identification document: {ex}");
+                return ApiResponse<KycResponseDto>.Failed(false, "Error uploading identification document.", StatusCodes.Status500InternalServerError, null);
+            }
         }
 
-        public Task<ApiResponse<CloudinaryUploadResponse>> UploadProofOfAddressDocument(string kycId, IFormFile file)
+        public Task<ApiResponse<KycResponseDto>> UploadProofOfAddressDocument(string kycId, IFormFile file)
         {
             throw new NotImplementedException();
         }
