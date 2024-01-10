@@ -106,40 +106,23 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-
-        //public async Task<ApiResponse<GetAllKycsDto>> GetAllKycs(int page, int perPage)
-        //{
-        //    try
-        //    {
-        //        var kycs = _unitOfWork.KycRepository.GetAllKycs();
-        //        var kycDtos = _mapper.Map<List<KycResponseDto>>(kycs);
-        //        var pagedResult = await Pagination<KycResponseDto>.PaginateAsync (
-        //            kycDtos,
-        //            perPage,
-        //            page,
-        //            kyc => kyc.IdentificationDocumentUrl,
-        //            kyc => kyc.IdentificationNumber
-        //        );
-        //        var response = new GetAllKycsDto
-        //        {
-        //            Kycs = pagedResult.Data.ToList(),
-        //            TotalCount = pagedResult.TotalCount,
-        //            TotalPageCount = pagedResult.TotalPageCount,
-        //            PerPage = pagedResult.PerPage,
-        //            CurrentPage = pagedResult.CurrentPage
-        //        };
-        //        return new ApiResponse<GetAllKycsDto>(true, "KYCs retrieved successfully", StatusCodes.Status200OK, response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error occurred while getting all KYCs");
-        //        return new ApiResponse<GetAllKycsDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
-        //    }
-        //}
-
-        public Task<ApiResponse<KycResponseDto>> GetKycById(string kycId)
+        public async Task<ApiResponse<KycResponseDto>> GetKycById(string kycId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var kyc = await _unitOfWork.KycRepository.GetKycByIdAsync(kycId);
+                if (kyc == null)
+                {
+                    return ApiResponse<KycResponseDto>.Failed(false, "KYC not found.", StatusCodes.Status404NotFound, null);
+                }
+                var kycDto = _mapper.Map<KycResponseDto>(kyc);
+                return ApiResponse<KycResponseDto>.Success(kycDto, "KYC retrieved successfully.", StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error getting KYC: {ex}");
+                return ApiResponse<KycResponseDto>.Failed(false, "Error getting KYC.", StatusCodes.Status500InternalServerError, null);
+            }
         }
 
         public Task<ApiResponse<bool>> UpdateKyc(string kycId, KycRequestDto kycRequest)
