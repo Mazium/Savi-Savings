@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Org.BouncyCastle.Crypto;
 using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
 using Savi_Thrift.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Serilog;
 using TicketEase.Domain;
 
 namespace Savi_Thrift.Application.ServicesImplementation
@@ -158,6 +153,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 }
 
                 var uploadResult = await _cloudinaryServices.UploadImage(file);
+                if (uploadResult == null)
+                {
+                    Log.Warning($"Failed to upload file for with ID {kycId}.");
+                    return ApiResponse<KycResponseDto>.Failed(false, $"Failed to upload file with ID {kycId}.", StatusCodes.Status500InternalServerError, null);
+                }
                 kyc.IdentificationDocumentUrl = uploadResult.Url;
                 _unitOfWork.KycRepository.UpdateKyc(kyc);
                 _unitOfWork.SaveChanges();
@@ -183,6 +183,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 }
 
                 var uploadResult = await _cloudinaryServices.UploadImage(file);
+                if (uploadResult == null)
+                {
+                    Log.Warning($"Failed to upload file for with ID {kycId}.");
+                    return ApiResponse<KycResponseDto>.Failed(false, $"Failed to upload file with ID {kycId}.", StatusCodes.Status500InternalServerError, null);
+                }
                 kyc.ProofOfAddressUrl = uploadResult.Url;
                 _unitOfWork.KycRepository.UpdateKyc(kyc);
                 _unitOfWork.SaveChanges();
@@ -196,6 +201,5 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 return ApiResponse<KycResponseDto>.Failed(false, "Error uploading proof of address document.", StatusCodes.Status500InternalServerError, null);
             }
         }
-    }
     }
 }
