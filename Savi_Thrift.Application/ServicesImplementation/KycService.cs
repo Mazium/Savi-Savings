@@ -48,14 +48,29 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while adding KYC");
-                return new ApiResponse<KycResponseDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+                _logger.LogError($"Error adding KYC: {ex}");
+                return ApiResponse<KycResponseDto>.Failed(false, "Error adding KYC.", StatusCodes.Status500InternalServerError, null);
             }
         }
 
-        public Task<ApiResponse<bool>> DeleteKyc(string kycId)
+        public async Task<ApiResponse<bool>> DeleteKycById(string kycId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var existingKyc = await _unitOfWork.KycRepository.GetKycByIdAsync(kycId);
+                if (existingKyc == null)
+                {
+                    return ApiResponse<bool>.Failed(false, "KYC not found.", StatusCodes.Status404NotFound, null);
+                }
+                await _unitOfWork.KycRepository.DeleteKycAsync(existingKyc);
+                _unitOfWork.SaveChanges();
+                return ApiResponse<bool>.Success(true, "KYC deleted successfully.", StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting KYC: {ex}");
+                return ApiResponse<bool>.Failed(false, "Error deleting KYC.", StatusCodes.Status500InternalServerError, null);
+            }
         }
 
         public Task<ApiResponse<PageResult<IEnumerable<KycResponseDto>>>> GetAllKycs(int page, int perPage)
