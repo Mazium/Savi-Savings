@@ -35,9 +35,21 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     return ApiResponse<KycResponseDto>.Failed(false, "KYC already exists for the user", StatusCodes.Status400BadRequest, new List<string>());
                 }
+
+                var identificationDocumentUrl = await _cloudinaryServices.UploadImage(kycDto.IdentificationDocumentUrl);
+                var proofOfAddressUrl = await _cloudinaryServices.UploadImage(kycDto.ProofOfAddressUrl);
+                if (identificationDocumentUrl == null || proofOfAddressUrl == null)
+                {
+                    return ApiResponse<KycResponseDto>.Failed(false, "Failed to upload one or more documents.", StatusCodes.Status500InternalServerError, null);
+                }
+                
                 var newKyc = _mapper.Map<KYC>(kycDto);
+                newKyc.IdentificationDocumentUrl = identificationDocumentUrl.Url;
+                newKyc.ProofOfAddressUrl = proofOfAddressUrl.Url;
+
                 await _unitOfWork.KycRepository.AddKycAsync(newKyc);
                 _unitOfWork.SaveChanges();
+
                 var addedKycDto = _mapper.Map<KycResponseDto>(newKyc);
                 return ApiResponse<KycResponseDto>.Success(addedKycDto, "KYC added successfully.", StatusCodes.Status201Created);
             }
@@ -47,6 +59,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 return ApiResponse<KycResponseDto>.Failed(false, "Error adding KYC.", StatusCodes.Status500InternalServerError, null);
             }
         }
+
 
         public async Task<ApiResponse<bool>> DeleteKycById(string kycId)
         {
@@ -139,66 +152,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
             {
                 _logger.LogError(ex, "Error occurred while updating KYC");
                 return new ApiResponse<KycResponseDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
-            }
-        }
-
-        public async Task<ApiResponse<KycResponseDto>> UploadIdentificationDocument(string kycId, IFormFile file)
-        {
-            try
-            {
-                var kyc = await _unitOfWork.KycRepository.GetKycByIdAsync(kycId);
-                if (kyc == null)
-                {
-                    return ApiResponse<KycResponseDto>.Failed(false, "KYC not found.", StatusCodes.Status404NotFound, null);
-                }
-
-                var uploadResult = await _cloudinaryServices.UploadImage(file);
-                if (uploadResult == null)
-                {
-                    Log.Warning($"Failed to upload file for with ID {kycId}.");
-                    return ApiResponse<KycResponseDto>.Failed(false, $"Failed to upload file with ID {kycId}.", StatusCodes.Status500InternalServerError, null);
-                }
-                kyc.IdentificationDocumentUrl = uploadResult.Url;
-                _unitOfWork.KycRepository.UpdateKyc(kyc);
-                _unitOfWork.SaveChanges();
-
-                var responseDto = _mapper.Map<KycResponseDto>(kyc);
-                return ApiResponse<KycResponseDto>.Success(responseDto, "Identification document uploaded successfully.", StatusCodes.Status200OK);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error uploading identification document: {ex}");
-                return ApiResponse<KycResponseDto>.Failed(false, "Error uploading identification document.", StatusCodes.Status500InternalServerError, null);
-            }
-        }
-
-        public async Task<ApiResponse<KycResponseDto>> UploadProofOfAddressDocument(string kycId, IFormFile file)
-        {
-            try
-            {
-                var kyc = await _unitOfWork.KycRepository.GetKycByIdAsync(kycId);
-                if (kyc == null)
-                {
-                    return ApiResponse<KycResponseDto>.Failed(false, "KYC not found.", StatusCodes.Status404NotFound, null);
-                }
-
-                var uploadResult = await _cloudinaryServices.UploadImage(file);
-                if (uploadResult == null)
-                {
-                    Log.Warning($"Failed to upload file for with ID {kycId}.");
-                    return ApiResponse<KycResponseDto>.Failed(false, $"Failed to upload file with ID {kycId}.", StatusCodes.Status500InternalServerError, null);
-                }
-                kyc.ProofOfAddressUrl = uploadResult.Url;
-                _unitOfWork.KycRepository.UpdateKyc(kyc);
-                _unitOfWork.SaveChanges();
-
-                var responseDto = _mapper.Map<KycResponseDto>(kyc);
-                return ApiResponse<KycResponseDto>.Success(responseDto, "Identification document uploaded successfully.", StatusCodes.Status200OK);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error uploading proof of address document: {ex}");
-                return ApiResponse<KycResponseDto>.Failed(false, "Error uploading proof of address document.", StatusCodes.Status500InternalServerError, null);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Savi_Thrift.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddKyc(string userId, [FromBody] KycRequestDto kycRequestDto)
+        public async Task<IActionResult> AddKyc(string userId, [FromForm] KycRequestDto kycRequestDto)
         {
             if (!ModelState.IsValid)
             {
