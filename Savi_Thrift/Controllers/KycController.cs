@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.Interfaces.Services;
 

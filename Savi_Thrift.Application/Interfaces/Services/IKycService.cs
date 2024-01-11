@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Savi_Thrift.Application.DTO;
-using Savi_Thrift.Common.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Savi_Thrift.Application.DTO;
 using TicketEase.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
