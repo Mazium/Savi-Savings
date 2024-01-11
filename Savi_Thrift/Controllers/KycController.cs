@@ -10,12 +10,9 @@ namespace Savi_Thrift.Controllers
     public class KycController : ControllerBase
     {
         private readonly IKycService _kycService;
-        public KycController(IKycService kycService)
-        {
-            _kycService = kycService;
-        }
+        public KycController(IKycService kycService) { _kycService = kycService; }
 
-        [HttpPost]
+        [HttpPost("AddKyc")]
         public async Task<IActionResult> AddKyc(string userId, [FromForm] KycRequestDto kycRequestDto)
         {
             if (!ModelState.IsValid)
@@ -26,22 +23,16 @@ namespace Savi_Thrift.Controllers
         }
 
         [HttpDelete("{kycId}")]
-        public async Task<IActionResult> DeleteKyc(string kycId)
-        {
-            return Ok(await _kycService.DeleteKycById(kycId));
-        }
+        public async Task<IActionResult> DeleteKyc(string kycId) 
+            => Ok(await _kycService.DeleteKycById(kycId));
 
-        [HttpGet]
+        [HttpGet("get-kycs")]
         public async Task<IActionResult> GetAllKycs([FromQuery] int page, [FromQuery] int perPage)
-        {
-            return Ok(await _kycService.GetAllKycs(page, perPage));
-        }
+            => Ok(await _kycService.GetAllKycs(page, perPage));
 
         [HttpGet("{kycId}")]
-        public async Task<IActionResult> GetKycById(string kycId)
-        {
-            return Ok(await _kycService.GetKycById(kycId));
-        }
+        public async Task<IActionResult> GetKycById(string kycId) 
+            => Ok(await _kycService.GetKycById(kycId));
 
         [HttpPut("{kycId}")]
         public async Task<IActionResult> UpdateKyc(string kycId, [FromBody] KycRequestDto updatedKyc)

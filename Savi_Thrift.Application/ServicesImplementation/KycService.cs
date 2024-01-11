@@ -18,7 +18,10 @@ namespace Savi_Thrift.Application.ServicesImplementation
         private readonly ILogger<KycService> _logger;
         private readonly ICloudinaryServices _cloudinaryServices;
 
-        public KycService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<KycService> logger, ICloudinaryServices cloudinaryServices)
+        public KycService(IUnitOfWork unitOfWork, 
+            IMapper mapper, 
+            ILogger<KycService> logger, 
+            ICloudinaryServices cloudinaryServices)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -33,14 +36,16 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var existingKyc = await _unitOfWork.KycRepository.GetKycByIdAsync(userId);
                 if (existingKyc != null)
                 {
-                    return ApiResponse<KycResponseDto>.Failed(false, "KYC already exists for the user", StatusCodes.Status400BadRequest, new List<string>());
+                    return ApiResponse<KycResponseDto>.Failed(false, "KYC already exists for the user", 
+                        StatusCodes.Status400BadRequest, new List<string>());
                 }
 
                 var identificationDocumentUrl = await _cloudinaryServices.UploadImage(kycDto.IdentificationDocumentUrl);
                 var proofOfAddressUrl = await _cloudinaryServices.UploadImage(kycDto.ProofOfAddressUrl);
                 if (identificationDocumentUrl == null || proofOfAddressUrl == null)
                 {
-                    return ApiResponse<KycResponseDto>.Failed(false, "Failed to upload one or more documents.", StatusCodes.Status500InternalServerError, null);
+                    return ApiResponse<KycResponseDto>.Failed(false, "Failed to upload one or more documents.", 
+                        StatusCodes.Status500InternalServerError, null);
                 }
                 
                 var newKyc = _mapper.Map<KYC>(kycDto);
@@ -110,7 +115,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while getting all KYCs");
-                return new ApiResponse<GetAllKycsDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+                return new ApiResponse<GetAllKycsDto>(false, "Error occurred while processing your request", 
+                    StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
         }
 
@@ -151,7 +157,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while updating KYC");
-                return new ApiResponse<KycResponseDto>(false, "Error occurred while processing your request", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+                return new ApiResponse<KycResponseDto>(false, "Error occurred while processing your request", 
+                    StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
         }
     }

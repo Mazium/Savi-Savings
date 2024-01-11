@@ -34,7 +34,6 @@ try
     builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
     builder.Services.AddTransient<IEmailServices, EmailServices>();
     builder.Services.AddScoped<ICloudinaryServices, CloudinaryServices>();
-    //builder.Services.AddScoped<IKycService, KycService>();
 
 
     builder.Services.AddControllers();

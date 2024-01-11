@@ -1,6 +1,6 @@
 ﻿namespace Savi_Thrift.Common.Utilities
 {
-    //public class Pagination<T>
+    //public class Pagination
     //{
     //    public async Task<PageResult<T>> PaginateAsync<T>(
     //        IEnumerable<T> data, Func<T, string> nameSelector, Func<T, int> idSelector, int page, int perPage)
