@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Savi_Thrift.Application;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Application.ServicesImplementation;
 using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Persistence.Extensions
@@ -14,6 +15,7 @@ namespace Savi_Thrift.Persistence.Extensions
             configuration.GetSection("CloudinarySettings").Bind(cloudinarySettings);
             services.AddSingleton(cloudinarySettings);
             services.AddScoped(typeof(ICloudinaryServices), typeof(CloudinaryServices));
+            services.AddScoped<IKycService, KycService>();
         }
     }
 }

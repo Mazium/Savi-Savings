@@ -14,6 +14,7 @@ using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Common.Utilities;
 using Savi_Thrift.Application;
 using Savi_Thrift.Configurations;
+using Savi_Thrift.Application.ServicesImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
@@ -33,6 +34,7 @@ try
     builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
     builder.Services.AddTransient<IEmailServices, EmailServices>();
     builder.Services.AddScoped<ICloudinaryServices, CloudinaryServices>();
+    //builder.Services.AddScoped<IKycService, KycService>();
 
 
     builder.Services.AddControllers();

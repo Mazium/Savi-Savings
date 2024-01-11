@@ -1,4 +1,5 @@
-﻿using Savi_Thrift.Domain.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using Savi_Thrift.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,9 +33,9 @@ namespace Savi_Thrift.Application.DTO
         public string IdentificationNumber { get; set; }
 
         [Required(ErrorMessage = "Identification Document is required")]
-        public string IdentificationDocumentUrl { get; set; }
+        public IFormFile IdentificationDocumentUrl { get; set; }
 
         [Required(ErrorMessage = "Proof of Address is required")]
-        public string ProofOfAddressUrl { get; set; }
+        public IFormFile ProofOfAddressUrl { get; set; }
     }
 }

@@ -52,17 +52,5 @@ namespace Savi_Thrift.Controllers
             }
             return Ok(await _kycService.UpdateKyc(kycId, updatedKyc));
         }
-
-        [HttpPost("{kycId}/upload-identification-document")]
-        public async Task<IActionResult> UploadIdentificationDocument(string kycId, [FromForm] IFormFile file)
-        {
-            return Ok(await _kycService.UploadIdentificationDocument(kycId, file));
-        }
-
-        [HttpPost("{kycId}/upload-proof-of-address-document")]
-        public async Task<IActionResult> UploadProofOfAddressDocument(string kycId, [FromForm] IFormFile file)
-        {
-            return Ok(await _kycService.UploadProofOfAddressDocument(kycId, file));
-        }
     }
 }
