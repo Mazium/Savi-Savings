@@ -14,7 +14,7 @@ namespace Savi_Thrift.Domain.Entities
 		public DateTime StartDate { get; set; }
 		public DateTime TargetDate { get; set; }
 		public decimal AmountToAdd { get; set; }
-		public FundFrequency Frequency { get; set; }
+		public SavingFrequency Frequency { get; set; }
 
 		[ForeignKey("WalletId")]
 		public string WalletId { get; set; } = string.Empty;

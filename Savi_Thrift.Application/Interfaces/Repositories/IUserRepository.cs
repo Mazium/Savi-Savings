@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Savi_Thrift.Application.Interfaces.Repositories;
+using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application.Repositories
 {
-    internal class IUserRepository
+    public interface IUserRepository : IGenericRepository<AppUser>
     {
     }
 }

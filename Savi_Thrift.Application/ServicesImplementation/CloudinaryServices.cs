@@ -3,58 +3,50 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Savi_Thrift.Application.DTO;
+using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
 using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application
 {
-    public class CloudinaryServices : ICloudinaryServices
-    {
-            private readonly Cloudinary _cloudinary;
-            private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration = ConfigurationHelper.GetConfigurationInstance();
-            private readonly CloudinarySettings cloudinaryOptions = new CloudinarySettings();
+	public class CloudinaryServices<TEntity> : ICloudinaryServices<TEntity> where TEntity : class
+	{
+		private readonly IGenericRepository<TEntity> _repository;
+		private readonly Cloudinary _cloudinary;
 
-         public CloudinaryServices()
-            {
-              _configuration.Bind(cloudinaryOptions.SectionName, cloudinaryOptions);
-              var account = new Account(
-                cloudinaryOptions.CloudName,
-                cloudinaryOptions.ApiKey,
-                cloudinaryOptions.ApiSecret
-                );
+		public CloudinaryServices(
+			IGenericRepository<TEntity> repository,
+			IConfiguration configuration)
+		{
+			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
-             _cloudinary = new Cloudinary(account);
-         }
+			var cloudinarySettings = new CloudinarySettings();
+			configuration.GetSection("CloudinarySettings").Bind(cloudinarySettings);
 
-        public async Task<CloudinaryUploadResponse> UploadImage(IFormFile fileToUpload)
-        {
-            try
-            {
-                var uploadResult = new RawUploadResult();
-                using (var fileStream = fileToUpload.OpenReadStream())
-                {
-                    var UploadParams = new RawUploadParams()
-                    {
-                        File = new FileDescription(fileToUpload.FileName, fileStream)
-                    };
-                    uploadResult = await _cloudinary.UploadAsync(UploadParams);
-                }
-                CloudinaryUploadResponse response = new CloudinaryUploadResponse
-                {
-                    PublicId = uploadResult.PublicId,
-                    Url = uploadResult.Url.ToString(),
-                };
+			_cloudinary = new Cloudinary(new Account(
+				cloudinarySettings.CloudName,
+				cloudinarySettings.ApiKey,
+				cloudinarySettings.ApiSecret));
+		}
 
-                return response;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex}");
-                return null;
-            }
-        }
-    }
+		public async Task<CloudinaryUploadResponse> UploadImage(IFormFile file)
+		{
+			var uploadParams = new ImageUploadParams
+			{
+				File = new FileDescription(file.FileName, file.OpenReadStream())
+			};
+
+			var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+			var response = new CloudinaryUploadResponse
+			{
+				PublicId = uploadResult.PublicId,
+				Url = uploadResult.SecureUrl.AbsoluteUri.ToString(),
+			};
+			return response;
+		}
+
+	}
 
 }
 
