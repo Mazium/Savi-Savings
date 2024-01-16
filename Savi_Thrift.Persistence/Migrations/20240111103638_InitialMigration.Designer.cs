@@ -12,7 +12,7 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    [Migration("20231222122324_InitialMigration")]
+    [Migration("20240111103638_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -324,6 +324,9 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FundFrequency")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -365,6 +368,9 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -395,6 +401,8 @@ namespace Savi_Thrift.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("GroupId");
 
                     b.ToTable("GroupTransactions");
@@ -409,15 +417,26 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("BVN")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<string>("IdentificationDocumentUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdentificationNumber")
                         .IsRequired()
@@ -426,15 +445,16 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<int>("IdentificationType")
                         .HasColumnType("int");
 
-                    b.Property<string>("Occupation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Occupation")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProofOfAddressUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -453,6 +473,9 @@ namespace Savi_Thrift.Persistence.Migrations
 
                     b.Property<decimal>("AmountToAdd")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Avatar")
                         .IsRequired()
@@ -497,6 +520,8 @@ namespace Savi_Thrift.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("Savings");
                 });
 
@@ -507,6 +532,9 @@ namespace Savi_Thrift.Persistence.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -533,6 +561,8 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("UserTransactions");
                 });
@@ -697,11 +727,29 @@ namespace Savi_Thrift.Persistence.Migrations
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.GroupTransaction", b =>
                 {
+                    b.HasOne("Savi_Thrift.Domain.Entities.AppUser", null)
+                        .WithMany("GroupTransactions")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("Savi_Thrift.Domain.Entities.Group", null)
                         .WithMany("GroupTransactions")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Savi_Thrift.Domain.Entities.Saving", b =>
+                {
+                    b.HasOne("Savi_Thrift.Domain.Entities.AppUser", null)
+                        .WithMany("Savings")
+                        .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("Savi_Thrift.Domain.Entities.UserTransaction", b =>
+                {
+                    b.HasOne("Savi_Thrift.Domain.Entities.AppUser", null)
+                        .WithMany("UserTransactions")
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.WalletFunding", b =>
@@ -716,6 +764,12 @@ namespace Savi_Thrift.Persistence.Migrations
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("CardDetails");
+
+                    b.Navigation("GroupTransactions");
+
+                    b.Navigation("Savings");
+
+                    b.Navigation("UserTransactions");
                 });
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.Group", b =>

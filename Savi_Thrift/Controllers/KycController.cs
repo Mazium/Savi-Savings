@@ -32,15 +32,5 @@ namespace Savi_Thrift.Controllers
         [HttpGet("{kycId}")]
         public async Task<IActionResult> GetKycById(string kycId) 
             => Ok(await _kycService.GetKycById(kycId));
-
-        [HttpPut("{kycId}")]
-        public async Task<IActionResult> UpdateKyc(string kycId, [FromBody] KycRequestDto updatedKyc)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(await _kycService.UpdateKyc(kycId, updatedKyc));
-        }
     }
 }

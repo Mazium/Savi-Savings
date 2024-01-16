@@ -50,6 +50,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var newKyc = _mapper.Map<KYC>(kycDto);
                 newKyc.IdentificationDocumentUrl = identificationDocumentUrl.Url;
                 newKyc.ProofOfAddressUrl = proofOfAddressUrl.Url;
+                newKyc.AppUserId = userId;
 
                 await _unitOfWork.KycRepository.AddKycAsync(newKyc);
                 _unitOfWork.SaveChanges();
@@ -135,29 +136,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
             {
                 _logger.LogError($"Error getting KYC: {ex}");
                 return ApiResponse<KycResponseDto>.Failed(false, "Error getting KYC.", StatusCodes.Status500InternalServerError, null);
-            }
-        }
-
-        public async Task<ApiResponse<KycResponseDto>> UpdateKyc(string kycId, KycRequestDto kycRequest)
-        {
-            try
-            {
-                var existingKyc = await _unitOfWork.KycRepository.GetKycByIdAsync(kycId);
-                if (existingKyc == null)
-                {
-                    return ApiResponse<KycResponseDto>.Failed(false, "KYC not found.", StatusCodes.Status404NotFound, null);
-                }
-                var kyc = _mapper.Map(kycRequest, existingKyc);
-                _unitOfWork.KycRepository.UpdateKyc(existingKyc);
-                _unitOfWork.SaveChanges();
-                var response = _mapper.Map<KycResponseDto>(kyc);
-                return ApiResponse<KycResponseDto>.Success(response, "KYC updated successfully.", StatusCodes.Status200OK);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while updating KYC");
-                return new ApiResponse<KycResponseDto>(false, "Error occurred while processing your request", 
-                    StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
         }
     }
