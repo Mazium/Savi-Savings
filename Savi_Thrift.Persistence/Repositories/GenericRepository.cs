@@ -1,4 +1,5 @@
-﻿using Savi_Thrift.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Persistence.Context;
 using System.Linq.Expressions;
 
@@ -13,7 +14,7 @@ namespace Savi_Thrift.Persistence.Repositories
             _context = context;
         }
 
-        public async void AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
         }
@@ -28,19 +29,19 @@ namespace Savi_Thrift.Persistence.Repositories
             _context.Set<T>().Remove(entity);
         }     
 
-        public List<T> FindAsync(Expression<Func<T, bool>> expression)
+        public async Task<List<T>> FindAsync(Expression<Func<T, bool>> expression)
         {
-            return _context.Set<T>().Where(expression).ToList();
+            return await _context.Set<T>().Where(expression).ToListAsync();
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
-            return _context.Set<T>().ToList();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public T GetByIdAsync(string id)
+        public async Task<T> GetByIdAsync(string id)
         {
-            return _context.Set<T>().Find(id);
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public async void SaveChangesAsync()
@@ -48,7 +49,7 @@ namespace Savi_Thrift.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public void UpdateAsync(T entity)
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }

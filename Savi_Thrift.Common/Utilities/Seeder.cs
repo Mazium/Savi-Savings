@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Savi_Thrift.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Savi_Thrift.Common.Utilities
 {
@@ -16,9 +10,9 @@ namespace Savi_Thrift.Common.Utilities
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             // Seed roles
-            if (!await roleManager.RoleExistsAsync("SuperAdmin"))
+            if (!await roleManager.RoleExistsAsync("Admin"))
             {
-                var role = new IdentityRole("SuperAdmin");
+                var role = new IdentityRole("Admin");
                 await roleManager.CreateAsync(role);
             }
 

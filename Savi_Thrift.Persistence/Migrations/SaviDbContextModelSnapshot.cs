@@ -305,6 +305,10 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AvailableSlots")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Avatar")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -322,8 +326,14 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FundFrequency")
+                    b.Property<int>("DurationInMonths")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("EstimatedCollection")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Fee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -350,8 +360,15 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<int>("Schedule")
+                    b.Property<int>("SavingFrequency")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Terms")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -573,9 +590,8 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Currency")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -587,10 +603,6 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Reference")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TransactionPin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -599,7 +611,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletID")
+                    b.Property<string>("WalletNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

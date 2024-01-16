@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Savi_Thrift.Application.Repositories;
 
 namespace Savi_Thrift.Application.Interfaces.Repositories
 {
-    internal class IUnitOfWork
-    {
-    }
+	public interface IUnitOfWork : IDisposable
+	{
+		IWalletRepository WalletRepository { get; }
+		IWalletFundingRepository WalletFundingRepository { get; }
+		ISavingRepository SavingRepository { get; }
+		IUserRepository UserRepository { get; }
+		IGroupRepository GroupRepository { get; }
+		Task<int> SaveChangesAsync();
+	}
 }

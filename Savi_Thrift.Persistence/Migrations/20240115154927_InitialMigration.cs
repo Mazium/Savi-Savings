@@ -62,14 +62,20 @@ namespace Savi_Thrift.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Schedule = table.Column<int>(type: "int", nullable: false),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ContributionAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    EstimatedCollection = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsOpen = table.Column<bool>(type: "bit", nullable: false),
                     MaxNumberOfParticipants = table.Column<int>(type: "int", nullable: false),
+                    AvailableSlots = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Terms = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DurationInMonths = table.Column<int>(type: "int", nullable: false),
                     CashoutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NextDueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SavingFrequency = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -84,7 +90,6 @@ namespace Savi_Thrift.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Occupation = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -92,7 +97,11 @@ namespace Savi_Thrift.Persistence.Migrations
                     BVN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentificationType = table.Column<int>(type: "int", nullable: false),
                     IdentificationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProofOfAddressUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ProofOfAddressUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,61 +109,16 @@ namespace Savi_Thrift.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Savings",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    WalletId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GoalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AmountSaved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AmountToAdd = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Frequency = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Savings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserTransactions",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TransactionType = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTransactions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Wallets",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    WalletID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WalletNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Currency = table.Column<int>(type: "int", nullable: false),
                     PaystackCustomerCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionPin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -275,11 +239,11 @@ namespace Savi_Thrift.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NameOnCard = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Expiry = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CVV = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -290,6 +254,62 @@ namespace Savi_Thrift.Persistence.Migrations
                     table.PrimaryKey("PK_CardDetails", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CardDetails_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Savings",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GoalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AmountSaved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TargetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AmountToAdd = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Frequency = table.Column<int>(type: "int", nullable: false),
+                    WalletId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Savings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Savings_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserTransactions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TransactionType = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserTransactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserTransactions_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -328,8 +348,9 @@ namespace Savi_Thrift.Persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GroupId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -337,6 +358,11 @@ namespace Savi_Thrift.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GroupTransactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroupTransactions_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_GroupTransactions_Groups_GroupId",
                         column: x => x.GroupId,
@@ -350,11 +376,11 @@ namespace Savi_Thrift.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    WalletId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FundAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Naration = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionType = table.Column<int>(type: "int", nullable: false),
+                    WalletId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -420,9 +446,24 @@ namespace Savi_Thrift.Persistence.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GroupTransactions_AppUserId",
+                table: "GroupTransactions",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GroupTransactions_GroupId",
                 table: "GroupTransactions",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Savings_AppUserId",
+                table: "Savings",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserTransactions_AppUserId",
+                table: "UserTransactions",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WalletFundings_WalletId",
@@ -472,10 +513,10 @@ namespace Savi_Thrift.Persistence.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Groups");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Wallets");
