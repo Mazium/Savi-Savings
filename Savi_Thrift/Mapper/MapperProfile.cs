@@ -13,7 +13,10 @@ namespace Savi_Thrift.Mapper
         public MapperProfile()
         {
             CreateMap<KycRequestDto, KYC>().ReverseMap();
-            CreateMap<KYC, KycResponseDto>().ReverseMap();
+            CreateMap<KYC, KycResponseDto>()
+            .ForMember(dest => dest.KycId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.AppUserId))
+            .ReverseMap();
             CreateMap<CreateWalletDto, Wallet>().ReverseMap();
             CreateMap<GroupResponseDto, Group>().ReverseMap();
             CreateMap<GroupCreationDto, Group>().ReverseMap();

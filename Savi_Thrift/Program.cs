@@ -4,7 +4,6 @@ using Savi_Thrift.Common.Utilities;
 using Savi_Thrift.Configurations;
 using Savi_Thrift.Mapper;
 using Savi_Thrift.Persistence.Extensions;
-using Savi_Thrift.Application.ServicesImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationHelper.InstantiateConfiguration(builder.Configuration);

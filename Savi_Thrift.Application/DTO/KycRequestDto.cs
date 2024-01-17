@@ -7,7 +7,7 @@ namespace Savi_Thrift.Application.DTO
     public class KycRequestDto
     {
         [Required(ErrorMessage = "Date ofBirth is required")]
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         [EnumDataType(typeof(Gender), ErrorMessage = "Gender is required")]
         public Gender Gender { get; set; }
@@ -16,11 +16,12 @@ namespace Savi_Thrift.Application.DTO
         public Occupation Occupation { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
-        public string Address { get; set; } = string.Empty;
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "BVN is required")]
-        public string BVN { get; set; } = string.Empty;
+        public string BVN { get; set; }
 
+        [Required]
         [EnumDataType(typeof(IdentificationType), ErrorMessage = "Identification Type is required")]
         public IdentificationType IdentificationType { get; set; }
 

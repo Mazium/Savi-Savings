@@ -15,8 +15,8 @@ namespace Savi_Thrift.Persistence.Repositories
         public async Task<List<KYC>> FindKycs(Expression<Func<KYC, bool>> expression) => await FindAsync(expression);
 
         public async Task<KYC> GetKycByIdAsync(string id) => await GetByIdAsync(id);
-        public async Task<List<KYC>> GetAllKycs() => await GetAll();
+        public async Task<List<KYC>> GetAllKycs() => await GetAllAsync();
 
-        public void UpdateKyc(KYC kyc) => UpdateAsync(kyc);
+        public void UpdateKyc(KYC kyc) => Update(kyc);
     }
 }

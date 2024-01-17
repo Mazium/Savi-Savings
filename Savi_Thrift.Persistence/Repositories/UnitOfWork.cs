@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Repositories;
 using Savi_Thrift.Persistence.Context;
@@ -23,17 +24,19 @@ namespace Savi_Thrift.Persistence.Repositories
 			UserRepository = new UserRepository(_saviDbContext);
 			GroupRepository = new GroupRepository(_saviDbContext);
 			WalletFundingRepository = new WalletFundingRepository(_saviDbContext);
-		}
+            KycRepository = new KycRepository(_saviDbContext);
+        }
 
 		public IWalletRepository WalletRepository { get; set; }
 		public ISavingRepository SavingRepository { get; set; }
 		public IUserRepository UserRepository { get; set; }
 		public IGroupRepository GroupRepository { get; set; }
 		public IWalletFundingRepository WalletFundingRepository { get; set; }
+        public IKycRepository KycRepository { get; private set; }
 
 
 
-		public async Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
 		{
 			return await _saviDbContext.SaveChangesAsync();
 		}
