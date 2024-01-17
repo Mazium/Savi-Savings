@@ -90,7 +90,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
         {
             try
             {
-                var kycs = _unitOfWork.KycRepository.GetAllKycs();
+                var kycs = await _unitOfWork.KycRepository.GetAllKycs();
                 var kycDtos = _mapper.Map<List<KycResponseDto>>(kycs);
 
                 var pagedResult = await PagePagination<KycResponseDto>.GetPager(

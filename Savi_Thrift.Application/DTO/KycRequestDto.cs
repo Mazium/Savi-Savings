@@ -19,6 +19,7 @@ namespace Savi_Thrift.Application.DTO
         public string Address { get; set; }
 
         [Required(ErrorMessage = "BVN is required")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "BVN must be exactly 11 digits")]
         public string BVN { get; set; }
 
         [Required]
@@ -26,6 +27,8 @@ namespace Savi_Thrift.Application.DTO
         public IdentificationType IdentificationType { get; set; }
 
         [Required(ErrorMessage = "Identification Number is required")]
+        [StringLength(20, MinimumLength = 10, ErrorMessage = "Identification Number must be between 10 and 20 characters")]
+        [RegularExpression("^[A-Z0-9]*$", ErrorMessage = "Identification Number must be alphanumeric with capital letters")]
         public string IdentificationNumber { get; set; }
 
         [Required(ErrorMessage = "Identification Document is required")]
