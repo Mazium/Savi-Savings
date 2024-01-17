@@ -34,6 +34,7 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<ISavingService, SavingService>();
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<IAuthenticationService, AuthenticationService>();
+			
 
 			// Register Email services
 			var emailSettings = new EmailSettings();
@@ -66,6 +67,10 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IGroupService, GroupService>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-		}
+            //Register UserTransactionRepository
+            services.AddScoped<IUserTransactionRepository, UserTransactionRepository>();
+            services.AddScoped<IUserTransactionServices, UserTransactionServices>();
+
+        }
     }
 }

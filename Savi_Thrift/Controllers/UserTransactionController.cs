@@ -19,7 +19,8 @@ namespace Savi_Thrift.Controllers
         public async Task<IActionResult> GetTransactions()
         {
             var result = await _userTransactionServices.GetRecentTransactions();
-            return result.Count < 1 ? NotFound() : Ok(result);
+            return result.Data.Count < 1 ? NotFound() : Ok(result);
         }
     }
 }
+

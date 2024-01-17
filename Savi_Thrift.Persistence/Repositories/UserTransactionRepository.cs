@@ -20,21 +20,21 @@ namespace Savi_Thrift.Persistence.Repositories
             _saviDbContext = saviDbContext;
         }
 
-        public void AddTransaction(UserTransaction userTransaction) => AddAsync(userTransaction);
+        //public void AddTransaction(UserTransaction userTransaction) => AddAsync(userTransaction);
 
-        public void DeleteTransaction(UserTransaction userTransaction) => DeleteAsync(userTransaction);
+        //public void DeleteTransaction(UserTransaction userTransaction) => DeleteAsync(userTransaction);
 
-        public async Task<List<UserTransaction>> FindTransaction(Expression<Func<UserTransaction, bool>> condition) => await FindAsync(condition);
-
-
-        public async Task<List<UserTransaction>> GetAllAsync() => await GetAllAsync();
+        //public async Task<List<UserTransaction>> FindTransaction(Expression<Func<UserTransaction, bool>> condition) => await FindAsync(condition);
 
 
-        public Task<UserTransaction> GetTransactionById(string id) =>  GetByIdAsync(id);
+        //public async Task<List<UserTransaction>> GetAllAsync() => await GetAllAsync();
+
+
+        //public Task<UserTransaction> GetTransactionById(string id) =>  GetByIdAsync(id);
 
         
         
-        public void UpdateTransaction(UserTransaction userTransaction) => UpdateTransaction(userTransaction);
+        //public void UpdateTransaction(UserTransaction userTransaction) => UpdateTransaction(userTransaction);
 
         public async Task<List<UserTransaction>> GetListOfTransactions()
         {

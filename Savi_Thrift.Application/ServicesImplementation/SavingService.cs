@@ -43,7 +43,29 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-		public async Task<ApiResponse<List<GoalResponseDto>>> ViewGoals()
+        public async Task<ApiResponse<List<Saving>>> GetListOfAllUserGoals(string UserId)
+        {
+            
+            try
+            {
+                var listOfTargets = await _unitOfWork.SavingRepository.FindAsync(u => u.Id == UserId);
+                if (listOfTargets.Any())
+                {
+                    return ApiResponse<List<Saving>>.Success(listOfTargets, "Get All Goal Retrived Successfully", StatusCodes.Status200OK);
+                    
+                }
+                return ApiResponse<List<Saving>>.Failed("Goal not found", StatusCodes.Status400BadRequest, new List<string>());
+            
+            }
+
+            catch (Exception ex)
+            {
+                return ApiResponse<List<Saving>>.Failed("Error occurred while creating a goal", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+
+            }
+        }
+
+        public async Task<ApiResponse<List<GoalResponseDto>>> ViewGoals()
 		{
 			var wallets = await _unitOfWork.SavingRepository.GetAllAsync();
 			List<GoalResponseDto> result = new();	
