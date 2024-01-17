@@ -51,7 +51,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var listOfTargets = await _unitOfWork.SavingRepository.FindAsync(u => u.Id == UserId);
                 if (listOfTargets.Any())
                 {
-                    return ApiResponse<List<Saving>>.Success(listOfTargets, "Get All Goal Retrived Successfully", StatusCodes.Status200OK);
+                    return ApiResponse<List<Saving>>.Success(listOfTargets, " Goals Retrived Successfully", StatusCodes.Status200OK);
                     
                 }
                 return ApiResponse<List<Saving>>.Failed("Goal not found", StatusCodes.Status400BadRequest, new List<string>());
