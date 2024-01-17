@@ -34,10 +34,10 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<ISavingService, SavingService>();
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<IAuthenticationService, AuthenticationService>();
-			
+            services.AddScoped<IKycService, KycService>();
 
-			// Register Email services
-			var emailSettings = new EmailSettings();
+            // Register Email services
+            var emailSettings = new EmailSettings();
 			configuration.GetSection("EmailSettings").Bind(emailSettings);
 			services.AddSingleton(emailSettings);
 			services.AddTransient<IEmailServices, EmailServices>();

@@ -10,6 +10,7 @@ namespace Savi_Thrift.Application.Interfaces.Repositories
         ISavingRepository SavingRepository { get; }
 		IUserRepository UserRepository { get; }
 		IGroupRepository GroupRepository { get; }
-		Task<int> SaveChangesAsync();
+        IKycRepository KycRepository { get; }
+        Task<int> SaveChangesAsync();
 	}
 }
