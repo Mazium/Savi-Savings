@@ -44,7 +44,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
             catch (Exception ex)
             {
-                return ApiResponse<List<GetTransactionDto>>.Failed("Error occurred while creating a goal", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+                return ApiResponse<List<GetTransactionDto>>.Failed("Error occurred while getting all goals", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
 
         }

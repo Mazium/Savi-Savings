@@ -43,7 +43,7 @@ namespace Savi_Thrift.Controllers
 		public async Task<IActionResult> GetAllGoals(string UserId)
 		{
 			var response = await _savingService.GetListOfAllUserGoals(UserId);
-			if (response.Data.Count > 0)
+			if (response.StatusCode == 200)
 			{
 				return Ok(response);
 			}
