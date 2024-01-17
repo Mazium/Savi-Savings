@@ -14,7 +14,7 @@ namespace Savi_Thrift.Persistence.Repositories
             _context = context;
         }
 
-        public async void AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
         }
@@ -27,14 +27,14 @@ namespace Savi_Thrift.Persistence.Repositories
         public void DeleteAsync(T entity)
         {
             _context.Set<T>().Remove(entity);
-        }
+        }     
 
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> expression)
         {
             return await _context.Set<T>().Where(expression).ToListAsync();
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
@@ -49,7 +49,7 @@ namespace Savi_Thrift.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public void UpdateAsync(T entity)
+        public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
         }

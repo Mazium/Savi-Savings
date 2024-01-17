@@ -32,5 +32,7 @@ namespace Savi_Thrift.Controllers
         [HttpGet("{kycId}")]
         public async Task<IActionResult> GetKycById(string kycId) 
             => Ok(await _kycService.GetKycById(kycId));
+
+   
     }
 }

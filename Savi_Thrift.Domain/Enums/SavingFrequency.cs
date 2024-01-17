@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Savi_Thrift.Domain.Enums
 {
-	public enum FundFrequency
+	public enum SavingFrequency
 	{
 		Daily,
 		Weekly,

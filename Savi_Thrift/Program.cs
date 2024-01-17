@@ -1,67 +1,35 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
-using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
-using Savi_Thrift.Domain.Entities;
-using Savi_Thrift.Domain.Entities.Helper;
-using Savi_Thrift.Infrastructure.Services;
-using Savi_Thrift.Persistence.Context;
-using CloudinaryDotNet;
-using Microsoft.Extensions.Options;
-using Savi_Thrift.Domain.Entities;
-using Savi_Thrift.Common.Utilities;
-using Savi_Thrift.Application;
 using Savi_Thrift.Configurations;
+using Savi_Thrift.Mapper;
+using Savi_Thrift.Persistence.Extensions;
 using Savi_Thrift.Application.ServicesImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
 
 var configuration = builder.Configuration;
-var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 try
 {
     // Add services to the container.
-    //var configuration = builder.Configuration;
+   
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-    builder.Services.AddDbContext<SaviDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-    builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<SaviDbContext>().AddDefaultTokenProviders();
-    builder.Services.AddScoped<RoleManager<IdentityRole>>();
-    builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-    builder.Services.AddTransient<IEmailServices, EmailServices>();
-    builder.Services.AddScoped<ICloudinaryServices, CloudinaryServices>();
 
+	// Register SaviThrift services using the extension class
+	builder.Services.AddDependencies(configuration);
 
-    builder.Services.AddControllers();
+	builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-    builder.Services.AddSingleton(provider =>
-    {
-
-        var cloudinarySettings = provider.GetRequiredService<IOptions<CloudinarySettings>>().Value;
-
-        Account cloudinaryAccount = new(
-
-            cloudinarySettings.CloudName,
-
-            cloudinarySettings.ApiKey,
-
-            cloudinarySettings.ApiSecret);
-
-        return new Cloudinary(cloudinaryAccount);
-
-    });
-
-
     builder.Services.AddAuthentication();
     builder.Services.ConfigureAuthentication(configuration);
-
-    builder.Logging.ClearProviders();
+	builder.Services.AddAutoMapper(typeof(MapperProfile));
+	builder.Logging.ClearProviders();
     builder.Host.UseNLog();
     var app = builder.Build();
 
@@ -74,7 +42,7 @@ try
     using (var scope = app.Services.CreateScope())
     {
         var serviceProvider = scope.ServiceProvider;
-        Seeder.SeedRolesAndSuperAdmin(serviceProvider);
+        await Seeder.SeedRolesAndSuperAdmin(serviceProvider);
     }
     app.UseHttpsRedirection();
 

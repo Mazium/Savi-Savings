@@ -13,9 +13,9 @@ namespace Savi_Thrift.Controllers
     public class CustomerMailController : ControllerBase
     {
         private readonly IEmailServices emailService;
-        private readonly ICloudinaryServices _cloudinaryServices;
+        private readonly ICloudinaryServices<CustomerMailController> _cloudinaryServices;
 
-        public CustomerMailController(IEmailServices emailService, ICloudinaryServices cloudinaryServices)
+        public CustomerMailController(IEmailServices emailService, ICloudinaryServices<CustomerMailController> cloudinaryServices)
 
         {
             this.emailService = emailService;

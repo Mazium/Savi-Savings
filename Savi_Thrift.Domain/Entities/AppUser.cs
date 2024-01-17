@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Domain.Entities
 {
