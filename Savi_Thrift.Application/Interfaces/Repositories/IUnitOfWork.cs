@@ -6,7 +6,8 @@ namespace Savi_Thrift.Application.Interfaces.Repositories
 	{
 		IWalletRepository WalletRepository { get; }
 		IWalletFundingRepository WalletFundingRepository { get; }
-		ISavingRepository SavingRepository { get; }
+        IUserTransactionRepository UserTransactionRepository { get; }
+        ISavingRepository SavingRepository { get; }
 		IUserRepository UserRepository { get; }
 		IGroupRepository GroupRepository { get; }
         IKycRepository KycRepository { get; }

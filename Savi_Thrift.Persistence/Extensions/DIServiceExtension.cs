@@ -67,6 +67,10 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IGroupService, GroupService>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-		}
+            //Register UserTransactionRepository
+           // services.AddScoped<IUserTransactionRepository, UserTransactionRepository>();
+            services.AddScoped<IUserTransactionServices, UserTransactionServices>();
+
+        }
     }
 }
