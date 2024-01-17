@@ -32,8 +32,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
         {
             try
             {
-                var existingKyc = await _unitOfWork.KycRepository.GetKycByIdAsync(userId);
-                if (existingKyc != null)
+                var existingKyc = await _unitOfWork.KycRepository.FindKycs(k => k.AppUserId == userId);
+                if (existingKyc.Any())
                 {
                     return ApiResponse<KycResponseDto>.Failed("KYC already exists for the user", 
                         StatusCodes.Status400BadRequest, new List<string>());
