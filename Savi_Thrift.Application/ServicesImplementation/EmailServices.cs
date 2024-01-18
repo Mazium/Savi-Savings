@@ -40,14 +40,15 @@ namespace Savi_Thrift.Infrastructure.Services
                     await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);
                     await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
                     await client.SendAsync(emailMessage);
-                    await client.DisconnectAsync(true);
                 }
             }
             catch (Exception ex)
             {
-                
                 throw;
+
             }
-        }
+
+        }        
+
     }
 }

@@ -20,8 +20,8 @@ try
 
 	// Register SaviThrift services using the extension class
 	builder.Services.AddDependencies(configuration);
-
-	builder.Services.AddControllers();
+    builder.Services.AddMailService(configuration);
+    builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

@@ -40,7 +40,7 @@ namespace Savi_Thrift.Persistence.Extensions
             var emailSettings = new EmailSettings();
 			configuration.GetSection("EmailSettings").Bind(emailSettings);
 			services.AddSingleton(emailSettings);
-			services.AddTransient<IEmailServices, EmailServices>();
+			services.AddScoped<IEmailServices, EmailServices>();
 
 			// Register Cloudinary services
 			var cloudinarySettings = new CloudinarySettings();

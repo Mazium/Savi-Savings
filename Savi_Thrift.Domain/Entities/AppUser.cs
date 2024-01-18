@@ -9,7 +9,9 @@ namespace Savi_Thrift.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
-        public DateTime DateModified {  get; set; } 
+        public DateTime DateModified {  get; set; }
+        public string? PasswordResetToken { get; set; } 
+        public DateTime? ResetTokenExpires { get; set; }
         public ICollection<Group>? Groups { get; set; }
         public ICollection<CardDetail>? CardDetails { get; set; }
 		public ICollection<Saving>? Savings { get; set; }
