@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Domain.Entities.Helper;
+using Savi_Thrift.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,7 +30,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 		private readonly IConfiguration _config;
 		private readonly IWalletService _walletService;
 		private readonly IUnitOfWork _unitOfWork;
-		public AuthenticationService(IUnitOfWork unitOfWork, IWalletService walletService, IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ILogger<AuthenticationService> logger)
+		private readonly IEmailServices _emailServices;
+        private readonly EmailSettings _emailSettings;
+        public AuthenticationService(IUnitOfWork unitOfWork, IWalletService walletService, IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ILogger<AuthenticationService> logger, IOptions<EmailSettings> emailSettings)
 		{
 
 			_userManager = userManager;
@@ -36,7 +41,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_config = config;
 			_walletService = walletService;
 			_unitOfWork = unitOfWork;
-		}
+            _emailServices = new EmailServices(emailSettings);
+            _emailSettings = emailSettings.Value;
+        }
 		public async Task<ApiResponse<RegisterResponseDto>> RegisterAsync(AppUserCreateDto appUserCreateDto)
 		{
 			var user = await _userManager.FindByEmailAsync(appUserCreateDto.Email);
@@ -229,5 +236,77 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				return new ApiResponse<string>(false, "Error extracting user ID from token.", 500, null, new List<string> { ex.Message });
 			}
 		}
-	}
+
+        public async Task<ApiResponse<string>> ForgotPasswordAsync(string email)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user == null)
+                {
+                    return new ApiResponse<string>(false, "User not found or email not confirmed.", StatusCodes.Status404NotFound, null, new List<string>());
+                }
+                string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                user.PasswordResetToken = token;
+                user.ResetTokenExpires = DateTime.UtcNow.AddHours(24);
+
+                await _userManager.UpdateAsync(user);
+
+                var resetPasswordUrl = "http://localhost:3000/reset-password?email=" + Uri.EscapeDataString(email) + "&token=" + Uri.EscapeDataString(token);
+
+                var mailRequest = new MailRequest
+                {
+                    ToEmail = email,
+                    Subject = "TicketEase Password Reset Instructions",
+                    Body = $"Please reset your password by clicking <a href='{resetPasswordUrl}'>here</a>."
+                };
+                await _emailServices.SendEmailAsync(mailRequest);
+
+                return new ApiResponse<string>(true, "Password reset email sent successfully.", 200, null, new List<string>());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while resolving password change");
+                var errorList = new List<string>();
+                errorList.Add(ex.Message);
+                return new ApiResponse<string>(true, "Error occurred while resolving password change", 500, null, errorList);
+            }
+        }
+
+        public async Task<ApiResponse<string>> ResetPasswordAsync(string email, string token, string newPassword)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user == null)
+                {
+                    return new ApiResponse<string>(false, "User not found.", 404, null, new List<string>());
+                }
+                var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+                if (result.Succeeded)
+                {
+                    user.PasswordResetToken = null;
+                    user.ResetTokenExpires = null;
+
+                    await _userManager.UpdateAsync(user);
+
+                    return new ApiResponse<string>(true, "Password reset successful.", 200, null, new List<string>());
+                }
+                else
+                {
+                    return new ApiResponse<string>(false, "Password reset failed.", 400, null, result.Errors.Select(error => error.Description).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while resetting password");
+                var errorList = new List<string> { ex.Message };
+                return new ApiResponse<string>(true, "Error occurred while resetting password", 500, null, errorList);
+            }
+        }
+    }
 }
