@@ -8,31 +8,27 @@ using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain.Entities.Helper;
 using Savi_Thrift.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Domain;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
-	public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
 	{
 		private readonly UserManager<AppUser> _userManager;
 		private readonly SignInManager<AppUser> _signInManager;
-		private readonly ILogger _logger;
+		private readonly ILogger<AuthenticationService> _logger;
 		private readonly IConfiguration _config;
 		private readonly IWalletService _walletService;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailServices _emailServices;
-        private readonly EmailSettings _emailSettings;
-        public AuthenticationService(IUnitOfWork unitOfWork, IWalletService walletService, IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ILogger<AuthenticationService> logger, IOptions<EmailSettings> emailSettings)
+        
+        public AuthenticationService(IUnitOfWork unitOfWork, IWalletService walletService, IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ILogger<AuthenticationService> logger, IEmailServices emailServices)
 		{
 
 			_userManager = userManager;
@@ -41,8 +37,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_config = config;
 			_walletService = walletService;
 			_unitOfWork = unitOfWork;
-            _emailServices = new EmailServices(emailSettings);
-            _emailSettings = emailSettings.Value;
+			_emailServices = emailServices;
+            
         }
 		public async Task<ApiResponse<RegisterResponseDto>> RegisterAsync(AppUserCreateDto appUserCreateDto)
 		{
@@ -262,7 +258,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                     Subject = "TicketEase Password Reset Instructions",
                     Body = $"Please reset your password by clicking <a href='{resetPasswordUrl}'>here</a>."
                 };
-                await _emailServices.SendEmailAsync(mailRequest);
+                await _emailServices.SendMailAsync(mailRequest);
 
                 return new ApiResponse<string>(true, "Password reset email sent successfully.", 200, null, new List<string>());
             }

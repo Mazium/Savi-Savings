@@ -5,7 +5,7 @@ using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -37,6 +37,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				{
 					var groupEntity = _mapper.Map<Group>(groupCreationDto);
 					groupEntity.SetAvailableSlots(groupCreationDto.MaxNumberOfParticipants);
+					groupEntity.IsActive = true;
 
 					await _unitOfWork.GroupRepository.AddAsync(groupEntity);
 					await _unitOfWork.SaveChangesAsync();
@@ -54,7 +55,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			{
 				_logger.LogError(ex, "Error occurred while creating a group");
 
-				return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.Message });
+				return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
 			}
 		}
 

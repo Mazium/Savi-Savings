@@ -5,8 +5,8 @@ using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
+using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
-using TicketEase.Domain;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {

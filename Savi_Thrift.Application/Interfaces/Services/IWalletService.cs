@@ -1,5 +1,6 @@
 ﻿using Savi_Thrift.Application.DTO.Wallet;
-using TicketEase.Domain;
+using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {
@@ -7,7 +8,8 @@ namespace Savi_Thrift.Application.Interfaces.Services
 	{
 		Task<ApiResponse<bool>> CreateWallet(CreateWalletDto createWalletDto);
 		Task<ApiResponse<List<WalletResponseDto>>> GetAllWallets();
-		Task<ApiResponse<WalletResponseDto>> GetWalletByPhone(string phone);
-		Task<ApiResponse<WalletResponseDto>> FundWallet(FundWalletDto fundWalletDto);
+        Task<ApiResponse<Wallet>> GetWalletByNumber(string phone);
+		Task<ApiResponse<CreditResponseDto>> FundWallet(FundWalletDto fundWalletDto);
+
 	}
 }

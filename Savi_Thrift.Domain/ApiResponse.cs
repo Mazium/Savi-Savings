@@ -1,4 +1,4 @@
-﻿namespace TicketEase.Domain
+﻿namespace Savi_Thrift.Domain
 {
 	public class ApiResponse<T>
 	{

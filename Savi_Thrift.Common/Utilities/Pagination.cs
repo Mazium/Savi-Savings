@@ -61,6 +61,21 @@
                 TotalCount = totalData
             };
         }
+
+        private static IOrderedEnumerable<T> OrderData<T>(IEnumerable<T> data, Func<T, string> nameSelector, Func<T, int> idSelector)
+        {
+            return data.OrderBy(nameSelector).ThenBy(idSelector);
+        }
+
+        private static int CalculateTotalPages(int totalData, int perPage)
+        {
+            return (int)Math.Ceiling((double)totalData / perPage);
+        }
+
+        private static IEnumerable<T> GetPagedData<T>(IOrderedEnumerable<T> orderedData, int page, int perPage)
+        {
+            return orderedData.Skip((page - 1) * perPage).Take(perPage);
+        }
     }
 }
 

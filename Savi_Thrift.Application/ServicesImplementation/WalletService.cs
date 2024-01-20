@@ -5,7 +5,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain.Enums;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -53,60 +53,63 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			return new ApiResponse<List<WalletResponseDto>>(result, "Wallet retrieved successfully"); 
 		}
 
-		public async Task<ApiResponse<WalletResponseDto>> GetWalletByPhone(string phone)
+		public async Task<ApiResponse<Wallet>> GetWalletByNumber(string phone)
 		{
 			var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.WalletNumber == phone);
 
 			if (wallets.Count < 1)
 			{
-				return ApiResponse<WalletResponseDto>.Failed("Wallet with this number not found", StatusCodes.Status404NotFound, new List<string>());
+				return ApiResponse<Wallet>.Failed("Wallet with this number not found", StatusCodes.Status404NotFound, new List<string>());
 			}
 
 			// Assuming you want to use the details of the first wallet if multiple wallets are found
 			var firstWallet = wallets.First();
 
-			var response = new WalletResponseDto
-			{
-				WalletNumber = firstWallet.WalletNumber,
-				Currency = firstWallet.Currency,
-				Balance = firstWallet.Balance
-			};
-
-			return ApiResponse<WalletResponseDto>.Success(response, "Wallet retrieved successfully", StatusCodes.Status200OK);
+			return ApiResponse<Wallet>.Success(firstWallet, "Wallet retrieved successfully", StatusCodes.Status200OK);
 		}
 
 
-		public async Task<ApiResponse<WalletResponseDto>> FundWallet(FundWalletDto fundWalletDto)
+		public async Task<ApiResponse<CreditResponseDto>> FundWallet(FundWalletDto fundWalletDto)
 		{
 			try
 			{
-				var response = await GetWalletByPhone(fundWalletDto.WalletNumber);
+				var response = await GetWalletByNumber(fundWalletDto.WalletNumber);
 
 				if (!response.Succeeded)
 				{
-					return ApiResponse<WalletResponseDto>.Failed(response.Message, response.StatusCode, response.Errors);
+					return ApiResponse<CreditResponseDto>.Failed(response.Message, response.StatusCode, response.Errors);
 				}
 
-				var userWallet = response.Data;
-				userWallet.Balance += fundWalletDto.FundAmount;
-				var wallet = _mapper.Map<Wallet>(userWallet);
+				var wallet = response.Data;
+				decimal bal = wallet.Balance + fundWalletDto.FundAmount;
+                wallet.Balance = bal;
 				_unitOfWork.WalletRepository.Update(wallet);
+                await _unitOfWork.SaveChangesAsync();
 
-				var walletFunding = _mapper.Map<WalletFunding>(fundWalletDto);
-				walletFunding.TransactionType = TransactionType.Credit;
-				walletFunding.WalletNumber = userWallet.WalletNumber;
+                var walletFunding = new WalletFunding
+				{
+					FundAmount = fundWalletDto.FundAmount,
+					Naration = fundWalletDto.Naration,
+					TransactionType = TransactionType.Credit,
+					WalletId = wallet.Id				
 
+				};
 				await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);
 				await _unitOfWork.SaveChangesAsync();
 
 
-				var walletResponse = _mapper.Map<WalletResponseDto>(userWallet);
+				var creditResponse = new CreditResponseDto
+				{
+					WalletNumber = fundWalletDto.WalletNumber,
+					Balance = bal,
+					Message = "Your account has been credited successfully.",
+                };
 
-				return ApiResponse<WalletResponseDto>.Success(walletResponse, "Wallet funded successfully", StatusCodes.Status200OK);
+               	return ApiResponse<CreditResponseDto>.Success(creditResponse, "Wallet funded successfully", StatusCodes.Status200OK);
 			}
 			catch (Exception e)
 			{
-				return ApiResponse<WalletResponseDto>.Failed("Failed to fund wallet. ", StatusCodes.Status400BadRequest, new List<string>() { e.InnerException.ToString()});
+				return ApiResponse<CreditResponseDto>.Failed("Failed to fund wallet. ", StatusCodes.Status400BadRequest, new List<string>() { e.InnerException.ToString()});
 			}
 		}
 

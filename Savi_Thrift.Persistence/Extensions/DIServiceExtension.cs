@@ -1,4 +1,5 @@
 ﻿using CloudinaryDotNet;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,14 +34,15 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IWalletService, WalletService>();
 			services.AddScoped<ISavingService, SavingService>();
 			services.AddScoped<IUserService, UserService>();
-			services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IKycService, KycService>();
+			services.AddScoped<IAuthenticationServices, AuthenticationServices>();
+			services.AddScoped<IKycService, KycService>();
 
             // Register Email services
             var emailSettings = new EmailSettings();
 			configuration.GetSection("EmailSettings").Bind(emailSettings);
 			services.AddSingleton(emailSettings);
-			services.AddScoped<IEmailServices, EmailServices>();
+			services.AddTransient<IEmailServices, EmailServices>();
+			
 
 			// Register Cloudinary services
 			var cloudinarySettings = new CloudinarySettings();

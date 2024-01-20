@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Application.Interfaces.Services;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Controllers
 {
@@ -27,14 +27,14 @@ namespace Savi_Thrift.Controllers
 		}
 
 		[HttpGet("GetWalletByNumber")]
-		public async Task<IActionResult> GetWalletByNumber(string phone)
+		public async Task<IActionResult> GetWalletByNumber(string number)
 		{
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
 			}
 
-			return Ok(await _walletService.GetWalletByPhone(phone));
+			return Ok(await _walletService.GetWalletByNumber(number));
 		}
 
 

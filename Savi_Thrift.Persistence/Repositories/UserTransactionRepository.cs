@@ -2,12 +2,6 @@
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Savi_Thrift.Persistence.Repositories
 {

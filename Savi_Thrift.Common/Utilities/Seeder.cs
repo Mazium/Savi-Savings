@@ -12,9 +12,9 @@ namespace Savi_Thrift.Common.Utilities
             var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
             // Seed roles
-            if (!await roleManager.RoleExistsAsync("SuperAdmin"))
+            if (!await roleManager.RoleExistsAsync("Admin"))
             {
-                var role = new IdentityRole("SuperAdmin");
+                var role = new IdentityRole("Admin");
                 await roleManager.CreateAsync(role);
             }
 

@@ -1,10 +1,12 @@
 ﻿using Savi_Thrift.Application.DTO.AppUser;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {
     public interface IUserService
 	{
 		Task<ApiResponse<List<RegisterResponseDto>>> GetUsers();
+        Task<ApiResponse<bool>> DeleteUser(string id);
+
 	}
 }

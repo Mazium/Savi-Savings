@@ -21,25 +21,25 @@ namespace Savi_Thrift.Controllers
             this.emailService = emailService;
             _cloudinaryServices = cloudinaryServices;
         }
-        [HttpPost("SendMail")]
-        public async Task<IActionResult> SendMail()
-        {
-            try
-            {
-                MailRequest mailRequest = new MailRequest();
-                mailRequest.ToEmail = "appjob06@gmail.com";
-                //mailRequest.ToEmail = "oliverchuks@gmail.com";
-                mailRequest.Subject = "Welcome To Savi Savings";
-                mailRequest.Body = "Thanks For Saving With Us1";
+        //[HttpPost("SendMail")]
+        //public async Task<IActionResult> SendMail()
+        //{
+        //    try
+        //    {
+        //        MailRequest mailRequest = new MailRequest();
+        //        mailRequest.ToEmail = "appjob06@gmail.com";
+        //        //mailRequest.ToEmail = "oliverchuks@gmail.com";
+        //        mailRequest.Subject = "Welcome To Savi Savings";
+        //        mailRequest.Body = "Thanks For Saving With Us1";
 
-                await emailService.SendEmailAsync(mailRequest);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        //        await emailService.SendmailAsync(mailRequest);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         [HttpPost("UploadFile")]
         public async Task<IActionResult> CloudinaryTest(IFormFile image)

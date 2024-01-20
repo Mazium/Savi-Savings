@@ -1,5 +1,5 @@
 ﻿using Savi_Thrift.Application.DTO;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.Interfaces.Services;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Controllers
 {

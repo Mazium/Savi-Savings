@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Savi_Thrift.Application.DTO.Group;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {

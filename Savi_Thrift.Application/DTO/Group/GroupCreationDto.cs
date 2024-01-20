@@ -16,6 +16,7 @@ namespace Savi_Thrift.Application.DTO.Group
         [Required(ErrorMessage = "IsActive is required")]
         public bool IsActive { get; set; }
 
+
         [Range(0, double.MaxValue, ErrorMessage = "Contribution amount must be non-negative")]
         public decimal ContributionAmount { get; set; }
 
@@ -37,7 +38,6 @@ namespace Savi_Thrift.Application.DTO.Group
         [Required(ErrorMessage = "End date is required")]
         public DateTime EndDate { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Duration in months must be at least 1")]
-        public int DurationInMonths { get; set; }
+       
     }
 }

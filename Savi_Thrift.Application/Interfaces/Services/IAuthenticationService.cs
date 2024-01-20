@@ -1,11 +1,5 @@
 ﻿using Savi_Thrift.Application.DTO.AppUser;
-using Savi_Thrift.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {

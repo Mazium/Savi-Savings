@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Application.Interfaces.Services;
-using Savi_Thrift.Application.ServicesImplementation;
-using TicketEase.Domain;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Controllers
 {
@@ -11,8 +10,7 @@ namespace Savi_Thrift.Controllers
 	public class SavingController : ControllerBase
 	{
 		private readonly ISavingService _savingService;
-		public SavingController(ISavingService savingService)
-		{
+		public SavingController(ISavingService savingService) {
 			_savingService = savingService;
 		}
 
