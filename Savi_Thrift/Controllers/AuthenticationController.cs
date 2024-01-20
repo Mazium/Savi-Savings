@@ -79,7 +79,7 @@ namespace Savi_Thrift.Controllers
 
         private static string GenerateConfirmEmailLink(string id, string token)
         {
-            var cemail = "http://localhost/7226/api/account/confirm-email?UserId=" + id + "&token=" + token;
+            var cemail = "https://localhost:7226/api/account/confirm-email?UserId=" + id + "&token=" + token;
             return cemail;
         }
         

@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Savi_Thrift.Domain;
+using System.Web;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -70,7 +71,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     await _userManager.AddToRoleAsync(appUser, "User");
                     token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-
+                    token = HttpUtility.UrlEncode(token);
                     var createWalletDto = new CreateWalletDto
                     {
                         PhoneNumber = appUser.PhoneNumber,
@@ -320,7 +321,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
                 await _userManager.UpdateAsync(user);
 
-                var resetPasswordUrl = "http://localhost:7226/reset-password?email=" + Uri.EscapeDataString(email) + "&token=" + Uri.EscapeDataString(token);
+                var resetPasswordUrl = "https://localhost:7226/reset-password?email=" + Uri.EscapeDataString(email) + "&token=" + Uri.EscapeDataString(token);
 
                 var mailRequest = new MailRequest
                 {
