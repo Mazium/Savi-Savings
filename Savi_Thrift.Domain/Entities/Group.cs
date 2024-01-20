@@ -21,6 +21,7 @@ namespace Savi_Thrift.Domain.Entities
 		public int DurationInMonths { get; set; }
 		public DateTime EndDate => StartDate.AddMonths(DurationInMonths);
 		public DateTime CashoutDate { get; set; }
+		public DateTime NextDueDate { get; set; }
 		public SavingFrequency SavingFrequency { get; set; }
 		public ICollection<AppUser> Users { get; set; }
 		public ICollection<GroupTransaction> GroupTransactions { get; set; }

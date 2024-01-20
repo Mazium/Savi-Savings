@@ -1,6 +1,7 @@
 ﻿
 
 using Savi_Thrift.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Savi_Thrift.Application.DTO.Wallet
 {

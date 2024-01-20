@@ -18,7 +18,7 @@ namespace Savi_Thrift.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailServices _emailServices;
         private readonly IUserService _userService;
-        
+
         public AuthenticationController(SignInManager<AppUser> signInManager,UserManager<AppUser> userManager, IUserService userService, IEmailServices emailService, IAuthenticationServices authenticationService)
         {
             _authenticationService = authenticationService;
@@ -27,7 +27,7 @@ namespace Savi_Thrift.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        [HttpPost("Register")]
+		[HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] AppUserCreateDto appUserCreateDto)
         {
             if (!ModelState.IsValid)
@@ -54,11 +54,11 @@ namespace Savi_Thrift.Controllers
                 {
                     await _userService.DeleteUser(data.Id);
                     return Ok("Email sending error: Confirmation link is null");
-                }
-
-
-
             }
+
+
+
+        }
             else
             {
                 return BadRequest(new { Message = registrationResult.Message, Errors = registrationResult.Errors });
@@ -66,15 +66,15 @@ namespace Savi_Thrift.Controllers
         }
 
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(AppUserLoginDto loginDTO)
-        {
-            if (!ModelState.IsValid)
-            {
+		[HttpPost("Login")]
+		public async Task<IActionResult> Login(AppUserLoginDto loginDTO)
+		{
+			if (!ModelState.IsValid)
+			{
                 return BadRequest(ApiResponse<string>.Failed("Invalid model state.", 400, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
-            }
-            return Ok(await _authenticationService.LoginAsync(loginDTO));
-        }
+			}
+			return Ok(await _authenticationService.LoginAsync(loginDTO));
+		}
 
 
         private static string GenerateConfirmEmailLink(string id, string token)
@@ -107,7 +107,7 @@ namespace Savi_Thrift.Controllers
             var response = await _authenticationService.ResetPasswordAsync(model.Email, model.Token, model.NewPassword);
 
             if (response.Succeeded)
-            {
+        {
                 return Ok(new ApiResponse<string>(true, response.Message, response.StatusCode, null, new List<string>()));
             }
             else

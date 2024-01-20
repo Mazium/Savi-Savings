@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using MimeKit;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities.Helper;
@@ -46,7 +43,7 @@ namespace Savi_Thrift.Infrastructure.Services
                 await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
-            }
+        }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while sending email.");
@@ -74,8 +71,8 @@ namespace Savi_Thrift.Infrastructure.Services
 
                 using var client = new SmtpClient();
                 await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.SslOnConnect);
-                await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
-                await client.SendAsync(emailMessage);
+                    await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
+                    await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
             catch (Exception ex)
@@ -84,8 +81,9 @@ namespace Savi_Thrift.Infrastructure.Services
                 throw;
             }
 
-        }
+            
 
+        }        
 
     }
 }

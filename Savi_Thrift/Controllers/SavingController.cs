@@ -5,7 +5,7 @@ using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class SavingController : ControllerBase
 	{
@@ -35,6 +35,17 @@ namespace Savi_Thrift.Controllers
 			}
 
 			return Ok(await _savingService.CreateGoal(createGoalDto));
+		}
+
+		[HttpGet("list/{UserId}")]
+		public async Task<IActionResult> GetAllGoals(string UserId)
+		{
+			var response = await _savingService.GetListOfAllUserGoals(UserId);
+			if (response.StatusCode == 200)
+			{
+				return Ok(response);
+			}
+			return BadRequest(response);
 		}
 	}
 }

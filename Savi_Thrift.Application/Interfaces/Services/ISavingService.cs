@@ -1,5 +1,6 @@
 ﻿using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Domain;
+using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {
@@ -7,5 +8,6 @@ namespace Savi_Thrift.Application.Interfaces.Services
 	{
 		Task<ApiResponse<GoalResponseDto>> CreateGoal(CreateGoalDto createGoalDto);
 		Task<ApiResponse<List<GoalResponseDto>>> ViewGoals();
-	}
+        Task<ApiResponse<List<Saving>>> GetListOfAllUserGoals(string UserId);
+    }
 }

@@ -36,12 +36,12 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<IAuthenticationServices, AuthenticationServices>();
 
-			// Register Email services
-			var emailSettings = new EmailSettings();
+            // Register Email services
+            var emailSettings = new EmailSettings();
 			configuration.GetSection("EmailSettings").Bind(emailSettings);
 			services.AddSingleton(emailSettings);
 			services.AddTransient<IEmailServices, EmailServices>();
-			services.AddSingleton<IHttpContextAccessor , HttpContextAccessor>();
+			
 
 			// Register Cloudinary services
 			var cloudinarySettings = new CloudinarySettings();
@@ -68,6 +68,10 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IGroupService, GroupService>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-		}
+            //Register UserTransactionRepository
+           // services.AddScoped<IUserTransactionRepository, UserTransactionRepository>();
+            services.AddScoped<IUserTransactionServices, UserTransactionServices>();
+
+        }
     }
 }

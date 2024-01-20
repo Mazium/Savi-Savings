@@ -83,7 +83,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				var wallet = response.Data;
 				decimal bal = wallet.Balance + fundWalletDto.FundAmount;
                 wallet.Balance = bal;
-                _unitOfWork.WalletRepository.Update(wallet);
+				_unitOfWork.WalletRepository.Update(wallet);
                 await _unitOfWork.SaveChangesAsync();
 
                 var walletFunding = new WalletFunding
@@ -94,8 +94,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
 					WalletId = wallet.Id				
 
 				};
-                await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);              
-                await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);
+				await _unitOfWork.SaveChangesAsync();
 
 
 				var creditResponse = new CreditResponseDto
@@ -106,7 +106,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 };
 
                	return ApiResponse<CreditResponseDto>.Success(creditResponse, "Wallet funded successfully", StatusCodes.Status200OK);
-            }
+			}
 			catch (Exception e)
 			{
 				return ApiResponse<CreditResponseDto>.Failed("Failed to fund wallet. ", StatusCodes.Status400BadRequest, new List<string>() { e.InnerException.ToString()});

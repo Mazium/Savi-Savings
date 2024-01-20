@@ -11,5 +11,5 @@ namespace Savi_Thrift.Application.Interfaces.Services
         Task<ApiResponse<Wallet>> GetWalletByNumber(string phone);
 		Task<ApiResponse<CreditResponseDto>> FundWallet(FundWalletDto fundWalletDto);
 
-    }
+	}
 }

@@ -8,5 +8,5 @@ namespace Savi_Thrift.Application.Interfaces.Services
 		Task<ApiResponse<List<RegisterResponseDto>>> GetUsers();
         Task<ApiResponse<bool>> DeleteUser(string id);
 
-    }
+	}
 }

@@ -13,7 +13,9 @@ namespace Savi_Thrift.Application.DTO.Group
         public string Description { get; set; }
 
 
-     
+        [Required(ErrorMessage = "IsActive is required")]
+        public bool IsActive { get; set; }
+
 
         [Range(0, double.MaxValue, ErrorMessage = "Contribution amount must be non-negative")]
         public decimal ContributionAmount { get; set; }
@@ -27,7 +29,8 @@ namespace Savi_Thrift.Application.DTO.Group
         [MaxLength(500, ErrorMessage = "Terms cannot exceed 500 characters")]
         public string Terms { get; set; }
 
-    
+        [Range(0, double.MaxValue, ErrorMessage = "Fee must be non-negative")]
+        public decimal Fee { get; set; }
 
         [Required(ErrorMessage = "Start date is required")]
         public DateTime StartDate { get; set; }
