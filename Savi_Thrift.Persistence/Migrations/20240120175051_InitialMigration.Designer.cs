@@ -12,8 +12,8 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    [Migration("20240116221822_Nullable")]
-    partial class Nullable
+    [Migration("20240120175051_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -457,6 +457,10 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<string>("IdentificationDocumentUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IdentificationNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -470,9 +474,8 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Occupation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Occupation")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProofOfAddressUrl")
                         .IsRequired()
@@ -659,10 +662,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("WalletId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("WalletNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
