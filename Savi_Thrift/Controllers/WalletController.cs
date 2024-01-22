@@ -49,6 +49,7 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _walletService.FundWallet(fundWalletDto));
 		}
 
+
         [HttpPost("DebitWallet")]
         public async Task<IActionResult> DebitWallet(DebitWalletDto debitWalletDto)
         {
