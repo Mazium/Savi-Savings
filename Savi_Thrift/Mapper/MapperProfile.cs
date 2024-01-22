@@ -26,6 +26,9 @@ namespace Savi_Thrift.Mapper
             CreateMap<RegisterResponseDto, AppUser>().ReverseMap();
             CreateMap<FundWalletDto, WalletFunding>().ReverseMap();
 			CreateMap<UpdateGroupPhotoDto, Group>().ReverseMap();
-		}  
+            CreateMap<Saving, CreditSavingsDto>().ReverseMap();
+
+
+        }  
     }
 }

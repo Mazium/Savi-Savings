@@ -8,7 +8,8 @@ namespace Savi_Thrift.Domain.Entities
 		public string Title { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
 		public decimal GoalAmount { get; set; }
-		public decimal AmountSaved { get; set; }
+        public decimal Balance { get; set; }
+        public decimal AmountSaved { get; set; }
 		public string Purpose { get; set; } = string.Empty;
 		public string Avatar { get; set; } = string.Empty;
 		public DateTime StartDate { get; set; }
