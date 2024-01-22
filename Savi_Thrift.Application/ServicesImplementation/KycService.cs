@@ -93,13 +93,16 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var kycs = await _unitOfWork.KycRepository.GetAllKycs();
                 var kycDtos = _mapper.Map<List<KycResponseDto>>(kycs);
 
-                var pagedResult = await PagePagination<KycResponseDto>.GetPager(
+                var pagedResult = await Pagination<KycResponseDto>.PaginateAsync(
                     kycDtos,
-                    perPage,
-                    page,
                     kyc => kyc.IdentificationDocumentUrl,
-                    kyc => kyc.IdentificationNumber
+                    kyc => kyc.IdentificationNumber,
+                    page,
+                    perPage
                 );
+
+              
+    
 
                 var response = new GetAllKycsDto
                 {

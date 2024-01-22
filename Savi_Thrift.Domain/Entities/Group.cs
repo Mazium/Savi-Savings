@@ -14,8 +14,8 @@ namespace Savi_Thrift.Domain.Entities
 		public decimal EstimatedCollection { get; set; }
 		public bool IsOpen { get; set; }
 		public int MaxNumberOfParticipants { get; set; }
-		public string AvailableSlots { get; set; }
-		public string Terms { get; set; }
+		public string AvailableSlots { get; set; } = string.Empty.ToString();
+		public string Terms { get; set; } = string.Empty.ToString();
 		public decimal Fee { get; set; }
 		public DateTime StartDate { get; set; }
 		public int DurationInMonths { get; set; }
@@ -23,8 +23,8 @@ namespace Savi_Thrift.Domain.Entities
 		public DateTime CashoutDate { get; set; }
 		public DateTime NextDueDate { get; set; }
 		public SavingFrequency SavingFrequency { get; set; }
-		public ICollection<AppUser> Users { get; set; }
-		public ICollection<GroupTransaction> GroupTransactions { get; set; }
+		public ICollection<AppUser> Users { get; set; } = new List<AppUser>();
+		public ICollection<GroupTransaction> GroupTransactions { get; set; } = new List<GroupTransaction>();
 
 		public void SetAvailableSlots(int maxNumberOfParticipants)
 		{

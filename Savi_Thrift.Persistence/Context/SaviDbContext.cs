@@ -16,5 +16,10 @@ namespace Savi_Thrift.Persistence.Context
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<WalletFunding> WalletFundings { get; set; }
         public DbSet<UserTransaction> UserTransactions { get; set; }
+
+
     }
+
+  
+
 }
