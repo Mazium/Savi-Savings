@@ -89,7 +89,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var walletFunding = new WalletFunding
 				{
 					FundAmount = fundWalletDto.FundAmount,
-					Naration = fundWalletDto.Naration,
+					Narration = fundWalletDto.Narration,
 					TransactionType = TransactionType.Credit,
 					WalletId = wallet.Id				
 
@@ -102,7 +102,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				{
 					WalletNumber = fundWalletDto.WalletNumber,
 					Balance = bal,
-					Message = "Your account has been credited successfully.",
+					Message = "Your wallet has been credited successfully.",
                 };
 
                	return ApiResponse<CreditResponseDto>.Success(creditResponse, "Wallet funded successfully", StatusCodes.Status200OK);
@@ -113,5 +113,54 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-	}
+        public async Task<ApiResponse<DebitResponseDto>> DebitWallet(DebitWalletDto debitWalletDto)
+        {
+            try
+            {
+                var response = await GetWalletByNumber(debitWalletDto.WalletNumber);
+
+                if (!response.Succeeded)
+                {
+                    return ApiResponse<DebitResponseDto>.Failed(response.Message, response.StatusCode, response.Errors);
+                }
+
+                var wallet = response.Data;
+
+                // Check if there is enough balance to perform the debit
+                if (wallet.Balance < debitWalletDto.DebitAmount)
+                {
+                    return ApiResponse<DebitResponseDto>.Failed("Insufficient funds for debit", StatusCodes.Status400BadRequest, new List<string>());
+                }
+
+                decimal newBalance = wallet.Balance - debitWalletDto.DebitAmount;
+                wallet.Balance = newBalance;
+                _unitOfWork.WalletRepository.Update(wallet);
+                await _unitOfWork.SaveChangesAsync();
+
+                var walletDebit = new WalletFunding
+                {
+                    FundAmount = debitWalletDto.DebitAmount,
+                    Narration = debitWalletDto.Narration,
+                    TransactionType = TransactionType.Debit,
+                    WalletId = wallet.Id
+                };
+                await _unitOfWork.WalletFundingRepository.AddAsync(walletDebit);
+                await _unitOfWork.SaveChangesAsync();
+
+                var debitResponse = new DebitResponseDto
+                {
+                    WalletNumber = debitWalletDto.WalletNumber,
+                    Balance = newBalance,
+                    Message = "Your wallet has been debited successfully.",
+                };
+
+                return ApiResponse<DebitResponseDto>.Success(debitResponse, "Wallet debited successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                return ApiResponse<DebitResponseDto>.Failed("Failed to debit wallet. ", StatusCodes.Status400BadRequest, new List<string>() { e.InnerException?.ToString() });
+            }
+        }
+
+    }
 }
