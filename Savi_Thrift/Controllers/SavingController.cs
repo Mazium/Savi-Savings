@@ -47,5 +47,24 @@ namespace Savi_Thrift.Controllers
 			}
 			return BadRequest(response);
 		}
-	}
+
+        [HttpPost("credit")]
+        public async Task<IActionResult> CreditPersonalSavings(CreditSavingsDto creditDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
+            }
+
+            var response = await _savingService.CreditPersonalSavings(creditDto);
+
+            if (response.StatusCode == 200)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(ApiResponse<string>.Failed($"Failed to credit personal savings: {response.Message}", response.StatusCode, response.Errors));
+        }
+
+    }
 }

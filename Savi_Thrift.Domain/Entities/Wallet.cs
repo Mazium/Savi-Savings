@@ -13,7 +13,7 @@ namespace Savi_Thrift.Domain.Entities
 
 		[ForeignKey("AppUserId")]
 		public string UserId { get; set; } = string.Empty;
-		public ICollection<WalletFunding> WalletFundings { get; set; }
+		public ICollection<WalletFunding> WalletFundings { get; set; } = new List<WalletFunding>();
 
 		public void SetWalletID(string phoneNumber)
 		{
