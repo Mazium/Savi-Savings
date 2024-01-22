@@ -49,18 +49,31 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _walletService.FundWallet(fundWalletDto));
 		}
 
+        [HttpPost("DebitWallet")]
+        public async Task<IActionResult> DebitWallet(DebitWalletDto debitWalletDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ApiResponse<string>.Failed("Wallet debit failed. This operation is not supported.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
 
-		
+            }
 
-		//[HttpPost]
-		//public async Task<IActionResult> CreateWallet(CreateWalletDto createWalletDto)
-		//{
-		//	if (!ModelState.IsValid)
-		//	{
-		//		return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
-		//	}
+            return Ok(await _walletService.DebitWallet(debitWalletDto));
+        }
+	
 
-		//	return Ok(await _walletService.CreateWallet(createWalletDto));
-		//}
-	}
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> CreateWallet(CreateWalletDto createWalletDto)
+        //{
+        //	if (!ModelState.IsValid)
+        //	{
+        //		return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
+        //	}
+
+        //	return Ok(await _walletService.CreateWallet(createWalletDto));
+        //}
+    }
 }
