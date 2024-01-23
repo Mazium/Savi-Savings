@@ -5,6 +5,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
+using Savi_Thrift.Application.DTO.Wallet;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -12,11 +13,14 @@ namespace Savi_Thrift.Application.ServicesImplementation
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-		public SavingService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IWalletService _walletService;
+
+        public SavingService(IUnitOfWork unitOfWork, IMapper mapper, IWalletService walletService)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
-		}
+            _walletService = walletService;
+        }
 
 		public async Task<ApiResponse<GoalResponseDto>> CreateGoal(CreateGoalDto createGoalDto)
 		{
@@ -76,5 +80,70 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 			return ApiResponse<List<GoalResponseDto>>.Success(result, "Goals retrieved successfully",StatusCodes.Status200OK); 
 		}
-	}
+
+
+        public async Task<ApiResponse<SavingsResponseDto>> CreditPersonalSavings(CreditSavingsDto creditDto)
+        {
+            try
+              {
+                // Assuming you have a method to get personal savings by user ID
+                var personalSavings = await _unitOfWork.SavingRepository.GetByIdAsync(creditDto.UserId);
+
+                if (personalSavings == null)
+                {
+                   
+                    var savingEntity =  _mapper.Map<Saving>(creditDto);
+
+                    await _unitOfWork.SavingRepository.AddAsync(savingEntity);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+
+                var response = await _walletService.GetWalletByNumber(creditDto.WalletNumber);
+
+                if (!response.Succeeded)
+                {
+                    return ApiResponse<SavingsResponseDto>.Failed(response.Message, response.StatusCode, response.Errors);
+                }
+
+                var wallet = response.Data;
+
+                if (wallet == null)
+                {
+                    //wallet is not found
+                    return ApiResponse<SavingsResponseDto>.Failed("Wallet not found", StatusCodes.Status404NotFound, new List<string>());
+                }
+
+                if (wallet.Balance < creditDto.CreditAmount)
+                {
+                   
+                    return ApiResponse<SavingsResponseDto>.Failed("Insufficient funds in the wallet.", StatusCodes.Status400BadRequest, new List<string>());
+                }
+
+                // Debit the wallet
+                decimal newWalletBalance = wallet.Balance - creditDto.CreditAmount;
+                wallet.Balance = newWalletBalance;
+                _unitOfWork.WalletRepository.Update(wallet);
+                await _unitOfWork.SaveChangesAsync();
+
+                // Credit personal savings
+                personalSavings.Balance += creditDto.CreditAmount;
+                _unitOfWork.SavingRepository.Update(personalSavings);
+                await _unitOfWork.SaveChangesAsync();
+
+                var responseDto = new SavingsResponseDto
+                {
+                    UserId = creditDto.UserId,
+                    Balance = personalSavings.Balance,
+                    Message = "Personal savings credited successfully.",
+                };
+
+                return ApiResponse<SavingsResponseDto>.Success(responseDto, "Personal savings credited successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                return ApiResponse<SavingsResponseDto>.Failed("Failed to credit personal savings. ", StatusCodes.Status500InternalServerError, new List<string> { e.InnerException.ToString() });
+            }
+        }
+
+    }
 }

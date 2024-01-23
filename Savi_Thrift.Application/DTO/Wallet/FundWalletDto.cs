@@ -9,6 +9,6 @@ namespace Savi_Thrift.Application.DTO.Wallet
 		[Required]
 		public string WalletNumber { get; set; }
 		public decimal FundAmount { get; set; }
-		public string Naration { get; set; } = string.Empty;
+		public string Narration { get; set; } = string.Empty;
 	}
 }

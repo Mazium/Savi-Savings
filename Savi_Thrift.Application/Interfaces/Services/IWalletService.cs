@@ -10,6 +10,8 @@ namespace Savi_Thrift.Application.Interfaces.Services
 		Task<ApiResponse<List<WalletResponseDto>>> GetAllWallets();
         Task<ApiResponse<Wallet>> GetWalletByNumber(string phone);
 		Task<ApiResponse<CreditResponseDto>> FundWallet(FundWalletDto fundWalletDto);
+		Task<ApiResponse<DebitResponseDto>> DebitWallet(DebitWalletDto debitWalletDto);
+		
 
 	}
 }
