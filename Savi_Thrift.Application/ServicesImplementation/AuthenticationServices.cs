@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using Savi_Thrift.Domain;
 using System.Web;
+using Google.Apis.Auth;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -38,6 +39,58 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_unitOfWork = unitOfWork;
 			_emailServices = emailServices;
 		}
+
+        public async Task<ApiResponse<string>> VerifyAndAuthenticateUserAsync(string idToken)
+        {
+            try
+            {
+                var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, new GoogleJsonWebSignature.ValidationSettings());
+                var userId = payload.Subject;
+                var userEmail = payload.Email;
+                var userName = payload.Name;
+                var firstName = payload.GivenName;
+                var lastName = payload.FamilyName;
+                var existingUser = await _userManager.FindByEmailAsync(userEmail);
+
+                if (existingUser == null)
+                {
+                    var newUser = new AppUser
+                    {
+                        Email = userEmail,
+                        UserName = userEmail,
+                        FirstName = firstName,
+                        LastName = lastName,
+                    };
+
+                    var result = await _userManager.CreateAsync(newUser);
+
+                    if (result.Succeeded)
+                    {
+                  
+                        await _signInManager.SignInAsync(newUser, isPersistent: false);
+                        return ApiResponse<string>.Success("","User created and authenticated successfully on the server side", StatusCodes.Status200OK);
+                    }
+                    else
+                    {
+                      
+                        return ApiResponse<string>.Failed("User creation failed", StatusCodes.Status400BadRequest, new List<string>());
+                    }
+                }
+                else
+                {
+                
+                    await _signInManager.SignInAsync(existingUser, isPersistent: false);
+
+                    return ApiResponse<string>.Success("","User authenticated successfully on the server side", StatusCodes.Status200OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while changing password");
+                return ApiResponse<string>.Failed("Error occurred while authenticating user", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+            }
+        }
+
         public async Task<ApiResponse<RegisterResponseDto>> RegisterAsync(AppUserCreateDto appUserCreateDto)
         {
             var user = await _userManager.FindByEmailAsync(appUserCreateDto.Email);
@@ -204,10 +257,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 					IssuerSigningKey = new SymmetricSecurityKey(key)
 				};
 
-                SecurityToken securityToken;
-				var principal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken securityToken);
 
-				var emailClaim = principal.FindFirst(JwtRegisteredClaimNames.Email)?.Value;
+                var emailClaim = principal.FindFirst(JwtRegisteredClaimNames.Email)?.Value;
 
 				return new ApiResponse<string>(true, "Token is valid.", 200, null, new List<string>());
 			}
@@ -280,13 +332,16 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     return new ApiResponse<string>(false, "User not found.", 404, null, new List<string>());
                 }
+
+                // Additional token validation logic can be added here
+
                 var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
 
                 if (result.Succeeded)
                 {
-                    //user.PasswordResetToken = null;
-                    //user.ResetTokenExpires = null;
-
+                    // Update user properties if needed
+                    user.PasswordResetToken = null;
+                    user.ResetTokenExpires = null;
                     await _userManager.UpdateAsync(user);
 
                     return new ApiResponse<string>(true, "Password reset successful.", 200, null, new List<string>());
@@ -298,11 +353,12 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while resetting password");
-                var errorList = new List<string> { ex.Message };
+                _logger.LogError(ex, "Error occurred while resetting password for user with email {Email}", email);
+                var errorList = new List<string> { "An unexpected error occurred while resetting the password." };
                 return new ApiResponse<string>(true, "Error occurred while resetting password", 500, null, errorList);
             }
         }
+
 
         public async Task<ApiResponse<string>> ForgotPasswordAsync(string email)
         {
@@ -310,18 +366,23 @@ namespace Savi_Thrift.Application.ServicesImplementation
             {
                 var user = await _userManager.FindByEmailAsync(email);
 
-                if (user == null)
+                if (user == null || !user.EmailConfirmed)
                 {
                     return new ApiResponse<string>(false, "User not found or email not confirmed.", StatusCodes.Status404NotFound, null, new List<string>());
                 }
+
                 string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+               
+                //token = HttpUtility.UrlEncode(token);
 
                 user.PasswordResetToken = token;
                 user.ResetTokenExpires = DateTime.UtcNow.AddHours(24);
 
                 await _userManager.UpdateAsync(user);
 
-                var resetPasswordUrl = "https://localhost:7226/reset-password?email=" + Uri.EscapeDataString(email) + "&token=" + Uri.EscapeDataString(token);
+                var resetPasswordUrl = "https://localhost:7226/api/Authentication/reset-password?email=" +Uri.EscapeDataString(email) + "&token=" + token;
+                //var resetPasswordUrl = "https://localhost:7226/api/Authentication/reset-password?email=" + email + "&token=" + token;
+
 
                 var mailRequest = new MailRequest
                 {
@@ -335,12 +396,12 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while resolving password change");
-                var errorList = new List<string>();
-               // errorList.Add(ex.Message);
-                return new ApiResponse<string>(true, "Error occurred while resolving password change", 500, null, errorList);
+                _logger.LogError(ex, "Error occurred while processing forgot password for user with email {Email}", email);
+                var errorList = new List<string> { "An unexpected error occurred while processing the forgot password request." };
+                return new ApiResponse<string>(true, "Error occurred while processing forgot password", 500, null, errorList);
             }
         }
+
 
 
         public async Task<ApiResponse<string>> ConfirmEmail(string userid, string token)
