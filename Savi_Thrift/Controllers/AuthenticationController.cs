@@ -185,6 +185,7 @@ namespace Savi_Thrift.Controllers
 
             return Ok(new ApiResponse<string>(true, "Logout successful", 200, null, new List<string>()));
         }
+
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
         {

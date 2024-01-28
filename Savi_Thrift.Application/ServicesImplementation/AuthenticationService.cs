@@ -255,7 +255,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var mailRequest = new MailRequest
                 {
                     ToEmail = email,
-                    Subject = "TicketEase Password Reset Instructions",
+                    Subject = "Savi Thrift Password Reset Instructions",
                     Body = $"Please reset your password by clicking <a href='{resetPasswordUrl}'>here</a>."
                 };
                 await _emailServices.SendMailAsync(mailRequest);
