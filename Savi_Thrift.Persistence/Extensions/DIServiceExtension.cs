@@ -13,6 +13,9 @@ using Savi_Thrift.Domain.Entities.Helper;
 using Savi_Thrift.Infrastructure.Services;
 using Savi_Thrift.Persistence.Context;
 using Savi_Thrift.Persistence.Repositories;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Savi_Thrift.Persistence.Extensions
 {
@@ -72,6 +75,41 @@ namespace Savi_Thrift.Persistence.Extensions
             //Register UserTransactionRepository
            // services.AddScoped<IUserTransactionRepository, UserTransactionRepository>();
             services.AddScoped<IUserTransactionServices, UserTransactionServices>();
+
+			//Google authentication
+			//services.AddAuthentication().AddGoogle(googleOptions =>
+			//{
+			//    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+			//    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+			//});
+
+			services.AddAuthentication(options =>
+			{
+				options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+			})
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/api/Authentication/Login";
+                })
+                .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+				{
+					options.ClientId = "667855328126-eflhj0idirqrejsvfm1616prpbpfr03j.apps.googleusercontent.com";
+					options.ClientSecret = "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";
+					options.CallbackPath = "/api/Authentication/signin-google/token";
+				});
+
+            //services.Configure<GoogleAPiSettings>(configuration.GetSection("GoogleApi"));
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
 
         }
     }

@@ -26,6 +26,7 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
+   // builder.Services.AddCors();
     builder.Services.ConfigureAuthentication(configuration);
 	builder.Services.AddAutoMapper(typeof(MapperProfile));
 	builder.Logging.ClearProviders();
@@ -49,12 +50,7 @@ try
 
     app.UseAuthorization();
 
-    app.UseCors(options =>
-    {
-        options.AllowAnyOrigin();
-        options.AllowAnyMethod();
-        options.AllowAnyHeader();
-    });
+    app.UseCors();
 
 
     app.MapControllers();

@@ -1,7 +1,9 @@
 ﻿
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
@@ -9,25 +11,39 @@ using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Controllers
 {
-    [Route("api/account")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationServices _authenticationService;
+        private readonly IConfiguration _configuration;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailServices _emailServices;
         private readonly IUserService _userService;
 
-        public AuthenticationController(SignInManager<AppUser> signInManager,UserManager<AppUser> userManager, IUserService userService, IEmailServices emailService, IAuthenticationServices authenticationService)
+        public AuthenticationController(IConfiguration configuration,SignInManager<AppUser> signInManager,UserManager<AppUser> userManager, IUserService userService, IEmailServices emailService, IAuthenticationServices authenticationService)
         {
             _authenticationService = authenticationService;
             _emailServices = emailService;
             _userService = userService;
             _userManager = userManager;
+            _configuration = configuration;
             _signInManager = signInManager;
+            
         }
-		[HttpPost("Register")]
+
+        [HttpPost("signin-google/{token}")]
+        public async Task<IActionResult> GoogleAuth([FromRoute] string token)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse<string>(false, "Invalid model state.", StatusCodes.Status400BadRequest,  "", ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
+            }
+            return Ok(await _authenticationService.VerifyAndAuthenticateUserAsync(token));
+        }
+
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] AppUserCreateDto appUserCreateDto)
         {
             if (!ModelState.IsValid)
