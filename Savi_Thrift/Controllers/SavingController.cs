@@ -15,18 +15,25 @@ namespace Savi_Thrift.Controllers
 		}
 
 
-		[HttpGet]
-		public async Task<IActionResult> AllGoals()
-		{
-			if (!ModelState.IsValid)
-			{
-				return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
-			}
+        [HttpGet("AllPersonalSavings")]
+        public async Task<IActionResult> GetAllPersonalSavings()
+        {
+            // No ModelState validation is performed for this action.
 
-			return Ok(await _savingService.ViewGoals());
-		}
+            var apiResponse = await _savingService.ViewGoals();
 
-		[HttpPost]
+            if (apiResponse.Data != null)
+            {
+                return Ok(apiResponse);
+            }
+            else
+            {
+                return NotFound(apiResponse.Message);
+            }
+        }
+
+
+        [HttpPost("createPersonalSaving")]
 		public async Task<IActionResult> CreateGoal(CreateGoalDto createGoalDto)
 		{
 			if (!ModelState.IsValid)
@@ -65,6 +72,19 @@ namespace Savi_Thrift.Controllers
 
             return BadRequest(ApiResponse<string>.Failed($"Failed to credit personal savings: {response.Message}", response.StatusCode, response.Errors));
         }
+
+
+        [HttpGet("PersonalSavingDetails")]
+        public async Task<IActionResult> GetPersonalSaving(string Id)
+        {
+            var response = await _savingService.GetPersonalSavings(Id);
+            if (response.StatusCode == 200)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
 
     }
 }

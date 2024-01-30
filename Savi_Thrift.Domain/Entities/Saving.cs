@@ -5,6 +5,7 @@ namespace Savi_Thrift.Domain.Entities
 {
 	public class Saving : BaseEntity
 	{
+
 		public string Title { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
 		public decimal GoalAmount { get; set; }
