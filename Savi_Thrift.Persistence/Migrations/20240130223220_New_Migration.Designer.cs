@@ -12,8 +12,8 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    [Migration("20240123151615_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240130223220_New_Migration")]
+    partial class New_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -504,6 +504,9 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -614,6 +617,10 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TransactionPin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -639,6 +646,9 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("CumulativeAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("FundAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -648,7 +658,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Naration")
+                    b.Property<string>("Narration")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -662,6 +672,10 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("WalletId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("WalletNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

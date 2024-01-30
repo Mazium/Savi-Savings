@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Application.ServicesImplementation;
 using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Controllers
@@ -10,8 +11,9 @@ namespace Savi_Thrift.Controllers
 	public class WalletController : ControllerBase
 	{
 		private readonly IWalletService _walletService;
-		public WalletController(IWalletService walletService) { 
-		_walletService = walletService;
+		public WalletController(IWalletService walletService)
+		{ 
+			_walletService = walletService;
 		}
 
 
@@ -61,7 +63,17 @@ namespace Savi_Thrift.Controllers
 
             return Ok(await _walletService.DebitWallet(debitWalletDto));
         }
-	
+
+
+        [HttpGet]
+        [Route("api/paystack/verify/{referenceCode}/{userId}")]
+        public async Task<IActionResult> VerifyPayment(string referenceCode, string userId)
+        {
+            var result = await _walletService.VerifyTransaction(referenceCode, userId);
+
+            return Ok(result);
+        }
+
 
 
 

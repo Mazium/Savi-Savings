@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Savi_Thrift.Persistence.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class New_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,6 +119,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     WalletNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Currency = table.Column<int>(type: "int", nullable: false),
+                    Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PaystackCustomerCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionPin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -270,6 +271,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GoalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     AmountSaved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -381,8 +383,10 @@ namespace Savi_Thrift.Persistence.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FundAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Naration = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Narration = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionType = table.Column<int>(type: "int", nullable: false),
+                    CumulativeAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    WalletNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WalletId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
