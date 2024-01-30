@@ -74,10 +74,16 @@ namespace Savi_Thrift.Controllers
         }
 
 
+        [HttpPost("debit-goal-credit-wallet")]
+        public async Task<IActionResult> DebitGoal(CreditWalletFromGoalDto createGoalDto)
+        {
+            var response = await _savingService.WithdrawFundsFromGoalToWallet(createGoalDto);
+
         [HttpGet("PersonalSavingDetails")]
         public async Task<IActionResult> GetPersonalSaving(string Id)
         {
             var response = await _savingService.GetPersonalSavings(Id);
+
             if (response.StatusCode == 200)
             {
                 return Ok(response);
@@ -85,6 +91,15 @@ namespace Savi_Thrift.Controllers
             return BadRequest(response);
         }
 
-
+        [HttpPost("fund-saving(goal)")]
+        public async Task<IActionResult> FundPersonalGoal(FundsPersonalGoalDto personalGoalDto)
+        {
+            var response = await _savingService.FundsPersonalGoal(personalGoalDto);
+            if (response.StatusCode == 200)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 }
