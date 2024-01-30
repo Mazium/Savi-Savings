@@ -66,5 +66,27 @@ namespace Savi_Thrift.Controllers
             return BadRequest(ApiResponse<string>.Failed($"Failed to credit personal savings: {response.Message}", response.StatusCode, response.Errors));
         }
 
+
+        [HttpPost("debit-goal-credit-wallet")]
+        public async Task<IActionResult> DebitGoal(CreditWalletFromGoalDto createGoalDto)
+        {
+            var response = await _savingService.WithdrawFundsFromGoalToWallet(createGoalDto);
+            if (response.StatusCode == 200)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+
+        [HttpPost("fund-saving(goal)")]
+        public async Task<IActionResult> FundPersonalGoal(FundsPersonalGoalDto personalGoalDto)
+        {
+            var response = await _savingService.FundsPersonalGoal(personalGoalDto);
+            if (response.StatusCode == 200)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
     }
 }

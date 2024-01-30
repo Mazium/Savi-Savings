@@ -6,6 +6,7 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Application.DTO.Wallet;
+using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -145,5 +146,129 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
+        public async Task<ApiResponse<SavingsResponseDto>> WithdrawFundsFromGoalToWallet(CreditWalletFromGoalDto creditDto)
+        {
+            try
+            {
+                var goalsSaving = await _unitOfWork.SavingRepository.FindAsync(u => u.WalletId == creditDto.WalletId);
+                var goalsSavings = goalsSaving.FirstOrDefault();
+
+                if (goalsSavings == null)
+                {
+                    return ApiResponse<SavingsResponseDto>.Failed("Goal savings is null.", StatusCodes.Status400BadRequest, new List<string>());
+                }
+
+                // Check if there are insufficient funds in the savings goal
+                if (goalsSavings.Balance < creditDto.GoalAmount)
+                {
+                    return ApiResponse<SavingsResponseDto>.Failed("Insufficient funds in the savings goal.", StatusCodes.Status400BadRequest, new List<string>());
+                }
+
+                // Calculate new balance and update
+                decimal newBalance = goalsSavings.Balance - creditDto.GoalAmount;
+                goalsSavings.Balance = newBalance;
+                _unitOfWork.SavingRepository.Update(goalsSavings);
+                await _unitOfWork.SaveChangesAsync();
+
+                // Check if the user already has a wallet
+                var existingWalletDetails = await _unitOfWork.WalletRepository.FindAsync(w => w.UserId == creditDto.WalletId);
+                var existingWallet = existingWalletDetails.FirstOrDefault();
+
+                if (existingWallet != null)
+                {
+                    // Update existing wallet balance
+                    existingWallet.Balance += creditDto.GoalAmount;
+                    _unitOfWork.WalletRepository.Update(existingWallet);
+                }
+                else
+                {
+                    // Create a new wallet entry
+                    var wallet = new Wallet
+                    {
+                        UserId = creditDto.WalletId,
+                        Balance = creditDto.GoalAmount
+                    };
+                    await _unitOfWork.WalletRepository.AddAsync(wallet);
+                }
+
+                await _unitOfWork.SaveChangesAsync();
+
+                // Create a user transaction
+                var userFund = new UserTransaction
+                {
+                    ModifiedAt = DateTime.Now,
+                    Amount = creditDto.GoalAmount,
+                    TransactionType = TransactionType.Debit,
+                    UserId = creditDto.WalletNumber // Verify if this should be set to creditDto.WalletId
+                };
+                await _unitOfWork.UserTransactionRepository.AddAsync(userFund);
+                await _unitOfWork.SaveChangesAsync();
+
+                // Prepare and return the response
+                var responseDto = new SavingsResponseDto
+                {
+                    UserId = creditDto.WalletId,
+                    Balance = goalsSavings.Balance,
+                    Message = "Funds successfully withdrawn from savings goal to wallet.",
+                };
+
+                return ApiResponse<SavingsResponseDto>.Success(responseDto, "Funds withdrawn successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                // Handle exceptions and return an error response
+                return ApiResponse<SavingsResponseDto>.Failed("Failed to withdraw funds.", StatusCodes.Status500InternalServerError, new List<string> { e.Message });
+            }
+        }
+
+
+        public async Task<ApiResponse<DebitResponseDto>> FundsPersonalGoal(FundsPersonalGoalDto personalGoalDto)
+        {
+            try
+            {
+                // Retrieve user's savings goal              
+                var walletInfo = await _unitOfWork.WalletRepository.FindAsync(u => u.WalletNumber == personalGoalDto.WalletNumber);
+                var wallet = walletInfo.FirstOrDefault();
+                //Check if the goalsSavings is null
+                if (wallet == null)
+                {
+                    return ApiResponse<DebitResponseDto>.Failed("Goal savings is null.", StatusCodes.Status400BadRequest, new List<string>());
+                }
+                // Check if there are sufficient funds in the savings goal
+                if (wallet.Balance < personalGoalDto.FundAmount)
+                {
+                    return ApiResponse<DebitResponseDto>.Failed("Insufficient funds in the savings goal.", StatusCodes.Status400BadRequest, new List<string>());
+                }
+
+                decimal newBalance = wallet.Balance - personalGoalDto.FundAmount;
+                wallet.Balance = newBalance;
+                _unitOfWork.WalletRepository.Update(wallet);
+                await _unitOfWork.SaveChangesAsync();
+
+                var walletSavings = new Saving
+                {
+                    WalletId = personalGoalDto.WalletNumber,
+                    Balance = personalGoalDto.FundAmount
+                };
+
+                await _unitOfWork.SavingRepository.AddAsync(walletSavings);
+                await _unitOfWork.SaveChangesAsync();
+
+                var debitResponse = new DebitResponseDto
+                {
+                    WalletNumber = personalGoalDto.WalletNumber,
+                    Balance = newBalance,
+                    Message = "Your wallet has been debited successfully.",
+                };
+                return ApiResponse<DebitResponseDto>.Success(debitResponse, "Funds withdrawn successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception e)
+            {
+                // Handle exceptions and return an error response
+                return ApiResponse<DebitResponseDto>.Failed("Failed to withdraw funds.", StatusCodes.Status500InternalServerError, new List<string> { e.Message });
+            }
+        }
+
+     
     }
 }
