@@ -1,7 +1,7 @@
 ﻿using Savi_Thrift.Application.DTO.CardDetail;
 using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.DTO.GroupTransaction;
-using Savi_Thrift.Application.DTO.Savings;
+using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Application.DTO.UserTransaction;
 
 namespace Savi_Thrift.Application.DTO.Appuser

@@ -10,5 +10,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
 		Task<ApiResponse<List<GoalResponseDto>>> ViewGoals();
         Task<ApiResponse<List<Saving>>> GetListOfAllUserGoals(string UserId);
         Task<ApiResponse<SavingsResponseDto>> CreditPersonalSavings(CreditSavingsDto creditDto);
+
+        Task<ApiResponse<GetPersonalSavingsDTO>> GetPersonalSavings(string Id);
     }
 }

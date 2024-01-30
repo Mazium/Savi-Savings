@@ -6,6 +6,7 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Application.DTO.Wallet;
+using System;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -72,6 +73,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
         public async Task<ApiResponse<List<GoalResponseDto>>> ViewGoals()
 		{
 			var wallets = await _unitOfWork.SavingRepository.GetAllAsync();
+
 			List<GoalResponseDto> result = new();	
 			foreach (var wallet in wallets)
 			{
@@ -142,6 +144,36 @@ namespace Savi_Thrift.Application.ServicesImplementation
             catch (Exception e)
             {
                 return ApiResponse<SavingsResponseDto>.Failed("Failed to credit personal savings. ", StatusCodes.Status500InternalServerError, new List<string> { e.InnerException.ToString() });
+            }
+
+        }
+
+
+        public async Task<ApiResponse<GetPersonalSavingsDTO>> GetPersonalSavings(string Id)
+        {
+
+            try
+            {
+                var listOfSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.Id == Id);
+                if (!listOfSavings.Any())
+                {
+                    return ApiResponse<GetPersonalSavingsDTO>.Failed("Saving Not Found", StatusCodes.Status404NotFound, new List<string>());
+
+                }
+                var Savings = listOfSavings.First();
+
+                var SavingsDTO = _mapper.Map<GetPersonalSavingsDTO>(Savings);
+
+
+
+                return ApiResponse<GetPersonalSavingsDTO>.Success(SavingsDTO, "Saving Retrieved Successfully", StatusCodes.Status200OK);
+
+            }
+
+            catch (Exception ex)
+            {
+                return ApiResponse<GetPersonalSavingsDTO>.Failed("Error occurred while retrieving savings", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+
             }
         }
 
