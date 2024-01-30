@@ -34,6 +34,12 @@ namespace Savi_Thrift.Persistence.Repositories
             return await _context.Set<T>().Where(expression).ToListAsync();
         }
 
+        public async Task<T> FindSingleAsync(Expression<Func<T, bool>> expression)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(expression);
+        }
+
+
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
