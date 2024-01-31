@@ -78,6 +78,12 @@ namespace Savi_Thrift.Controllers
         public async Task<IActionResult> DebitGoal(CreditWalletFromGoalDto createGoalDto)
         {
             var response = await _savingService.WithdrawFundsFromGoalToWallet(createGoalDto);
+            if (response.StatusCode == 200)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
 
         [HttpGet("PersonalSavingDetails")]
         public async Task<IActionResult> GetPersonalSaving(string Id)
