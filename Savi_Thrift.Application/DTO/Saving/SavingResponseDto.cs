@@ -1,8 +1,8 @@
 ﻿using Savi_Thrift.Domain.Enums;
 
-namespace Savi_Thrift.Application.DTO.Savings
+namespace Savi_Thrift.Application.DTO.Saving
 {
-    public class SavingDto
+    public class SavingResponseDto
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -14,5 +14,9 @@ namespace Savi_Thrift.Application.DTO.Savings
         public DateTime TargetDate { get; set; }
         public decimal AmountToAdd { get; set; }
         public SavingFrequency Frequency { get; set; }
+        public string WalletId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

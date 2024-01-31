@@ -616,7 +616,6 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reference")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TransactionPin")

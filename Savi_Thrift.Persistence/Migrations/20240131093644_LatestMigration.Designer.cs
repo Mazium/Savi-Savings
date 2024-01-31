@@ -12,8 +12,8 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    [Migration("20240130223220_New_Migration")]
-    partial class New_Migration
+    [Migration("20240131093644_LatestMigration")]
+    partial class LatestMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -618,7 +618,6 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reference")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TransactionPin")
