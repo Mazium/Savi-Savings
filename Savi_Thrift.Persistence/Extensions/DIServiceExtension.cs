@@ -39,6 +39,8 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<IAuthenticationServices, AuthenticationServices>();
 			services.AddScoped<IKycService, KycService>();
+			services.AddScoped<IWalletService, WalletService>();
+            services.AddTransient<WalletService>();
 
             // Register Email services
             var emailSettings = new EmailSettings();

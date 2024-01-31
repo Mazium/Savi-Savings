@@ -1,22 +1,34 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain.Enums;
-using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
     public class WalletService : IWalletService
 	{
+        private readonly ILogger<WalletService> _logger;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-		public WalletService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _config;
+		public WalletService(ILogger<WalletService> logger, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration config)
 		{
+            _logger = logger;
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
+            _httpClient = new HttpClient();
+            _config = config;
+            string secretKey = _config["PaystackApi:SecretKey"];
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {secretKey}");
 		}
 
 		public async Task<ApiResponse<bool>> CreateWallet(CreateWalletDto createWalletDto)
@@ -160,6 +172,87 @@ namespace Savi_Thrift.Application.ServicesImplementation
             {
                 return ApiResponse<DebitResponseDto>.Failed("Failed to debit wallet. ", StatusCodes.Status400BadRequest, new List<string>() { e.InnerException?.ToString() });
             }
+        }
+
+        public async Task<string> VerifyTransaction(string referenceCode, string userId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(referenceCode))
+                {
+                    throw new Exception("Please provide a valid reference number");
+                }
+                HttpResponseMessage response = await _httpClient.GetAsync($"https://api.paystack.co/transaction/verify/{referenceCode}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<PaystackResponse>(content);
+                    if (result.Status)
+                    {
+                        var data = result.Data;
+                        if (data.Status == "success")
+                        {
+                            var amount = data.Amount / 100;
+                            var email = data.Customer.Email;
+                            var updateWallet = UpdateWallet(userId, amount); //email to be changed to userId, remember blah
+                            var walletFunding = new WalletFunding()
+                            {
+                                FundAmount = amount,
+                                Reference = referenceCode,
+                                WalletNumber = updateWallet.Result.WalletNumber,
+                                WalletId = updateWallet.Result.Id,
+                                CumulativeAmount = updateWallet.Result.Balance,
+                                TransactionType =TransactionType.Credit,
+                            };
+                            await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);
+                            await _unitOfWork.SaveChangesAsync();
+                            return ($"Payment of {amount} Naira from {email} was successful!");
+                        }
+                        else
+                        {
+                            return ($"Payment was not successful. Status: {data.Status}");
+                        }
+                    }
+                    else
+                    {
+                        return ($"Paystack API returned an error. Message: {result.Message}");
+                    }
+                }
+                else
+                {
+                    return $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                return $"HttpRequestException: {ex.Message}";
+
+            }
+        }
+
+        private ResponseDto<Wallet> UpdateWallet(string userId, decimal amount)
+        {
+            var wallet = _unitOfWork.WalletRepository.WalletById(userId);
+            if (wallet == null)
+            {
+                return new ResponseDto<Wallet>
+                {
+                    StatusCode = 400,
+                    DisplayMessage = "User does not have a wallet",
+                };
+            }
+            wallet.Balance += amount;
+            wallet.ModifiedAt = DateTime.UtcNow;
+
+            _unitOfWork.WalletRepository.Update(wallet);
+            _unitOfWork.SaveChangesAsync();
+            return new ResponseDto<Wallet>
+            {
+                StatusCode = 200,
+                DisplayMessage = "wallet updated successfully",
+                Result = wallet
+            };
         }
 
     }
