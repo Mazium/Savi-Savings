@@ -71,7 +71,8 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 			// Register GroupService
-			//services.AddScoped<IGroupService, GroupService>();
+			services.AddScoped<IGroupSavingsService, GroupSavingsService>();
+			
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Register UserTransactionRepository
