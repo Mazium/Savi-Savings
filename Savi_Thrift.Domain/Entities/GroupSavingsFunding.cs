@@ -11,7 +11,8 @@ namespace Savi_Thrift.Domain.Entities
         public string UserId { get; set; }
         public string ActionId { get; set; }
         public string GroupSavingsId { get; set; } 
-        public decimal Amount { get; set; } 
+        public decimal Amount { get; set; }
+
 
 
 

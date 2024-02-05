@@ -3,38 +3,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Savi_Thrift.Application.DTO.Group
 {
-    public class GroupCreationDto
+    public class GroupCreationDto 
     {
-        [Required(ErrorMessage = "Name is required")]
-        [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters")]
-        public string Name { get; set; }
-
-        [MaxLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
-        public string Description { get; set; }
-
-
-        [Required(ErrorMessage = "IsActive is required")]
-        public bool IsActive { get; set; }
-
-
-        [Range(0, double.MaxValue, ErrorMessage = "Contribution amount must be non-negative")]
+        public string GroupName { get; set; }
         public decimal ContributionAmount { get; set; }
+        public DateTime ExpectedStartDate { get; set; }
+        public DateTime ActualStartDate { get; set; }
+        public DateTime ExpectedEndDate { get; set; }
+        public SavingFrequency Frequency { get; set; }
 
-        [Required(ErrorMessage = "IsOpen is required")]
+        public int MemberCount = 5;
+        public DateTime RunTime { get; set; }
+        public string PurposeAndGoal { get; set; }
+        public string TermsAndConditions { get; set; }
+        public GroupStatus GroupStatus { get; set; }
+        public string SafePortraitImageURL { get; set; }
+        public string SafeLandScapeImageURL { get; set; }
+        public DateTime NextRunTime { get; set; }
         public bool IsOpen { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime ModifiedAt { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Max number of participants must be at least 1")]
-        public int MaxNumberOfParticipants { get; set; }
-
-        [MaxLength(500, ErrorMessage = "Terms cannot exceed 500 characters")]
-        public string Terms { get; set; }
-
-        [Range(0, double.MaxValue, ErrorMessage = "Fee must be non-negative")]
-        public decimal Fee { get; set; }
-
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
 
     }
 }
