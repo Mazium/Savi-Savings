@@ -8,7 +8,6 @@ namespace Savi_Thrift.Domain.Entities
 		public string Description { get; set; } = string.Empty;
 		public string Avatar { get; set; } = string.Empty;
 		public PaymentMethod PaymentMethod { get; set; }
-
 		public bool IsActive { get; set; }
 		public decimal ContributionAmount { get; set; }
 		public decimal EstimatedCollection { get; set; }
@@ -26,21 +25,21 @@ namespace Savi_Thrift.Domain.Entities
 		public ICollection<AppUser> Users { get; set; } = new List<AppUser>();
 		public ICollection<GroupTransaction> GroupTransactions { get; set; } = new List<GroupTransaction>();
 
-		public void SetAvailableSlots(int maxNumberOfParticipants)
-		{
-			string aSLots = "";
-			for (int i = 1; i <= maxNumberOfParticipants; i++)
-			{
-				if (aSLots == "")
-				{
-					aSLots=i.ToString();
-				}
-				else
-				{
-					aSLots += ","+i.ToString();
-				}
-			}
-			AvailableSlots = aSLots;
-		}
+		//public void SetAvailableSlots(int maxNumberOfParticipants)
+		//{
+		//	string aSLots = "";
+		//	for (int i = 1; i <= maxNumberOfParticipants; i++)
+		//	{
+		//		if (aSLots == "")
+		//		{
+		//			aSLots=i.ToString();
+		//		}
+		//		else
+		//		{
+		//			aSLots += ","+i.ToString();
+		//		}
+		//	}
+		//	AvailableSlots = aSLots;
 	}
 }
+

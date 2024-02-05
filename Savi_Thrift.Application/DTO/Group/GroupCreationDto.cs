@@ -32,12 +32,9 @@ namespace Savi_Thrift.Application.DTO.Group
         [Range(0, double.MaxValue, ErrorMessage = "Fee must be non-negative")]
         public decimal Fee { get; set; }
 
-        [Required(ErrorMessage = "Start date is required")]
         public DateTime StartDate { get; set; }
 
-        [Required(ErrorMessage = "End date is required")]
         public DateTime EndDate { get; set; }
 
-       
     }
 }
