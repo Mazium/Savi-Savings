@@ -12,8 +12,8 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    [Migration("20240131093644_LatestMigration")]
-    partial class LatestMigration
+    [Migration("20240131125831_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -491,9 +491,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("AmountSaved")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("AmountToAdd")
                         .HasColumnType("decimal(18,2)");
 
@@ -510,25 +507,20 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Frequency")
                         .HasColumnType("int");
 
                     b.Property<decimal>("GoalAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("IsAutomatic")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Purpose")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -540,7 +532,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletId")
+                    b.Property<string>("WalletNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

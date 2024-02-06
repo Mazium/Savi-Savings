@@ -30,7 +30,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 		public AuthenticationServices(IEmailServices emailServices, IUnitOfWork unitOfWork, IWalletService walletService, IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ILogger<AuthenticationServices> logger)
 		{
-
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_logger = logger;
@@ -171,7 +170,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-
         public async Task<ApiResponse<LoginResponseDto>> LoginAsync(AppUserLoginDto loginDTO)
 		{
 			try
@@ -220,9 +218,10 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			var claims = new[]
 			{
-				new Claim(JwtRegisteredClaimNames.Sub, contact.UserName),
+				new Claim(JwtRegisteredClaimNames.Sub, contact.Id),
 				new Claim(JwtRegisteredClaimNames.Email, contact.Email),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+				new Claim(JwtRegisteredClaimNames.GivenName, contact.FirstName+" "+contact.LastName),
 				new Claim(ClaimTypes.Role, roles)
 			};
 
@@ -359,7 +358,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-
         public async Task<ApiResponse<string>> ForgotPasswordAsync(string email)
         {
             try
@@ -401,8 +399,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 return new ApiResponse<string>(true, "Error occurred while processing forgot password", 500, null, errorList);
             }
         }
-
-
 
         public async Task<ApiResponse<string>> ConfirmEmail(string userid, string token)
 		{

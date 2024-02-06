@@ -38,9 +38,21 @@ namespace Savi_Thrift.Controllers
 
 			return Ok(await _walletService.GetWalletByNumber(number));
 		}
+		
 
 
-		[HttpPost("FundWallet")]
+		[HttpGet("GetWalletByUserId")]
+		public async Task<IActionResult> GetWalletByUserId(string userId)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
+			}
+
+			return Ok(await _walletService.GetWalletByUserId(userId));
+		}
+
+		[HttpGet("FundWallet")]
 		public async Task<IActionResult> FundWallet(FundWalletDto fundWalletDto)
 		{
 			if (!ModelState.IsValid)
@@ -51,8 +63,7 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _walletService.FundWallet(fundWalletDto));
 		}
 
-
-        [HttpPost("DebitWallet")]
+		[HttpPost("DebitWallet")]
         public async Task<IActionResult> DebitWallet(DebitWalletDto debitWalletDto)
         {
             if (!ModelState.IsValid)

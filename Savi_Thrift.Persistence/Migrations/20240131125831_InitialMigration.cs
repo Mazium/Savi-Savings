@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Savi_Thrift.Persistence.Migrations
 {
-    public partial class LatestMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -269,17 +269,15 @@ namespace Savi_Thrift.Persistence.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GoalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AmountSaved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TargetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsAutomatic = table.Column<bool>(type: "bit", nullable: false),
                     AmountToAdd = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Frequency = table.Column<int>(type: "int", nullable: false),
-                    WalletId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WalletNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),

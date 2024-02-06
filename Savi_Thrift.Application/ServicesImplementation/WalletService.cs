@@ -80,6 +80,19 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			return ApiResponse<Wallet>.Success(firstWallet, "Wallet retrieved successfully", StatusCodes.Status200OK);
 		}
 
+		public async Task<ApiResponse<Wallet>> GetWalletByUserId(string userId)
+		{
+			var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.UserId == userId);
+
+			if (wallets.Count < 1)
+			{
+				return ApiResponse<Wallet>.Failed("Wallet with this number not found", StatusCodes.Status404NotFound, new List<string>());
+			}
+
+			var firstWallet = wallets.First();
+
+			return ApiResponse<Wallet>.Success(firstWallet, "Wallet retrieved successfully", StatusCodes.Status200OK);
+		}
 
 		public async Task<ApiResponse<CreditResponseDto>> FundWallet(FundWalletDto fundWalletDto)
 		{

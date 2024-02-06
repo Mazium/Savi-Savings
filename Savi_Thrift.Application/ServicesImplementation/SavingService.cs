@@ -182,7 +182,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
         {
             try
             {
-                var goalsSaving = await _unitOfWork.SavingRepository.FindAsync(u => u.WalletId == creditDto.WalletId);
+                var goalsSaving = await _unitOfWork.SavingRepository.FindAsync(u => u.WalletNumber == creditDto.WalletNumber);
                 var goalsSavings = goalsSaving.FirstOrDefault();
 
                 if (goalsSavings == null)
@@ -203,7 +203,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 await _unitOfWork.SaveChangesAsync();
 
                 // Check if the user already has a wallet
-                var existingWalletDetails = await _unitOfWork.WalletRepository.FindAsync(w => w.UserId == creditDto.WalletId);
+                var existingWalletDetails = await _unitOfWork.WalletRepository.FindAsync(w => w.WalletNumber == creditDto.WalletNumber);
                 var existingWallet = existingWalletDetails.FirstOrDefault();
 
                 if (existingWallet != null)
@@ -217,7 +217,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                     // Create a new wallet entry
                     var wallet = new Wallet
                     {
-                        UserId = creditDto.WalletId,
+                        UserId = creditDto.WalletNumber,
                         Balance = creditDto.GoalAmount
                     };
                     await _unitOfWork.WalletRepository.AddAsync(wallet);
@@ -239,7 +239,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 // Prepare and return the response
                 var responseDto = new SavingsResponseDto
                 {
-                    UserId = creditDto.WalletId,
+                    UserId = creditDto.WalletNumber,
                     Balance = goalsSavings.Balance,
                     Message = "Funds successfully withdrawn from savings goal to wallet.",
                 };
@@ -279,7 +279,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
                 var walletSavings = new Saving
                 {
-                    WalletId = personalGoalDto.WalletNumber,
+                    WalletNumber = personalGoalDto.WalletNumber,
                     Balance = personalGoalDto.FundAmount
                 };
 

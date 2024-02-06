@@ -2,7 +2,7 @@
 {
     public class CreditWalletFromGoalDto
     {
-        public string WalletId { get; set; } = string.Empty;
+        //public string WalletId { get; set; } = string.Empty;
         public decimal GoalAmount { get; set; }
         public string WalletNumber { get; set; } = string.Empty;
     }
