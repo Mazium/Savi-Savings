@@ -16,6 +16,7 @@ using Savi_Thrift.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Hangfire;
 
 namespace Savi_Thrift.Persistence.Extensions
 {
@@ -105,6 +106,25 @@ namespace Savi_Thrift.Persistence.Extensions
                            .AllowAnyHeader();
                 });
             });
+
+            //configure Hangfire
+            var hangFireConnectionString = configuration.GetConnectionString("DefaultConnection");
+
+            services.AddHangfire(config => config
+                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                     .UseSimpleAssemblyNameTypeSerializer()
+                     .UseRecommendedSerializerSettings()
+                     .UseSqlServerStorage(hangFireConnectionString, new Hangfire.SqlServer.SqlServerStorageOptions
+                     {
+                         CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                         SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                         QueuePollInterval = TimeSpan.Zero,
+                         UseRecommendedIsolationLevel = true,
+                         DisableGlobalLocks = true
+                     }));
+
+
+
 
         }
     }

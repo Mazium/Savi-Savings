@@ -8,7 +8,7 @@ namespace Savi_Thrift.Domain.Entities
 		public string WalletNumber { get; set; } = string.Empty;
 		public decimal Balance { get; set; }
 		public Currency Currency { get; set; }
-        public string? Reference { get; set; }
+        public string Reference { get; set; }
         public string PaystackCustomerCode { get; set; } = string.Empty;
 		public string TransactionPin { get; set; } = string.Empty;
 
