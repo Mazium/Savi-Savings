@@ -51,34 +51,31 @@ namespace Savi_Thrift.Controllers
                 return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
             }
 
-
-
             // Call registration service
             var registrationResult = await _authenticationService.RegisterAsync(appUserCreateDto);
+            return Ok(registrationResult);
 
             // Handle registration result
-            if (registrationResult.Succeeded)
-            {
-                var data = registrationResult.Data;
-                var confirmationLink = GenerateConfirmEmailLink(data.Id, data.Token);
-                if (confirmationLink != null)
-                {
-                    await _emailServices.SendEmailAsync(confirmationLink, data.Email);
-                    return Ok(data);
-                }
-                else
-                {
-                    await _userService.DeleteUser(data.Id);
-                    return Ok("Email sending error: Confirmation link is null");
-            }
+            //if (registrationResult.Succeeded)
+            //{
+            //    var data = registrationResult.Data;
+            //    var confirmationLink = GenerateConfirmEmailLink(data.Id, data.Token);
+            //    if (confirmationLink != null)
+            //    {
+            //        await _emailServices.SendEmailAsync(confirmationLink, data.Email);
+            //        return Ok(data);
+            //    }
+            //    else
+            //    {
+            //        await _userService.DeleteUser(data.Id);
+            //        return Ok("Email sending error: Confirmation link is null");
+            //    }
 
-
-
-        }
-            else
-            {
-                return BadRequest(new { Message = registrationResult.Message, Errors = registrationResult.Errors });
-            }
+            //}
+            //else
+            //{
+            //    return BadRequest(new { Message = registrationResult.Message, Errors = registrationResult.Errors });
+            //}
         }
 
 

@@ -82,7 +82,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 
 		public async Task<ApiResponse<CreditResponseDto>> FundWallet(FundWalletDto fundWalletDto)
-		{
+		 {
 			try
 			{
 				var response = await GetWalletByNumber(fundWalletDto.WalletNumber);
@@ -102,8 +102,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				{
 					FundAmount = fundWalletDto.FundAmount,
 					Narration = fundWalletDto.Narration,
-					TransactionType = TransactionType.Credit,
-					WalletId = wallet.Id				
+					ActionId = fundWalletDto.ActionId,
+					WalletId = wallet.Id,
+                    WalletNumber = fundWalletDto.WalletNumber
 
 				};
 				await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);
@@ -153,7 +154,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     FundAmount = debitWalletDto.DebitAmount,
                     Narration = debitWalletDto.Narration,
-                    TransactionType = TransactionType.Debit,
+                    ActionId = debitWalletDto.ActionId,
                     WalletId = wallet.Id
                 };
                 await _unitOfWork.WalletFundingRepository.AddAsync(walletDebit);
@@ -203,7 +204,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                                 WalletNumber = updateWallet.Result.WalletNumber,
                                 WalletId = updateWallet.Result.Id,
                                 CumulativeAmount = updateWallet.Result.Balance,
-                                TransactionType =TransactionType.Credit,
+                                ActionId = 1,
                             };
                             await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);
                             await _unitOfWork.SaveChangesAsync();
@@ -214,7 +215,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                             return ($"Payment was not successful. Status: {data.Status}");
                         }
                     }
-                    else
+                    else 
                     {
                         return ($"Paystack API returned an error. Message: {result.Message}");
                     }

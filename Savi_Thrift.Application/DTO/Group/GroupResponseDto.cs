@@ -6,16 +6,21 @@ namespace Savi_Thrift.Application.DTO.Group
 {
     public class GroupResponseDto
     {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public string? Avatar { get; set; }
-        public bool? IsActive { get; set; }
-        public decimal? ContributionAmount { get; set; }
-        public bool? IsOpen { get; set; }
-        public int? MaxNumberOfParticipants { get; set; }
-		public string AvailableSlots { get; set; }
-		public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-        public SavingFrequency? SavingFrequency { get; set; }
+        public string GroupName { get; set; }
+        public decimal ContributionAmount { get; set; }
+        public DateTime ExpectedStartDate { get; set; }
+        public DateTime ActualStartDate { get; set; }
+        public DateTime ExpectedEndDate { get; set; }
+        public SavingFrequency Frequency { get; set; }
+        public int MemberCount { get; set; }
+        public DateTime RunTime { get; set; }
+        public string PurposeAndGoal { get; set; }
+        public string TermsAndConditions { get; set; }
+        public GroupStatus GroupStatus { get; set; }
+        public string SafePortraitImageURL { get; set; }
+        public string SafeLandScapeImageURL { get; set; }
+        public DateTime NextRunTime { get; set; }
+        public bool IsOpen { get; set; }
+
     }
 }

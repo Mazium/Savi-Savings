@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Savi_Thrift.Persistence.Context;
 
@@ -11,9 +12,10 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    partial class SaviDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240205222100_ThirdGroupMigration")]
+    partial class ThirdGroupMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,31 +157,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Savi_Thrift.Domain.Entities.Actions", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ActionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ActionName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Actions");
-                });
-
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -206,15 +183,18 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -278,15 +258,18 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CVV")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CardNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Expiry")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -296,9 +279,11 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NameOnCard")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -335,6 +320,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("GroupName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GroupStatus")
@@ -353,18 +339,22 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PurposeAndGoal")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RunTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SafeLandScapeImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SafePortraitImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TermsAndConditions")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -380,6 +370,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActionId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Amount")
@@ -389,6 +380,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GroupSavingsId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -398,6 +390,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -416,6 +409,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("GroupSavingsId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
@@ -431,9 +425,11 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Position")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -458,9 +454,11 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -470,12 +468,14 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Reference")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -491,12 +491,15 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BVN")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -509,9 +512,11 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("IdentificationDocumentUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdentificationNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdentificationType")
@@ -527,6 +532,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ProofOfAddressUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -549,6 +555,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Avatar")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Balance")
@@ -558,6 +565,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Frequency")
@@ -573,6 +581,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Purpose")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
@@ -582,9 +591,11 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WalletId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -609,6 +620,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -618,12 +630,14 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Reference")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -654,18 +668,22 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaystackCustomerCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reference")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TransactionPin")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WalletNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -677,9 +695,6 @@ namespace Savi_Thrift.Persistence.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ActionId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -697,15 +712,22 @@ namespace Savi_Thrift.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Narration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reference")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
                     b.Property<string>("WalletId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("WalletNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -784,14 +806,18 @@ namespace Savi_Thrift.Persistence.Migrations
                 {
                     b.HasOne("Savi_Thrift.Domain.Entities.GroupSavings", null)
                         .WithMany("GroupSavingsFundings")
-                        .HasForeignKey("GroupSavingsId");
+                        .HasForeignKey("GroupSavingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.GroupSavingsMembers", b =>
                 {
                     b.HasOne("Savi_Thrift.Domain.Entities.GroupSavings", null)
                         .WithMany("GroupSavingsMembers")
-                        .HasForeignKey("GroupSavingsId");
+                        .HasForeignKey("GroupSavingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.GroupTransaction", b =>
@@ -819,7 +845,9 @@ namespace Savi_Thrift.Persistence.Migrations
                 {
                     b.HasOne("Savi_Thrift.Domain.Entities.Wallet", null)
                         .WithMany("WalletFundings")
-                        .HasForeignKey("WalletId");
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.AppUser", b =>
