@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Savi_Thrift.Domain.Entities
+﻿namespace Savi_Thrift.Domain.Entities
 {
     public class GroupSavingsFunding :BaseEntity
     {
@@ -12,10 +6,6 @@ namespace Savi_Thrift.Domain.Entities
         public string ActionId { get; set; }
         public string GroupSavingsId { get; set; } 
         public decimal Amount { get; set; }
-
-
-
-
 
     }
 }
