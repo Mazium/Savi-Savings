@@ -43,6 +43,20 @@ namespace Savi_Thrift.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        [HttpGet]
+        [Route("get-explore-details")]
+        public async Task<IActionResult> GetExploreGroupsDetails(string id)
+        {
+            var response = await _groupService.ExploreGroupSavingDetailsAsync(id);
+
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode(response.StatusCode, response);
+        }
+
 
         //        [HttpGet]
         //        [Route("{id}")]

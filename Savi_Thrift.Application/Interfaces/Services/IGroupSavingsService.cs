@@ -9,6 +9,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
         Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto);
 
         Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetAllPublicGroupsAsync();
+        Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id);
 
     }
 }

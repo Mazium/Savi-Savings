@@ -78,6 +78,29 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
+        public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)
+        {
+            try
+            {
+                var groupDetails = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.Id == id && u.IsDeleted == false);
+
+                if (groupDetails.Count == 0)
+                {
+                    return ApiResponse<GroupResponseDto>.Failed($"Group not found", 404, null);
+                }
+                var groupDetail = groupDetails.First();
+                var groupResponses = _mapper.Map<GroupResponseDto>(groupDetail);
+
+                return ApiResponse<GroupResponseDto>.Success(groupResponses, $"Explore Group Saving Details", 200);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while creating a group");
+                return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
+
+            }
+        }
+
         //		public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto)
         //		{
         //			try
