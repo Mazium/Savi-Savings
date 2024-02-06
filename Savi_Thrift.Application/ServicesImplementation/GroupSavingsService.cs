@@ -59,170 +59,173 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-            //		public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto)
-            //		{
-            //			try
-            //			{
-            //				var isGroupNameUnique = await IsGroupNameUniqueAsync(groupCreationDto.Name);
-
-            //				if (isGroupNameUnique)
-            //				{
-            //					var groupEntity = _mapper.Map<Group>(groupCreationDto);
-            //					groupEntity.SetAvailableSlots(groupCreationDto.MaxNumberOfParticipants);
-            //					groupEntity.IsActive = true;
-
-            //					await _unitOfWork.GroupRepository.AddAsync(groupEntity);
-            //					await _unitOfWork.SaveChangesAsync();
-
-            //					var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
-
-            //					return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group created successfully", 201);
-            //				}
-            //				else
-            //				{
-            //					return ApiResponse<GroupResponseDto>.Failed("Group name must be unique", 400, null);
-            //				}
-            //			}
-            //			catch (Exception ex)
-            //			{
-            //				_logger.LogError(ex, "Error occurred while creating a group");
-
-            //				return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
-            //			}
-            //		}
-
-            //        public async Task<ApiResponse<GroupResponseDto>> CreateNewGroupSavingsAsync(GroupCreationDto groupCreationDto)
-            //        {
-            //            try
-            //            {
-            //                var isGroupNameUnique = await IsGroupNameUniqueAsync(groupCreationDto.Name);
-
-            //                if (isGroupNameUnique)
-            //                {
-            //                    var groupEntity = _mapper.Map<Group>(groupCreationDto);
-            //                    groupEntity.SetAvailableSlots(groupCreationDto.MaxNumberOfParticipants);
-            //                    groupEntity.IsActive = true;
-
-            //                    // Add logic to assign participants and handle the bulk contribution cycle
-            //                    var participants = new List<string> { groupCreationDto.CreatorName }; // Assuming CreatorName is a property in GroupCreationDto
-
-            //                    // Assign remaining slots to participants
-            //                    for (int i = 1; i < groupCreationDto.MaxNumberOfParticipants; i++)
-            //                    {
-            //                        participants.Add($"Participant{i + 1}");
-            //                    }
-
-            //                    groupEntity.Participants = participants; // Add Participants property to your Group entity
-
-            //                    await _unitOfWork.GroupRepository.AddAsync(groupEntity);
-            //                    await _unitOfWork.SaveChangesAsync();
-
-            //                    var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
-
-            //                    return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group created successfully", 201);
-            //                }
-            //                else
-            //                {
-            //                    return ApiResponse<GroupResponseDto>.Failed("Group name must be unique", 400, null);
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                _logger.LogError(ex, "Error occurred while creating a group");
-
-            //                return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
-            //            }
-            //        }
+        public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetAllPublicGroupsAsync()
+        {
+            try
+            {
+                var allGroups = await _unitOfWork.GroupSavingsRepository.FindAsync(x => x.IsOpen == true && x.IsDeleted == false);
 
 
-            //        public async Task<bool> IsGroupNameUniqueAsync(string groupName)
-            //		{
-            //			var existingGroup = await _unitOfWork.GroupRepository.FindAsync(g => g.Name == groupName);
+                var groupResponses = _mapper.Map<IEnumerable<GroupResponseDto>>(allGroups);
 
-            //			return existingGroup.Count == 0;
-            //		}
+                return ApiResponse<IEnumerable<GroupResponseDto>>.Success(groupResponses, "All groups retrieved successfully", 200);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting all groups");
 
-            //		public async Task<ApiResponse<GroupResponseDto>> GetGroupByIdAsync(string groupId)
-            //		{
-            //			try
-            //			{
-            //				var groupEntity = await _unitOfWork.GroupRepository.GetByIdAsync(groupId);
+                return ApiResponse<IEnumerable<GroupResponseDto>>.Failed("Failed to get all groups", 500, new List<string> { ex.Message });
+            }
+        }
 
-            //				if (groupEntity == null)
-            //				{
-            //					return ApiResponse<GroupResponseDto>.Failed($"Group with ID {groupId} not found", 404, null);
-            //				}
+        //		public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto)
+        //		{
+        //			try
+        //			{
+        //				var isGroupNameUnique = await IsGroupNameUniqueAsync(groupCreationDto.Name);
 
-            //				var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
+        //				if (isGroupNameUnique)
+        //				{
+        //					var groupEntity = _mapper.Map<Group>(groupCreationDto);
+        //					groupEntity.SetAvailableSlots(groupCreationDto.MaxNumberOfParticipants);
+        //					groupEntity.IsActive = true;
 
-            //				return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group retrieved successfully", 200);
-            //			}
-            //			catch (Exception ex)
-            //			{
-            //				_logger.LogError(ex, $"Error occurred while getting a group by ID ({groupId})");
+        //					await _unitOfWork.GroupRepository.AddAsync(groupEntity);
+        //					await _unitOfWork.SaveChangesAsync();
 
-            //				return ApiResponse<GroupResponseDto>.Failed("Failed to get the group", 500, new List<string> { ex.Message });
-            //			}
-            //		}
+        //					var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
 
-            //		public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetAllGroupsAsync()
-            //		{
-            //			try
-            //			{
-            //				var allGroups = await _unitOfWork.GroupRepository.GetAllAsync();
+        //					return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group created successfully", 201);
+        //				}
+        //				else
+        //				{
+        //					return ApiResponse<GroupResponseDto>.Failed("Group name must be unique", 400, null);
+        //				}
+        //			}
+        //			catch (Exception ex)
+        //			{
+        //				_logger.LogError(ex, "Error occurred while creating a group");
 
-            //				var groupResponses = _mapper.Map<IEnumerable<GroupResponseDto>>(allGroups);
+        //				return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
+        //			}
+        //		}
 
-            //				return ApiResponse<IEnumerable<GroupResponseDto>>.Success(groupResponses, "All groups retrieved successfully", 200);
-            //			}
-            //			catch (Exception ex)
-            //			{
-            //				_logger.LogError(ex, "Error occurred while getting all groups");
+        //        public async Task<ApiResponse<GroupResponseDto>> CreateNewGroupSavingsAsync(GroupCreationDto groupCreationDto)
+        //        {
+        //            try
+        //            {
+        //                var isGroupNameUnique = await IsGroupNameUniqueAsync(groupCreationDto.Name);
 
-            //				return ApiResponse<IEnumerable<GroupResponseDto>>.Failed("Failed to get all groups", 500, new List<string> { ex.Message });
-            //			}
-            //		}
+        //                if (isGroupNameUnique)
+        //                {
+        //                    var groupEntity = _mapper.Map<Group>(groupCreationDto);
+        //                    groupEntity.SetAvailableSlots(groupCreationDto.MaxNumberOfParticipants);
+        //                    groupEntity.IsActive = true;
 
-            //		public async Task<string> UpdateGroupPhotoByGroupId(string groupId, UpdateGroupPhotoDto model)
-            //		{
-            //			try
-            //			{
-            //				var group = await _unitOfWork.GroupRepository.GetByIdAsync(groupId);
+        //                    // Add logic to assign participants and handle the bulk contribution cycle
+        //                    var participants = new List<string> { groupCreationDto.CreatorName }; // Assuming CreatorName is a property in GroupCreationDto
 
-            //				if (group == null)
-            //					return "Group not found";
+        //                    // Assign remaining slots to participants
+        //                    for (int i = 1; i < groupCreationDto.MaxNumberOfParticipants; i++)
+        //                    {
+        //                        participants.Add($"Participant{i + 1}");
+        //                    }
 
-            //				var file = model.PhotoFile;
+        //                    groupEntity.Participants = participants; // Add Participants property to your Group entity
 
-            //				if (file == null || file.Length <= 0)
-            //					return "Invalid file size";
+        //                    await _unitOfWork.GroupRepository.AddAsync(groupEntity);
+        //                    await _unitOfWork.SaveChangesAsync();
+
+        //                    var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
+
+        //                    return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group created successfully", 201);
+        //                }
+        //                else
+        //                {
+        //                    return ApiResponse<GroupResponseDto>.Failed("Group name must be unique", 400, null);
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                _logger.LogError(ex, "Error occurred while creating a group");
+
+        //                return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
+        //            }
+        //        }
 
 
-            //				_mapper.Map(model, group);
+        //        public async Task<bool> IsGroupNameUniqueAsync(string groupName)
+        //		{
+        //			var existingGroup = await _unitOfWork.GroupRepository.FindAsync(g => g.Name == groupName);
 
-            //				var response = await _cloudinaryServices.UploadImage(file);
+        //			return existingGroup.Count == 0;
+        //		}
 
-            //				if (response == null)
-            //				{
-            //					_logger.LogError($"Failed to upload image for group with ID {groupId}.");
-            //					return null;
-            //				}
+        //		public async Task<ApiResponse<GroupResponseDto>> GetGroupByIdAsync(string groupId)
+        //		{
+        //			try
+        //			{
+        //				var groupEntity = await _unitOfWork.GroupRepository.GetByIdAsync(groupId);
 
-            //				// Update the ImageUrl property with the Cloudinary URL
-            //				group.Avatar = response.Url;
+        //				if (groupEntity == null)
+        //				{
+        //					return ApiResponse<GroupResponseDto>.Failed($"Group with ID {groupId} not found", 404, null);
+        //				}
 
-            //				_unitOfWork.GroupRepository.Update(group);
-            //				await _unitOfWork.SaveChangesAsync();
-            //				return response.Url;
-            //			}
-            //			catch (Exception ex)
-            //			{
-            //				_logger.LogError(ex, "An error occurred while updating group photo.");
-            //				throw;
-            //			}
-            //		}
+        //				var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
 
-        
+        //				return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group retrieved successfully", 200);
+        //			}
+        //			catch (Exception ex)
+        //			{
+        //				_logger.LogError(ex, $"Error occurred while getting a group by ID ({groupId})");
+
+        //				return ApiResponse<GroupResponseDto>.Failed("Failed to get the group", 500, new List<string> { ex.Message });
+        //			}
+        //		}
+
+        //		
+
+        //		public async Task<string> UpdateGroupPhotoByGroupId(string groupId, UpdateGroupPhotoDto model)
+        //		{
+        //			try
+        //			{
+        //				var group = await _unitOfWork.GroupRepository.GetByIdAsync(groupId);
+
+        //				if (group == null)
+        //					return "Group not found";
+
+        //				var file = model.PhotoFile;
+
+        //				if (file == null || file.Length <= 0)
+        //					return "Invalid file size";
+
+
+        //				_mapper.Map(model, group);
+
+        //				var response = await _cloudinaryServices.UploadImage(file);
+
+        //				if (response == null)
+        //				{
+        //					_logger.LogError($"Failed to upload image for group with ID {groupId}.");
+        //					return null;
+        //				}
+
+        //				// Update the ImageUrl property with the Cloudinary URL
+        //				group.Avatar = response.Url;
+
+        //				_unitOfWork.GroupRepository.Update(group);
+        //				await _unitOfWork.SaveChangesAsync();
+        //				return response.Url;
+        //			}
+        //			catch (Exception ex)
+        //			{
+        //				_logger.LogError(ex, "An error occurred while updating group photo.");
+        //				throw;
+        //			}
+        //		}
+
+
     }
 }
 
