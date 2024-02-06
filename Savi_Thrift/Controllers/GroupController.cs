@@ -29,6 +29,21 @@ namespace Savi_Thrift.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("ExploreGroups")]
+        public async Task<IActionResult> GetAllPublicGroups()
+        {
+            var response = await _groupService.GetAllPublicGroupsAsync();
+
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode(response.StatusCode, response);
+        }
+
+
         //        [HttpGet]
         //        [Route("{id}")]
         //        public async Task<IActionResult> GetGroupById(string id)
@@ -43,20 +58,7 @@ namespace Savi_Thrift.Controllers
         //            return NotFound(response?.Errors ?? new List<string> { "Error retrieving group" });
         //        }
 
-        //        [HttpGet]
-        //        [Route("all")]
-        //        public async Task<IActionResult> GetAllGroups()
-        //        {
-        //            var response = await _groupService.GetAllGroupsAsync();
-
-        //            if (response.Succeeded)
-        //            {
-        //                return Ok(response);
-        //            }
-
-        //            return StatusCode(response.StatusCode, response);
-        //        }
-
+        //       
         //        [HttpPut]
         //        [Route("updatePhoto/{id}")]
         //        public async Task<IActionResult> UpdateGroupPhotoById(string id, [FromForm] UpdateGroupPhotoDto model)
