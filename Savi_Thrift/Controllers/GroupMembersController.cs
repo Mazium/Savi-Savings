@@ -18,7 +18,7 @@ namespace Savi_Thrift.Controllers
 
         [HttpPost]
         [Route("join-group")]
-        public async Task<IActionResult> JoinGroupsSavings(string id, AppUserGroupDto userGroupDto)
+        public async Task<IActionResult> JoinGroupsSavings(string id, GroupMemberDto userGroupDto)
         {
             var response = await _groupMembersService.JoinGroupSavingAsync(id, userGroupDto);
 

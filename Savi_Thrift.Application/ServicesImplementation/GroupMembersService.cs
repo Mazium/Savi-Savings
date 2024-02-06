@@ -6,6 +6,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
+using Savi_Thrift.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,49 +28,55 @@ namespace Savi_Thrift.Application.ServicesImplementation
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse<GroupSavingDetailsResponseDto>> JoinGroupSavingAsync(string id, AppUserGroupDto userGroupDto)
+        public async Task<ApiResponse<GroupSavingDetailsResponseDto>> JoinGroupSavingAsync(string groupId, GroupMemberDto userGroupDto)
         {
             try
             {
-                var group = await _unitOfWork.GroupSavingsRepository.GetByIdAsync(id);
+                var group = await _unitOfWork.GroupSavingsRepository.GetByIdAsync(groupId);
 
                 if (group == null)
                 {
                     return ApiResponse<GroupSavingDetailsResponseDto>.Failed("Group not found", 404, null);
                 }
-                var groupcount = await _unitOfWork.GroupMembersRepository.GetByIdAsync(id);
-                /*if (group.MemberCount >= 5)
+                var groupcount = await _unitOfWork.GroupMembersRepository.FindAsync(u => u.GroupSavingsId == groupId);
+                if (groupcount.Count == 5)
                 {
                     return ApiResponse<GroupSavingDetailsResponseDto>.Failed("This group is filled up already", 400, null);
                 }
-*/
-                var groupMember = await _unitOfWork.GroupMembersRepository.FindAsync(u => u.UserId == userGroupDto.UserId);
-                if (groupMember == null)
-                {
-                    return ApiResponse<GroupSavingDetailsResponseDto>.Failed("Group not found", 404, null);
-                }
-                //if (group.GroupSavingsMembers.Any(u => u.UserId == userGroupDto.UserId))
-                /* if (group.GroupSavingsMembers.Any(u => u.UserId == userGroupDto.UserId))
-                 {
-                     return ApiResponse<GroupSavingDetailsResponseDto>.Failed("User is already part of the group", 400, null);
-                 }*/
+                var groupMember = await _unitOfWork.GroupMembersRepository.FindAsync(u => u.UserId == userGroupDto.UserId && u.GroupSavingsId == groupId);
 
+                if (groupMember.Count > 0)
+                {
+                    return ApiResponse<GroupSavingDetailsResponseDto>.Failed("User is already part of the group", 400, null);
+                }
                 var user = new GroupSavingsMembers
                 {
                     UserId = userGroupDto.UserId,
-                    //  Position = userGroupDto.Position,
-                    // GroupSavingsId = userGroupDto.GroupSavingsId,
+                    Position = (groupMember.Count + 1).ToString(),
+                    GroupSavingsId = userGroupDto.GroupSavingsId,
                 };
-
                 // Add the user to the group
-                group.GroupSavingsMembers.Add(user);
-
-                // Automatically assign a slot to the user
-                int nextSlot = group.GroupSavingsMembers.Count + 1;
-
-                // Update the group in the database
-                _unitOfWork.GroupMembersRepository.Update(groupcount);
+                await _unitOfWork.GroupMembersRepository.AddAsync(user);
                 await _unitOfWork.SaveChangesAsync();
+                if (groupMember.Count + 1 == 5)
+                {
+                    group.ActualStartDate = DateTime.Now;
+                    var frequency = group.Frequency;
+                    if (frequency.Equals(SavingFrequency.Daily))
+                    {
+                        group.ExpectedEndDate = group.ActualStartDate.AddDays(5);
+                    }
+                    else if (frequency.Equals(SavingFrequency.Weekly))
+                    {
+                        group.ExpectedEndDate = group.ActualStartDate.AddDays(35);
+                    }
+                    else
+                    {
+                        group.ExpectedEndDate = group.ActualStartDate.AddMonths(5);
+                    }
+                    _unitOfWork.GroupSavingsRepository.Update(group);
+                    await _unitOfWork.SaveChangesAsync();
+                }
 
                 var groupSavingDetailsDto = new GroupSavingDetailsResponseDto
                 {
@@ -84,7 +91,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
             catch (Exception ex)
             {
-                return ApiResponse<GroupSavingDetailsResponseDto>.Failed("An error occurred while joining the group", 500, new List<string>() { ex.Message});
+                return ApiResponse<GroupSavingDetailsResponseDto>.Failed("An error occurred while joining the group", 500, new List<string>() { ex.Message });
             }
         }
 

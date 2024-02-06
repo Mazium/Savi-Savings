@@ -6,6 +6,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
+using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -26,7 +27,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
         }
 
 
-        public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto)
+        public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto, string userId)
         {
             try
             {
@@ -42,6 +43,21 @@ namespace Savi_Thrift.Application.ServicesImplementation
                     var groupEntity = _mapper.Map<GroupSavings>(groupCreationDto);
                     await _unitOfWork.GroupSavingsRepository.AddAsync(groupEntity);
                     await _unitOfWork.SaveChangesAsync();
+
+
+                    var user = new GroupSavingsMembers
+                    {
+                        UserId = userId,
+                        Position = "1",
+                        GroupSavingsId = groupEntity.Id,
+                    };
+                    // Add the user to the group
+                    await _unitOfWork.GroupMembersRepository.AddAsync(user);
+                    await _unitOfWork.SaveChangesAsync();                  
+
+
+
+
                     var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
 
                     return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group created successfully", 201);
