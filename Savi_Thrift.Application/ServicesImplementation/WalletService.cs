@@ -102,7 +102,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				{
 					FundAmount = fundWalletDto.FundAmount,
 					Narration = fundWalletDto.Narration,
-					TransactionType = TransactionType.Credit,
+					ActionId = fundWalletDto.ActionId,
 					WalletId = wallet.Id,
                     WalletNumber = fundWalletDto.WalletNumber
 
@@ -154,7 +154,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     FundAmount = debitWalletDto.DebitAmount,
                     Narration = debitWalletDto.Narration,
-                    TransactionType = TransactionType.Debit,
+                    ActionId = debitWalletDto.ActionId,
                     WalletId = wallet.Id
                 };
                 await _unitOfWork.WalletFundingRepository.AddAsync(walletDebit);
@@ -204,7 +204,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                                 WalletNumber = updateWallet.Result.WalletNumber,
                                 WalletId = updateWallet.Result.Id,
                                 CumulativeAmount = updateWallet.Result.Balance,
-                                TransactionType =TransactionType.Credit,
+                                ActionId = 1,
                             };
                             await _unitOfWork.WalletFundingRepository.AddAsync(walletFunding);
                             await _unitOfWork.SaveChangesAsync();
