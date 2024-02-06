@@ -67,7 +67,7 @@ try
 
     app.MapHangfireDashboard("/hangfire");
 
-    RecurringJob.AddOrUpdate(() => Console.WriteLine("Hello from Hangfire"), "* * * * *");
+    //RecurringJob.AddOrUpdate(() => Console.WriteLine("Hello from Hangfire"), "* * * * *");
 
     app.Run();
 }

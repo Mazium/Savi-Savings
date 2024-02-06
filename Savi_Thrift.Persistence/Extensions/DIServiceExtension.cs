@@ -73,6 +73,7 @@ namespace Savi_Thrift.Persistence.Extensions
 
 			// Register GroupService
 			services.AddScoped<IGroupSavingsService, GroupSavingsService>();
+			services.AddScoped<IGroupMembersService, GroupMembersService>();
 			
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 

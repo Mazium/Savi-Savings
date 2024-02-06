@@ -6,6 +6,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
+using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -26,7 +27,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
         }
 
 
-        public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto)
+        public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto, string userId)
         {
             try
             {
@@ -42,6 +43,21 @@ namespace Savi_Thrift.Application.ServicesImplementation
                     var groupEntity = _mapper.Map<GroupSavings>(groupCreationDto);
                     await _unitOfWork.GroupSavingsRepository.AddAsync(groupEntity);
                     await _unitOfWork.SaveChangesAsync();
+
+
+                    var user = new GroupSavingsMembers
+                    {
+                        UserId = userId,
+                        Position = "1",
+                        GroupSavingsId = groupEntity.Id,
+                    };
+                    // Add the user to the group
+                    await _unitOfWork.GroupMembersRepository.AddAsync(user);
+                    await _unitOfWork.SaveChangesAsync();                  
+
+
+
+
                     var groupResponse = _mapper.Map<GroupResponseDto>(groupEntity);
 
                     return ApiResponse<GroupResponseDto>.Success(groupResponse, "Group created successfully", 201);
@@ -75,6 +91,29 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 _logger.LogError(ex, "Error occurred while getting all groups");
 
                 return ApiResponse<IEnumerable<GroupResponseDto>>.Failed("Failed to get all groups", 500, new List<string> { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)
+        {
+            try
+            {
+                var groupDetails = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.Id == id && u.IsDeleted == false);
+
+                if (groupDetails.Count == 0)
+                {
+                    return ApiResponse<GroupResponseDto>.Failed($"Group not found", 404, null);
+                }
+                var groupDetail = groupDetails.First();
+                var groupResponses = _mapper.Map<GroupResponseDto>(groupDetail);
+
+                return ApiResponse<GroupResponseDto>.Success(groupResponses, $"Explore Group Saving Details", 200);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while creating a group");
+                return ApiResponse<GroupResponseDto>.Failed("Failed to create the group", 500, new List<string> { ex.InnerException.ToString() });
+
             }
         }
 
