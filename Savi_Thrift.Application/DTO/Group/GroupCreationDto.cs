@@ -21,9 +21,6 @@ namespace Savi_Thrift.Application.DTO.Group
         public string SafeLandScapeImageURL { get; set; }
         public DateTime NextRunTime { get; set; }
         public bool IsOpen { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime ModifiedAt { get; set; } = DateTime.Now;
-        public bool IsDeleted { get; set; }
 
 
     }
