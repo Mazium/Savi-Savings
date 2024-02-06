@@ -6,6 +6,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
+using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -77,6 +78,88 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 return ApiResponse<IEnumerable<GroupResponseDto>>.Failed("Failed to get all groups", 500, new List<string> { ex.Message });
             }
         }
+
+
+        public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> ListOngoingGroupSavingsAccountsAsync()
+        {
+            try
+            {
+                // Retrieve all ongoing group savings accounts and filter them where GroupStatus is 'Ongoing'
+                var allGroups = await _unitOfWork.GroupSavingsRepository.GetAllAsync();
+
+                var ongoingGroups = allGroups.Where(g => g.GroupStatus == GroupStatus.Ongoing);
+
+                var groupResponses = _mapper.Map<IEnumerable<GroupResponseDto>>(ongoingGroups);
+
+                return ApiResponse<IEnumerable<GroupResponseDto>>.Success(
+                    groupResponses,
+                    "Ongoing group saving accounts retrieved successfully",
+                    200
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting ongoing group savings accounts");
+
+                return ApiResponse<IEnumerable<GroupResponseDto>>.Failed(
+                    "Failed to get ongoing group saving accounts",
+                    500,
+                    new List<string> { ex.Message }
+                );
+            }
+        }
+
+
+        public async Task<ApiResponse<GroupDetailsDto>> GetGroupDetailByIdAsync(string groupId)
+        {
+            try
+            {
+                // Retrieve the group entity by ID using the repository
+                var groupEntity = await _unitOfWork.GroupSavingsRepository
+                    .FindSingleAsync(g => g.Id == groupId && g.GroupStatus == GroupStatus.Ongoing);
+
+                // Check if the group entity is null, indicating that the group was not found
+                if (groupEntity == null)
+                {
+                    return ApiResponse<GroupDetailsDto>.Failed(
+                        $"Group with ID {groupId} not found or is inactive/open",
+                        404,
+                        null
+                    );
+                }
+
+                // Map the group entity to GroupDetailsDto using AutoMapper
+                var groupResponse = _mapper.Map<GroupDetailsDto>(groupEntity);
+
+                // Return a successful ApiResponse with the mapped GroupDetailsDto
+                return ApiResponse<GroupDetailsDto>.Success(
+                    groupResponse,
+                    "Group retrieved successfully",
+                    200
+                );
+            }
+            catch (Exception ex)
+            {
+                // Log any exceptions that occur during the process
+                _logger.LogError(ex, $"Error occurred while getting a group by ID ({groupId})");
+
+                // Return a failed ApiResponse with details of the error
+                return ApiResponse<GroupDetailsDto>.Failed(
+                    "Failed to get the group",
+                    500,
+                    new List<string> { ex.Message }
+                );
+            }
+        }
+
+
+
+
+
+
+
+
+
 
         //		public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto)
         //		{

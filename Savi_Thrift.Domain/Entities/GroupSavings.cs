@@ -4,6 +4,7 @@ namespace Savi_Thrift.Domain.Entities
 {
     public class GroupSavings : BaseEntity
     {
+
         public string GroupName { get; set; }
         public decimal ContributionAmount { get; set; }
         public DateTime ExpectedStartDate { get; set; }
