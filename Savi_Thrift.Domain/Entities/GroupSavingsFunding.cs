@@ -7,9 +7,5 @@
         public string GroupSavingsId { get; set; } 
         public decimal Amount { get; set; }
 
-
-
-
-
     }
 }
