@@ -9,9 +9,9 @@ namespace Savi_Thrift.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
-        private readonly IGroupService _groupService;
+        private readonly IGroupSavingsService _groupService;
 
-        public GroupController(IGroupService groupService)
+        public GroupController(IGroupSavingsService groupService)
         {
             _groupService = groupService;
         }
@@ -26,51 +26,49 @@ namespace Savi_Thrift.Controllers
 
             var response = await _groupService.CreateGroupAsync(groupCreationDto);
 
-            return response.Succeeded
-                ? Created($"api/groups/{response.Data.Name}", response)
-                : StatusCode(response.StatusCode, response);
+            return Ok(response);
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetGroupById(string id)
-        {
-            var response = await _groupService.GetGroupByIdAsync(id);
+        //        [HttpGet]
+        //        [Route("{id}")]
+        //        public async Task<IActionResult> GetGroupById(string id)
+        //        {
+        //            var response = await _groupService.GetGroupByIdAsync(id);
 
-            if (response != null && response.Succeeded)
-            {
-                return Ok(response);
-            }
+        //            if (response != null && response.Succeeded)
+        //            {
+        //                return Ok(response);
+        //            }
 
-            return NotFound(response?.Errors ?? new List<string> { "Error retrieving group" });
-        }
+        //            return NotFound(response?.Errors ?? new List<string> { "Error retrieving group" });
+        //        }
 
-        [HttpGet]
-        [Route("all")]
-        public async Task<IActionResult> GetAllGroups()
-        {
-            var response = await _groupService.GetAllGroupsAsync();
+        //        [HttpGet]
+        //        [Route("all")]
+        //        public async Task<IActionResult> GetAllGroups()
+        //        {
+        //            var response = await _groupService.GetAllGroupsAsync();
 
-            if (response.Succeeded)
-            {
-                return Ok(response);
-            }
+        //            if (response.Succeeded)
+        //            {
+        //                return Ok(response);
+        //            }
 
-            return StatusCode(response.StatusCode, response);
-        }
+        //            return StatusCode(response.StatusCode, response);
+        //        }
 
-        [HttpPut]
-        [Route("updatePhoto/{id}")]
-        public async Task<IActionResult> UpdateGroupPhotoById(string id, [FromForm] UpdateGroupPhotoDto model)
-        {
-            var imageUrl = await _groupService.UpdateGroupPhotoByGroupId(id, model);
+        //        [HttpPut]
+        //        [Route("updatePhoto/{id}")]
+        //        public async Task<IActionResult> UpdateGroupPhotoById(string id, [FromForm] UpdateGroupPhotoDto model)
+        //        {
+        //            var imageUrl = await _groupService.UpdateGroupPhotoByGroupId(id, model);
 
-            if (imageUrl != null)
-            {
-                return Ok(new ApiResponse<string>(true, "Group photo updated successfully", 200, imageUrl, null));
-            }
+        //            if (imageUrl != null)
+        //            {
+        //                return Ok(new ApiResponse<string>(true, "Group photo updated successfully", 200, imageUrl, null));
+        //            }
 
-            return StatusCode(500, new ApiResponse<string?>(false, "Failed to update group photo", 500, null, null));
-        }
+        //            return StatusCode(500, new ApiResponse<string?>(false, "Failed to update group photo", 500, null, null));
+        //        }
     }
 }
