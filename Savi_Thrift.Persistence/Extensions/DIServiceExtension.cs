@@ -75,17 +75,9 @@ namespace Savi_Thrift.Persistence.Extensions
 			
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            //Register UserTransactionRepository
-           // services.AddScoped<IUserTransactionRepository, UserTransactionRepository>();
             services.AddScoped<IUserTransactionServices, UserTransactionServices>();
 
-			//Google authentication
-			//services.AddAuthentication().AddGoogle(googleOptions =>
-			//{
-			//    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-			//    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
-			//});
-
+			
 			services.AddAuthentication(options =>
 			{
 				options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -102,7 +94,7 @@ namespace Savi_Thrift.Persistence.Extensions
 					options.CallbackPath = "/api/Authentication/signin-google/token";
 				});
 
-            //services.Configure<GoogleAPiSettings>(configuration.GetSection("GoogleApi"));
+            
 
             services.AddCors(options =>
             {
