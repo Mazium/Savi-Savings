@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Savi_Thrift.Persistence.Context;
 
@@ -11,9 +12,10 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    partial class SaviDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240205222100_ThirdGroupMigration")]
+    partial class ThirdGroupMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -543,6 +545,9 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<decimal>("AmountSaved")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("AmountToAdd")
                         .HasColumnType("decimal(18,2)");
 
@@ -559,20 +564,25 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Frequency")
                         .HasColumnType("int");
 
                     b.Property<decimal>("GoalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("IsAutomatic")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -584,7 +594,7 @@ namespace Savi_Thrift.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletNumber")
+                    b.Property<string>("WalletId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

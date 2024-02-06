@@ -2423,6 +2423,7 @@
 2024-01-23 20:49:44.1917 Info Configuration initialized.
 2024-01-23 20:49:45.3646 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\user\OneDrive\Desktop\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
 2024-01-23 20:49:45.4219 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+<<<<<<< HEAD
 2024-01-28 22:41:24.8451 Info Registered target NLog.Targets.FileTarget(Name=customLog)
 2024-01-28 22:41:24.9112 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
 2024-01-28 22:41:24.9112 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)

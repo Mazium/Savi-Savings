@@ -85,7 +85,7 @@ namespace Savi_Thrift.Controllers
             return BadRequest(response);
         }
 
-            [HttpGet("PersonalSavingDetails")]
+        [HttpGet("PersonalSavingDetails")]
         public async Task<IActionResult> GetPersonalSaving(string Id)
         {
             var response = await _savingService.GetPersonalSavings(Id);

@@ -4,8 +4,8 @@ using Savi_Thrift.Persistence.Context;
 
 namespace Savi_Thrift.Persistence.Repositories
 {
-    public class GroupRepository: GenericRepository<Group>, IGroupRepository
+    public class GroupSavingsRepository: GenericRepository<GroupSavings>, IGroupSavingsRepository
     {
-        public GroupRepository(SaviDbContext saviDbContext) : base(saviDbContext) { }
+        public GroupSavingsRepository(SaviDbContext saviDbContext) : base(saviDbContext) { }
     }
 }

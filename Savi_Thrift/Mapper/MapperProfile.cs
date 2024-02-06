@@ -18,14 +18,13 @@ namespace Savi_Thrift.Mapper
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.AppUserId))
             .ReverseMap();
             CreateMap<CreateWalletDto, Wallet>().ReverseMap();
-            CreateMap<GroupResponseDto, Group>().ReverseMap();
-            CreateMap<GroupCreationDto, Group>().ReverseMap();
+            CreateMap<GroupCreationDto, GroupSavings>().ReverseMap();
+            CreateMap<GroupResponseDto, GroupSavings>().ReverseMap();
             CreateMap<Wallet, WalletResponseDto>().ReverseMap();
             CreateMap<CreateGoalDto, Saving>().ReverseMap();
             CreateMap<GoalResponseDto, Saving>().ReverseMap();
             CreateMap<RegisterResponseDto, AppUser>().ReverseMap();
             CreateMap<FundWalletDto, WalletFunding>().ReverseMap();
-			CreateMap<UpdateGroupPhotoDto, Group>().ReverseMap();
             CreateMap<Saving, CreditSavingsDto>().ReverseMap();
             CreateMap<Saving, GetPersonalSavingsDTO>().ReverseMap();
 
