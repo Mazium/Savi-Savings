@@ -15,5 +15,6 @@ namespace Savi_Thrift.Application.DTO.Saving
 		public DateTime TargetDate { get; set; }
 		public decimal AmountToAdd { get; set; }
 		public SavingFrequency Frequency { get; set; }
+		public bool IsAutomatic { get; set; }
 	}
 }
