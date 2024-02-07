@@ -125,7 +125,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				if (wallet.Balance < creditDto.CreditAmount)
 				{
 
-					return ApiResponse<SavingsResponseDto>.Failed("Insufficient funds in the wallet.", StatusCodes.Status400BadRequest, new List<string>());
+					return ApiResponse<SavingsResponseDto>.Failed("Insufficient funds in the wallet.", StatusCodes.Status200OK, new List<string>());
 				}
 
 				// Debit the wallet
