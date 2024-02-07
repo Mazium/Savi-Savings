@@ -5,6 +5,7 @@ using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Domain.Entities;
+using System.Text.RegularExpressions;
 
 namespace Savi_Thrift.Mapper
 {
@@ -27,6 +28,7 @@ namespace Savi_Thrift.Mapper
             CreateMap<FundWalletDto, WalletFunding>().ReverseMap();
             CreateMap<Saving, CreditSavingsDto>().ReverseMap();
             CreateMap<Saving, GetPersonalSavingsDTO>().ReverseMap();
+            CreateMap<GroupSavings, GroupDetailsDto>().ReverseMap();
 
 
         }  

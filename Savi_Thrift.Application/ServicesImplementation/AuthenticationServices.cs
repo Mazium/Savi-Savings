@@ -119,12 +119,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                             Token = token
                         };
 
-                        //await _emailServices.SendEmailAsync(new MailRequest
-                        //{
-                        //    ToEmail = appUser.Email,
-                        //    Subject = "Confirm Your Email",
-                        //    Body = "Thank you for registering. ",
-                        //}, confirmationLink);
+                       
 
                         return ApiResponse<RegisterResponseDto>.Success(response, "User registered successfully. Please click on the link sent to your email to confirm your account", StatusCodes.Status201Created);
                     }
