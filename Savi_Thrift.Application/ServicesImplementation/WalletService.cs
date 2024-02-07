@@ -112,11 +112,12 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 await _unitOfWork.SaveChangesAsync();
 
                 var walletFunding = new WalletFunding
-				{
-					FundAmount = fundWalletDto.FundAmount,
-					Narration = fundWalletDto.Narration,
-					ActionId = fundWalletDto.ActionId,
-					WalletId = wallet.Id,
+                {
+                    FundAmount = fundWalletDto.FundAmount,
+                    Narration = fundWalletDto.Narration,
+                    ActionId = 1,
+                    WalletId = wallet.Id,
+                    CumulativeAmount = bal,
                     WalletNumber = fundWalletDto.WalletNumber
 
 				};

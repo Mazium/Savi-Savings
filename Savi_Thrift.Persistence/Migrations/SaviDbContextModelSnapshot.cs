@@ -554,9 +554,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Frequency")
                         .HasColumnType("int");
 
@@ -572,9 +569,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Purpose")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -584,7 +578,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletId")
+                    b.Property<string>("WalletNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -598,6 +592,9 @@ namespace Savi_Thrift.Persistence.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ActionId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -617,13 +614,13 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Reference")
+                    b.Property<string>("SavingsId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WalletNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

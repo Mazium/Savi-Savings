@@ -52,7 +52,7 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _walletService.GetWalletByUserId(userId));
 		}
 
-		[HttpGet("FundWallet")]
+		[HttpPost("FundWallet")]
 		public async Task<IActionResult> FundWallet(FundWalletDto fundWalletDto)
 		{
 			if (!ModelState.IsValid)

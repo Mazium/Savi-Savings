@@ -9,10 +9,11 @@ namespace Savi_Thrift.Application.Interfaces.Services
 	{
 		Task<ApiResponse<GoalResponseDto>> CreateGoal(CreateGoalDto createGoalDto);
 		Task<ApiResponse<List<GoalResponseDto>>> ViewGoals();
-        Task<ApiResponse<List<Saving>>> GetListOfAllUserGoals(string UserId);
-        Task<ApiResponse<SavingsResponseDto>> CreditPersonalSavings(CreditSavingsDto creditDto);
+		Task<ApiResponse<List<Saving>>> GetListOfAllUserGoals(string walletNumber);
+		Task<ApiResponse<decimal>> GetTotalSavingBalance(string walletNumber);
+		Task<ApiResponse<SavingsResponseDto>> CreditPersonalSavings(CreditSavingsDto creditDto);
         Task<ApiResponse<SavingsResponseDto>> WithdrawFundsFromGoalToWallet(CreditWalletFromGoalDto creditDto);
         Task<ApiResponse<DebitResponseDto>> FundsPersonalGoal(FundsPersonalGoalDto personalGoalDto);
-        Task<ApiResponse<GetPersonalSavingsDTO>> GetPersonalSavings(string Id);
+        Task<ApiResponse<GetPersonalSavingsDTO>> GetPersonalSavings(string savingsId);
     }
 }
