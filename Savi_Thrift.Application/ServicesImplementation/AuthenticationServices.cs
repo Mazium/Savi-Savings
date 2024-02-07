@@ -39,28 +39,34 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_emailServices = emailServices;
 		}
 
-        public async Task<ApiResponse<string>> VerifyAndAuthenticateUserAsync(string idToken)
+        public async Task<ApiResponse<string[]>> VerifyAndAuthenticateUserAsync(string idToken)
         {
             try
             {
                 var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, new GoogleJsonWebSignature.ValidationSettings());
                 var userEmail = payload.Email;
                 var existingUser = await _userManager.FindByEmailAsync(userEmail);
+                var wallet = await _walletService.GetWalletByUserId(existingUser.Id);
+                string wallletNumber = wallet.Data.WalletNumber;
+                string userId = existingUser.Id;
+
+                string[] response = new string[] {userEmail,wallletNumber, payload.GivenName+" "+ payload.FamilyName, userId };
+
 
                 if (existingUser != null)
                 {
                     await _signInManager.SignInAsync(existingUser, isPersistent: false);
-                    return ApiResponse<string>.Success("", "User authenticated successfully on the server side", StatusCodes.Status200OK);
+                    return ApiResponse<string[]>.Success(response, "User authenticated successfully on the server side", StatusCodes.Status200OK);
                 }
                 else
                 {
-                    return ApiResponse<string>.Failed("User not found", StatusCodes.Status404NotFound, new List<string>());
+                    return ApiResponse<string[]>.Failed("User not found", StatusCodes.Status404NotFound, new List<string>());
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while changing password");
-                return ApiResponse<string>.Failed("Error occurred while authenticating user", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+                return ApiResponse<string[]>.Failed("Error occurred while authenticating user", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
         }
 
@@ -118,12 +124,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                             Token = token
                         };
 
-                        //await _emailServices.SendEmailAsync(new MailRequest
-                        //{
-                        //    ToEmail = appUser.Email,
-                        //    Subject = "Confirm Your Email",
-                        //    Body = "Thank you for registering. ",
-                        //}, confirmationLink);
+                       
 
                         return ApiResponse<RegisterResponseDto>.Success(response, "User registered successfully. Please click on the link sent to your email to confirm your account", StatusCodes.Status201Created);
                     }
@@ -346,7 +347,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
                 string token = await _userManager.GeneratePasswordResetTokenAsync(user);
                
-                //token = HttpUtility.UrlEncode(token);
+                token = HttpUtility.UrlEncode(token);
 
                 user.PasswordResetToken = token;
                 user.ResetTokenExpires = DateTime.UtcNow.AddHours(24);

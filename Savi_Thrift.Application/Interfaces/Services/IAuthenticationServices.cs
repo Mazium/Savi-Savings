@@ -17,6 +17,6 @@ namespace Savi_Thrift.Application.Interfaces.Services
         Task<ApiResponse<string>> ForgotPasswordAsync(string email);
         //Task<ApiResponse<string>> SendConfirmationEmail(string email, string link);
         Task<ApiResponse<string>> ConfirmEmail(string userid, string token);
-        Task<ApiResponse<string>> VerifyAndAuthenticateUserAsync(string idToken);
+        Task<ApiResponse<string[]>> VerifyAndAuthenticateUserAsync(string idToken);
     }
 }

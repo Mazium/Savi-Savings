@@ -1,9 +1,11 @@
 ﻿
 using Google.Apis.Auth.OAuth2;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
@@ -16,18 +18,20 @@ namespace Savi_Thrift.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationServices _authenticationService;
+        private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IConfiguration _configuration;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailServices _emailServices;
         private readonly IUserService _userService;
 
-        public AuthenticationController(IConfiguration configuration,SignInManager<AppUser> signInManager,UserManager<AppUser> userManager, IUserService userService, IEmailServices emailService, IAuthenticationServices authenticationService)
+        public AuthenticationController(IBackgroundJobClient backgroundJobClient, IConfiguration configuration,SignInManager<AppUser> signInManager,UserManager<AppUser> userManager, IUserService userService, IEmailServices emailService, IAuthenticationServices authenticationService)
         {
             _authenticationService = authenticationService;
             _emailServices = emailService;
             _userService = userService;
             _userManager = userManager;
+            _backgroundJobClient = backgroundJobClient;
             _configuration = configuration;
             _signInManager = signInManager;
             
@@ -36,6 +40,7 @@ namespace Savi_Thrift.Controllers
         [HttpPost("signin-google/{token}")]
         public async Task<IActionResult> GoogleAuth([FromRoute] string token)
         {
+           
             if (!ModelState.IsValid)
             {
                 return BadRequest(new ApiResponse<string>(false, "Invalid model state.", StatusCodes.Status400BadRequest,  "", ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
@@ -53,41 +58,43 @@ namespace Savi_Thrift.Controllers
 
             // Call registration service
             var registrationResult = await _authenticationService.RegisterAsync(appUserCreateDto);
-            return Ok(registrationResult);
+           // return Ok(registrationResult);
 
             // Handle registration result
-            //if (registrationResult.Succeeded)
-            //{
-            //    var data = registrationResult.Data;
-            //    var confirmationLink = GenerateConfirmEmailLink(data.Id, data.Token);
-            //    if (confirmationLink != null)
-            //    {
-            //        await _emailServices.SendEmailAsync(confirmationLink, data.Email);
-            //        return Ok(data);
-            //    }
-            //    else
-            //    {
-            //        await _userService.DeleteUser(data.Id);
-            //        return Ok("Email sending error: Confirmation link is null");
-            //    }
 
-            //}
-            //else
-            //{
-            //    return BadRequest(new { Message = registrationResult.Message, Errors = registrationResult.Errors });
-            //}
+            if (registrationResult.Succeeded)
+            {
+                var data = registrationResult.Data;
+                _backgroundJobClient.Enqueue(() => Console.WriteLine(data));
+                var confirmationLink = GenerateConfirmEmailLink(data.Id, data.Token);
+                if (confirmationLink != null)
+                {
+                    await _emailServices.SendEmailAsync(confirmationLink, data.Email);
+                    return Ok(data);
+                }
+                else
+                {
+                    await _userService.DeleteUser(data.Id);
+                    return Ok("Email sending error: Confirmation link is null");
+                }
+
+            }
+            else
+            {
+                return BadRequest(new { Message = registrationResult.Message, Errors = registrationResult.Errors });
+            }
         }
 
 
-		[HttpPost("Login")]
-		public async Task<IActionResult> Login(AppUserLoginDto loginDTO)
-		{
-			if (!ModelState.IsValid)
-			{
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(AppUserLoginDto loginDTO)
+        {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ApiResponse<string>.Failed("Invalid model state.", 400, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
-			}
-			return Ok(await _authenticationService.LoginAsync(loginDTO));
-		}
+            }
+            return Ok(await _authenticationService.LoginAsync(loginDTO));
+        }
 
 
         private static string GenerateConfirmEmailLink(string id, string token)
