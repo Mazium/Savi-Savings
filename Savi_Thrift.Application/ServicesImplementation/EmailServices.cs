@@ -24,33 +24,31 @@ namespace Savi_Thrift.Infrastructure.Services
             {
                 var bodyBuilder = new BodyBuilder
                 {
-                    HtmlBody = $"{link}><br>Click here to confirm your email</a>"
+                    HtmlBody = $"<a href='{link}'>Click here to confirm your email</a>"
                 };
 
-                
                 var emailMessage = new MimeMessage();
-
                 emailMessage.From.Add(new MailboxAddress(_emailSettings.DisplayName, _emailSettings.Email));
                 emailMessage.To.Add(new MailboxAddress(email, email));
                 emailMessage.Subject = "Confirm your email";
-
-                
-
                 emailMessage.Body = bodyBuilder.ToMessageBody();
 
                 using var client = new SmtpClient();
-                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.SslOnConnect);
+
+                // Adjustments for SSL/TLS handshake issue
+                client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Permissive certificate validation
+                await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port); // Use STARTTLS
                 await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
-        }
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while sending email.");
-
                 throw new Exception("Error occurred while sending email. Please try again later.", ex);
             }
         }
+
         public async Task SendMailAsync(MailRequest mailRequest)
         {
             try
