@@ -34,20 +34,20 @@ namespace Savi_Thrift.Controllers
 
 
         [HttpPost("createPersonalSaving")]
-		public async Task<IActionResult> CreateGoal(CreateGoalDto createGoalDto)
+		public async Task<IActionResult> CreateGoal([FromBody] CreateGoalDto createGoalDto)
 		{
 			if (!ModelState.IsValid)
 			{
-				return BadRequest(ApiResponse<string>.Failed("Invalid model state.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
+				return BadRequest(ApiResponse<string>.Failed("Invalid model state my friend.", StatusCodes.Status400BadRequest, ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList()));
 			}
 
 			return Ok(await _savingService.CreateGoal(createGoalDto));
 		}
 
-		[HttpGet("list/{UserId}")]
-		public async Task<IActionResult> GetAllGoals(string UserId)
+		[HttpGet("list/{walletNumber}")]
+		public async Task<IActionResult> GetAllGoals(string walletNumber)
 		{
-			var response = await _savingService.GetListOfAllUserGoals(UserId);
+			var response = await _savingService.GetListOfAllUserGoals(walletNumber);
 			if (response.StatusCode == 200)
 			{
 				return Ok(response);
@@ -86,9 +86,9 @@ namespace Savi_Thrift.Controllers
         }
 
         [HttpGet("PersonalSavingDetails")]
-        public async Task<IActionResult> GetPersonalSaving(string Id)
+        public async Task<IActionResult> GetPersonalSaving(string savingsId)
         {
-            var response = await _savingService.GetPersonalSavings(Id);
+            var response = await _savingService.GetPersonalSavings(savingsId);
 
             if (response.StatusCode == 200)
             {
@@ -97,7 +97,14 @@ namespace Savi_Thrift.Controllers
             return BadRequest(response);
         }
 
-        [HttpPost("fund-saving(goal)")]
+		[HttpGet("GetTotalSavingBalance")]
+		public async Task<IActionResult> GetTotalSavingBalance(string walletNumber)
+		{
+			var response = await _savingService.GetTotalSavingBalance(walletNumber);
+			return Ok(response);
+		}
+
+		[HttpPost("fund-personal-saving")]
         public async Task<IActionResult> FundPersonalGoal(FundsPersonalGoalDto personalGoalDto)
         {
             var response = await _savingService.FundsPersonalGoal(personalGoalDto);

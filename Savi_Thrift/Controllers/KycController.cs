@@ -22,17 +22,20 @@ namespace Savi_Thrift.Controllers
         }
 
         [HttpDelete("{kycId}")]
-        public async Task<IActionResult> DeleteKyc(string kycId) 
-            => Ok(await _kycService.DeleteKycById(kycId));
+        public async Task<IActionResult> DeleteKyc(string kycId)    => Ok(await _kycService.DeleteKycById(kycId));
 
         [HttpGet("get-kycs")]
         public async Task<IActionResult> GetAllKycs([FromQuery] int page, [FromQuery] int perPage)
             => Ok(await _kycService.GetAllKycs(page, perPage));
 
         [HttpGet("{kycId}")]
-        public async Task<IActionResult> GetKycById(string kycId) 
-            => Ok(await _kycService.GetKycById(kycId));
+        public async Task<IActionResult> GetKycById(string kycId)  => Ok(await _kycService.GetKycById(kycId));
 
-   
-    }
+
+        [HttpGet("GetKycByUserId")]
+        public async Task<IActionResult> GetKycByUserId(string userId)
+        {
+            return Ok(await _kycService.GetKycByUserId(userId));
+        }
+	}
 }

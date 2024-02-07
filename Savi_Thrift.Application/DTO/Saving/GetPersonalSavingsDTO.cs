@@ -12,7 +12,7 @@ namespace Savi_Thrift.Application.DTO.Saving
 
         public decimal GoalAmount { get; set; }
 
-        public DateTime NextSaveDate { get; set; }
+        public DateTime TargetDate { get; set; }
 
         public DateTime ModifiedAt { get; set;}
 
@@ -23,6 +23,7 @@ namespace Savi_Thrift.Application.DTO.Saving
         public SavingFrequency Frequency { get; set; }
 
         public string Avatar { get; set; }
+        public decimal Balance { get; set; }
 
     }
 }

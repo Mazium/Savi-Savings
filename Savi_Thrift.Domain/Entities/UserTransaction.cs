@@ -5,12 +5,12 @@ namespace Savi_Thrift.Domain.Entities
 {
     public class UserTransaction : BaseEntity
     {
-        public TransactionType TransactionType { get; set; }
+        public int ActionId { get; set; }
         public string Description { get; set; } = string.Empty;
         public decimal Amount { get; set; }
-        public string Reference { get; set; } = string.Empty;
+        public string WalletNumber { get; set; } = string.Empty;
+        public string SavingsId { get; set; }
 
-        [ForeignKey("AppUserId")]
-        public string UserId { get; set; } = string.Empty;
+        public string UserId { get; set; }
 	}
 }
