@@ -58,6 +58,41 @@ namespace Savi_Thrift.Controllers
         }
 
 
+
+        [HttpGet]
+        [Route("allActiveGroups")]
+        public async Task<IActionResult> ListSavingsGroups()
+        {
+            var response = await _groupService.ListOngoingGroupSavingsAccountsAsync();
+
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode(response.StatusCode, response);
+        }
+
+
+        [HttpGet]
+        [Route("details/{id}")]
+        public async Task<IActionResult> GetGroupDetailById(string id)
+        {
+            var response = await _groupService.GetGroupDetailByIdAsync(id);
+
+            if (response != null && response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return NotFound(response?.Errors ?? new List<string> { "Error retrieving group detail" });
+        }
+
+
+
+
+
+
         //        [HttpGet]
         //        [Route("{id}")]
         //        public async Task<IActionResult> GetGroupById(string id)
