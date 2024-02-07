@@ -1,3 +1,4 @@
+using Hangfire;
 using NLog;
 using NLog.Web;
 using Savi_Thrift.Common.Utilities;
@@ -8,12 +9,17 @@ using Savi_Thrift.Persistence.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationHelper.InstantiateConfiguration(builder.Configuration);
 
+
 var configuration = builder.Configuration;
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+
 try
 {
     // Add services to the container.
+
    
+
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -26,7 +32,9 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
-   // builder.Services.AddCors();
+
+    
+    builder.Services.AddHangfireServer();
     builder.Services.ConfigureAuthentication(configuration);
 	builder.Services.AddAutoMapper(typeof(MapperProfile));
 	builder.Logging.ClearProviders();
@@ -54,6 +62,12 @@ try
 
 
     app.MapControllers();
+
+    app.UseHangfireDashboard();
+
+    app.MapHangfireDashboard("/hangfire");
+
+    //RecurringJob.AddOrUpdate(() => Console.WriteLine("Hello from Hangfire"), "* * * * *");
 
     app.Run();
 }

@@ -44,43 +44,17 @@ namespace Savi_Thrift.Application.ServicesImplementation
             try
             {
                 var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, new GoogleJsonWebSignature.ValidationSettings());
-                var userId = payload.Subject;
                 var userEmail = payload.Email;
-                var userName = payload.Name;
-                var firstName = payload.GivenName;
-                var lastName = payload.FamilyName;
                 var existingUser = await _userManager.FindByEmailAsync(userEmail);
 
-                if (existingUser == null)
+                if (existingUser != null)
                 {
-                    var newUser = new AppUser
-                    {
-                        Email = userEmail,
-                        UserName = userEmail,
-                        FirstName = firstName,
-                        LastName = lastName,
-                    };
-
-                    var result = await _userManager.CreateAsync(newUser);
-
-                    if (result.Succeeded)
-                    {
-                  
-                        await _signInManager.SignInAsync(newUser, isPersistent: false);
-                        return ApiResponse<string>.Success("","User created and authenticated successfully on the server side", StatusCodes.Status200OK);
-                    }
-                    else
-                    {
-                      
-                        return ApiResponse<string>.Failed("User creation failed", StatusCodes.Status400BadRequest, new List<string>());
-                    }
+                    await _signInManager.SignInAsync(existingUser, isPersistent: false);
+                    return ApiResponse<string>.Success("", "User authenticated successfully on the server side", StatusCodes.Status200OK);
                 }
                 else
                 {
-                
-                    await _signInManager.SignInAsync(existingUser, isPersistent: false);
-
-                    return ApiResponse<string>.Success("","User authenticated successfully on the server side", StatusCodes.Status200OK);
+                    return ApiResponse<string>.Failed("User not found", StatusCodes.Status404NotFound, new List<string>());
                 }
             }
             catch (Exception ex)
@@ -89,6 +63,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 return ApiResponse<string>.Failed("Error occurred while authenticating user", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
         }
+
 
         public async Task<ApiResponse<RegisterResponseDto>> RegisterAsync(AppUserCreateDto appUserCreateDto)
         {
