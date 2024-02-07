@@ -17,14 +17,14 @@ namespace Savi_Thrift.Controllers
         }
 
         [HttpPost("Add-Groups")]
-        public async Task<IActionResult> CreateGroup([FromBody] GroupCreationDto groupCreationDto)
+        public async Task<IActionResult> CreateGroup([FromBody] GroupCreationDto groupCreationDto, string userId)
         {
             if (groupCreationDto == null)
             {
                 return BadRequest("Invalid group data");
             }
 
-            var response = await _groupService.CreateGroupAsync(groupCreationDto);
+            var response = await _groupService.CreateGroupAsync(groupCreationDto, userId);
 
             return Ok(response);
         }
@@ -42,6 +42,55 @@ namespace Savi_Thrift.Controllers
 
             return StatusCode(response.StatusCode, response);
         }
+
+        [HttpGet]
+        [Route("get-explore-details")]
+        public async Task<IActionResult> GetExploreGroupsDetails(string id)
+        {
+            var response = await _groupService.ExploreGroupSavingDetailsAsync(id);
+
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode(response.StatusCode, response);
+        }
+
+
+
+        [HttpGet]
+        [Route("allActiveGroups")]
+        public async Task<IActionResult> ListSavingsGroups()
+        {
+            var response = await _groupService.ListOngoingGroupSavingsAccountsAsync();
+
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return StatusCode(response.StatusCode, response);
+        }
+
+
+        [HttpGet]
+        [Route("details/{id}")]
+        public async Task<IActionResult> GetGroupDetailById(string id)
+        {
+            var response = await _groupService.GetGroupDetailByIdAsync(id);
+
+            if (response != null && response.Succeeded)
+            {
+                return Ok(response);
+            }
+
+            return NotFound(response?.Errors ?? new List<string> { "Error retrieving group detail" });
+        }
+
+
+
+
 
 
         //        [HttpGet]

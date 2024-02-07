@@ -12,5 +12,7 @@ namespace Savi_Thrift.Application.Interfaces.Repositories
 		void DeleteAsync(T entity);
 		void DeleteAllAsync(List<T> entities);
 		void SaveChangesAsync();
-	}
+		Task<T> FindSingleAsync(Expression<Func<T, bool>> expression);
+
+    }
 }
