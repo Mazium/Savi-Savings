@@ -26,5 +26,14 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _userService.GetUsers());
 		}
 
-	}
+
+        [HttpGet("all-new-Users")]
+        public async Task<IActionResult> GetAllNewUsers()
+        {
+            var newUsers = await _userService.GetNewUsers();
+            if (newUsers == null)
+                return NotFound(newUsers);
+            return Ok(newUsers);
+        }
+    }
 }

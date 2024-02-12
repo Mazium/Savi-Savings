@@ -7,6 +7,7 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Enums;
+using Savi_Thrift.Application.DTO.UserTransaction;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -53,7 +54,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                     };
                     // Add the user to the group
                     await _unitOfWork.GroupMembersRepository.AddAsync(user);
-                    await _unitOfWork.SaveChangesAsync();                  
+                    await _unitOfWork.SaveChangesAsync();
 
 
 
@@ -167,14 +168,14 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
         }
 
-
-
-
-
-
-
-
-
+        public async Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup()
+        {
+            var groupEntity = await _unitOfWork.GroupSavingsRepository.GetNewGroupSavings();
+            if(groupEntity.Count < 0)
+                return ApiResponse<List<GroupResponseDto>>.Failed($"Group not found", 404, null);
+            var groupResponses = _mapper.Map<List<GroupResponseDto>>(groupEntity);
+            return ApiResponse<List<GroupResponseDto>>.Success(groupResponses, $"Explore Group Saving Details", 200);
+        }
 
         public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)
         {
