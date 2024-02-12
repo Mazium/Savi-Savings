@@ -6,5 +6,6 @@ namespace Savi_Thrift.Application.Repositories
 {
     public interface IUserRepository : IGenericRepository<AppUser>
     {
+        Task<List<AppUser>> GetNewUsers();
     }
 }
