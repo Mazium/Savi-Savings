@@ -1,5 +1,6 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore;
 using Savi_Thrift.Application.Repositories;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Persistence.Context;
@@ -8,6 +9,19 @@ namespace Savi_Thrift.Persistence.Repositories
 {
     public class UserRepository : GenericRepository<AppUser>, IUserRepository
     {
-		public UserRepository(SaviDbContext context) : base(context) { }
-	}
+        private readonly SaviDbContext _saviDbContext;
+
+        public UserRepository(SaviDbContext saviDbContext) : base(saviDbContext)
+        {
+            _saviDbContext = saviDbContext;
+        }
+
+        public async Task<List<AppUser>> GetNewUsers()
+        {
+            DateTime today = DateTime.Today;
+            var newUsers = await _saviDbContext.Users.Where(u => u.CreatedAt.Date == today)
+                               .ToListAsync();
+            return newUsers;
+        }
+    }
 }

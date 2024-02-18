@@ -15,12 +15,13 @@ namespace Savi_Thrift.Controllers
         {
            _groupMembersService = groupMembersService;
         }
+		
 
-        [HttpPost]
+		[HttpPost]
         [Route("join-group")]
-        public async Task<IActionResult> JoinGroupsSavings(string id, GroupMemberDto userGroupDto)
+        public async Task<IActionResult> JoinGroupsSavings(GroupMemberDto userGroupDto)
         {
-            var response = await _groupMembersService.JoinGroupSavingAsync(id, userGroupDto);
+            var response = await _groupMembersService.JoinGroupSavingAsync(userGroupDto);
 
             if (response.Succeeded)
             {
@@ -29,5 +30,12 @@ namespace Savi_Thrift.Controllers
 
             return StatusCode(response.StatusCode, response);
         }
-    }
+
+		[HttpGet]
+		[Route("getGroupMembers")]
+		public async Task<IActionResult> GetGroupMembersDetails(string groupId)
+		{
+				return Ok(await _groupMembersService.GetGroupMembersDetails(groupId));
+		}
+	}
 }

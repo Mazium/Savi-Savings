@@ -38,7 +38,7 @@ namespace Savi_Thrift.Controllers
 
 
         [HttpPost("createPersonalSaving")]
-		public async Task<IActionResult> CreateGoal([FromBody] CreateGoalDto createGoalDto)
+		public async Task<IActionResult> CreateGoal([FromForm] CreateGoalDto createGoalDto)
 		{
 			if (!ModelState.IsValid)
 			{

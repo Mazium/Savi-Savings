@@ -313,7 +313,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ActualStartDate")
+                    b.Property<DateTime?>("ActualStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AppUserId")
@@ -349,7 +349,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("NextRunTime")
+                    b.Property<DateTime?>("NextRunTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PurposeAndGoal")

@@ -46,7 +46,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 var payload = await GoogleJsonWebSignature.ValidateAsync(idToken, new GoogleJsonWebSignature.ValidationSettings());
                 var userEmail = payload.Email;
                 var existingUser = await _userManager.FindByEmailAsync(userEmail);
-                var wallet = await _walletService.GetWalletByUserId(existingUser.Id);
+                if (existingUser == null)
+                {
+					return ApiResponse<string[]>.Failed("Email not registered", StatusCodes.Status404NotFound, new List<string>());
+				}
+				var wallet = await _walletService.GetWalletByUserId(existingUser.Id);
                 string wallletNumber = wallet.Data.WalletNumber;
                 string userId = existingUser.Id;
 
@@ -56,7 +60,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 if (existingUser != null)
                 {
                     await _signInManager.SignInAsync(existingUser, isPersistent: false);
-                    return ApiResponse<string[]>.Success(response, "User authenticated successfully on the server side", StatusCodes.Status200OK);
+                    return ApiResponse<string[]>.Success(response, "User authenticated successfully via Google", StatusCodes.Status200OK);
                 }
                 else
                 {

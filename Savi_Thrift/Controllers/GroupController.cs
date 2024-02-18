@@ -17,7 +17,7 @@ namespace Savi_Thrift.Controllers
         }
 
         [HttpPost("Add-Groups")]
-        public async Task<IActionResult> CreateGroup([FromBody] GroupCreationDto groupCreationDto, string userId)
+        public async Task<IActionResult> CreateGroup([FromForm] GroupCreationDto groupCreationDto, string userId)
         {
             if (groupCreationDto == null)
             {
@@ -43,7 +43,15 @@ namespace Savi_Thrift.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpGet]
+		[HttpGet]
+		[Route("GetGroupsByUserId")]
+		public async Task<IActionResult> GetGroupsByUserId(string userId)
+		{
+			var response = await _groupService.GetGroupsByUserId(userId);
+            return Ok(response);
+		}
+
+		[HttpGet]
         [Route("get-explore-details")]
         public async Task<IActionResult> GetExploreGroupsDetails(string id)
         {

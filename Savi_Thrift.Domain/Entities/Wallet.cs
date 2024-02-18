@@ -16,28 +16,6 @@ namespace Savi_Thrift.Domain.Entities
 		public string UserId { get; set; } = string.Empty;
 		public ICollection<WalletFunding> WalletFundings { get; set; } = new List<WalletFunding>();
 
-		public void SetWalletID(string phoneNumber)
-		{
-			if (phoneNumber.StartsWith("+234"))
-			{
-				WalletNumber = phoneNumber.Substring(4);
-			}
-			else if (phoneNumber.StartsWith("0"))
-			{
-				WalletNumber = phoneNumber.Substring(1);
-			}
-			else
-			{
-				if (phoneNumber.Length == 10 && long.TryParse(phoneNumber, out long walletNumber))
-				{
-					WalletNumber = walletNumber.ToString();
-				}
-				else
-				{
-					throw new Exception("Invalid Phone Number Format");
-				}
-			}
-
-		}
+		
 	}
 }

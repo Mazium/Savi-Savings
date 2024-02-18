@@ -47,5 +47,24 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
 		}
 
-	}
+        public async Task<ApiResponse<List<NewUserResponseDto>>> GetNewUsers()
+        {
+            var newUsers = await _unitOfWork.UserRepository.GetNewUsers();
+            var users = new List<NewUserResponseDto>();
+            foreach (var user in newUsers)
+            {
+                var registerResponseDto = new NewUserResponseDto
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    DateModified = user.DateModified,
+                };
+
+                users.Add(registerResponseDto);
+            }
+            return ApiResponse<List<NewUserResponseDto>>.Success(users, "List of New Users", StatusCodes.Status200OK);
+        }
+
+    }
 }

@@ -12,8 +12,8 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    [Migration("20240206142003_Models Reformed")]
-    partial class ModelsReformed
+    [Migration("20240215120745_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -315,7 +315,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ActualStartDate")
+                    b.Property<DateTime?>("ActualStartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AppUserId")
@@ -351,7 +351,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("NextRunTime")
+                    b.Property<DateTime?>("NextRunTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PurposeAndGoal")
@@ -541,9 +541,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("AmountSaved")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("AmountToAdd")
                         .HasColumnType("decimal(18,2)");
 
@@ -559,23 +556,20 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Frequency")
                         .HasColumnType("int");
 
                     b.Property<decimal>("GoalAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("IsAutomatic")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Purpose")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -586,7 +580,7 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WalletId")
+                    b.Property<string>("WalletNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -600,6 +594,9 @@ namespace Savi_Thrift.Persistence.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ActionId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -619,13 +616,13 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Reference")
+                    b.Property<string>("SavingsId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WalletNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
