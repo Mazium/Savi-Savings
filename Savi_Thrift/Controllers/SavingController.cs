@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
@@ -10,8 +11,11 @@ namespace Savi_Thrift.Controllers
 	public class SavingController : ControllerBase
 	{
 		private readonly ISavingService _savingService;
-		public SavingController(ISavingService savingService) {
+        private readonly IBackgroundJobClient _backgroundJobClient;
+		public SavingController(IBackgroundJobClient backgroundJobClient, ISavingService savingService) 
+        {
 			_savingService = savingService;
+            _backgroundJobClient = backgroundJobClient;
 		}
 
 
@@ -107,12 +111,15 @@ namespace Savi_Thrift.Controllers
 		[HttpPost("fund-personal-saving")]
         public async Task<IActionResult> FundPersonalGoal(FundsPersonalGoalDto personalGoalDto)
         {
-            var response = await _savingService.FundsPersonalGoal(personalGoalDto);
-            if (response.StatusCode == 200)
-            {
-                return Ok(response);
-            }
-            return BadRequest(response);
+             _backgroundJobClient.Schedule<ISavingService>(service => service
+           .FundsPersonalGoal(personalGoalDto), TimeSpan.FromMinutes(1));
+            //var response = await _savingService.FundsPersonalGoal(personalGoalDto);
+            //if (response.StatusCode == 200)
+            //{
+            //    return Ok(response);
+            //}
+            //return BadRequest(response);
+            return Ok();
         }
     }
 }

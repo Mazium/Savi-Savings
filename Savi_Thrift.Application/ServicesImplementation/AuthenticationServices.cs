@@ -104,7 +104,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     await _userManager.AddToRoleAsync(appUser, "User");
                     token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    token = HttpUtility.UrlEncode(token);
                     var createWalletDto = new CreateWalletDto
                     {
                         PhoneNumber = appUser.PhoneNumber,
