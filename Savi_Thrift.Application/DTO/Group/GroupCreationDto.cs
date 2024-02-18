@@ -1,10 +1,12 @@
-﻿using Savi_Thrift.Domain.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using Savi_Thrift.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Savi_Thrift.Application.DTO.Group
 {
     public class GroupCreationDto 
     {
+        
         public string GroupName { get; set; }
         public decimal ContributionAmount { get; set; }
         public DateTime ExpectedStartDate { get; set; }
@@ -17,8 +19,8 @@ namespace Savi_Thrift.Application.DTO.Group
         public string PurposeAndGoal { get; set; }
         public string TermsAndConditions { get; set; }
         public GroupStatus GroupStatus { get; set; }
-        public string SafePortraitImageURL { get; set; }
-        public string SafeLandScapeImageURL { get; set; }
+        public IFormFile SafePortraitImageURL { get; set; }
+        public IFormFile SafeLandScapeImageURL { get; set; }
         public DateTime NextRunTime { get; set; }
         public bool IsOpen { get; set; }
 

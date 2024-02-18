@@ -17,12 +17,14 @@ namespace Savi_Thrift.Application.ServicesImplementation
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
 		private readonly IWalletService _walletService;
+		private readonly ICloudinaryServices<SavingService> _cloudinaryServices;
 
-		public SavingService(IUnitOfWork unitOfWork, IMapper mapper, IWalletService walletService)
+		public SavingService(IUnitOfWork unitOfWork, IMapper mapper, IWalletService walletService, ICloudinaryServices<SavingService> cloudinaryServices)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 			_walletService = walletService;
+			_cloudinaryServices = cloudinaryServices;
 		}
 
 		public async Task<ApiResponse<GoalResponseDto>> CreateGoal(CreateGoalDto createGoalDto)
@@ -41,7 +43,15 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			try
 			{
+				var avartar = await _cloudinaryServices.UploadImage(createGoalDto.Avatar);
+				if (avartar == null)
+				{
+					return ApiResponse<GoalResponseDto>.Failed("Failed to upload image to cloudinary",
+						StatusCodes.Status500InternalServerError, new List<string>());
+				}
+
 				var saving = _mapper.Map<Saving>(createGoalDto);
+				saving.Avatar = avartar.Url;
 				await _unitOfWork.SavingRepository.AddAsync(saving);
 				await _unitOfWork.SaveChangesAsync();
 
@@ -51,7 +61,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 			catch (Exception ex)
 			{
-				return ApiResponse<GoalResponseDto>.Failed("Error occurred while creating a goal", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+				return ApiResponse<GoalResponseDto>.Failed("Error occurred while creating a goal", StatusCodes.Status500InternalServerError, new List<string> { ex.InnerException.ToString() });
 			}
 		}
 
