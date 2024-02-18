@@ -7,6 +7,7 @@ using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Common.Utilities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain.Enums;
@@ -36,16 +37,13 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			try
 			{
 				var wallet = _mapper.Map<Wallet>(createWalletDto);
-				wallet.SetWalletID(createWalletDto.PhoneNumber);
+				wallet.WalletNumber= WalletGenerator.SetWalletID(createWalletDto.PhoneNumber);
 				wallet.Currency = Currency.Naira;
 				wallet.TransactionPin = "1234";
-
 				await _unitOfWork.WalletRepository.AddAsync(wallet);
 				await _unitOfWork.SaveChangesAsync();
-
 				var reponseDto = _mapper.Map<WalletResponseDto>(wallet);
 				return new ApiResponse<bool>(true, "Wallet Created Successful");
-
 			}
 			catch (Exception ex)
 			{

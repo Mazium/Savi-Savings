@@ -11,6 +11,8 @@ namespace Savi_Thrift.Application.Interfaces.Services
 {
     public interface IGroupMembersService
     {
-        Task<ApiResponse<GroupSavingDetailsResponseDto>> JoinGroupSavingAsync(string groupId, GroupMemberDto userGroupDto);
-    }
+        Task<ApiResponse<GroupSavingDetailsResponseDto>> JoinGroupSavingAsync(GroupMemberDto userGroupDto);
+        Task<ApiResponse<List<GroupMembersDetailsDto>>> GetGroupMembersDetails(string groupId);
+
+	}
 }
