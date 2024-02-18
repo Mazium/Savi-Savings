@@ -7,6 +7,7 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Enums;
+using Savi_Thrift.Application.DTO.UserTransaction;
 using Savi_Thrift.Application.DTO;
 
 namespace Savi_Thrift.Application.ServicesImplementation
@@ -217,11 +218,20 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-		public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)
-		{
-			try
-			{
-				var groupDetails = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.Id == id && u.IsDeleted == false);
+        public async Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup()
+        {
+            var groupEntity = await _unitOfWork.GroupSavingsRepository.GetNewGroupSavings();
+            if(groupEntity.Count < 0)
+                return ApiResponse<List<GroupResponseDto>>.Failed($"Group not found", 404, null);
+            var groupResponses = _mapper.Map<List<GroupResponseDto>>(groupEntity);
+            return ApiResponse<List<GroupResponseDto>>.Success(groupResponses, $"Explore Group Saving Details", 200);
+        }
+
+        public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)
+        {
+            try
+            {
+                var groupDetails = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.Id == id && u.IsDeleted == false);
 
 				if (groupDetails.Count == 0)
 				{

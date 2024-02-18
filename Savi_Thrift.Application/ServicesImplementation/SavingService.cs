@@ -220,7 +220,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-		public async Task<ApiResponse<SavingsResponseDto>> WithdrawFundsFromGoalToWallet(CreditWalletFromGoalDto creditDto)
+        
+
+        public async Task<ApiResponse<SavingsResponseDto>> WithdrawFundsFromGoalToWallet(CreditWalletFromGoalDto creditDto)
 		{
 			try
 			{
