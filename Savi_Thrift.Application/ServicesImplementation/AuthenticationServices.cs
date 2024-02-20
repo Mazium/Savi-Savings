@@ -108,8 +108,19 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     await _userManager.AddToRoleAsync(appUser, "User");
                     token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                    token = HttpUtility.UrlEncode(token);
-                    var createWalletDto = new CreateWalletDto
+					//token = HttpUtility.UrlEncode(token);
+					//var resul = await _userManager.ConfirmEmailAsync(appUser, token);
+     //               if (resul.Succeeded)
+     //               {
+					//	Console.WriteLine("success = " + resul);
+     //               }
+     //               else
+     //               {
+					//	Console.WriteLine("failed = " + resul);
+					//}
+					//	Console.WriteLine("token encoded= "+ token);
+
+					var createWalletDto = new CreateWalletDto
                     {
                         PhoneNumber = appUser.PhoneNumber,
                         UserId = appUser.Id
@@ -158,6 +169,10 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				if (user == null)
 				{
 					return ApiResponse<LoginResponseDto>.Failed("User not found.", StatusCodes.Status404NotFound, new List<string>());
+				}
+                if (!user.EmailConfirmed)
+                {
+					return ApiResponse<LoginResponseDto>.Failed("Email not confirmed.", StatusCodes.Status401Unauthorized, new List<string>());
 				}
 				var result = await _signInManager.CheckPasswordSignInAsync(user, loginDTO.Password, lockoutOnFailure: false);
 
@@ -313,6 +328,10 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 }
 
                 // Additional token validation logic can be added here
+                if(token.Contains(" "))
+                {
+                    token = token.Replace(" ", "+");
+                }
 
                 var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
 
@@ -344,22 +363,26 @@ namespace Savi_Thrift.Application.ServicesImplementation
             {
                 var user = await _userManager.FindByEmailAsync(email);
 
-                if (user == null || !user.EmailConfirmed)
+                if (user == null)
                 {
-                    return new ApiResponse<string>(false, "User not found or email not confirmed.", StatusCodes.Status404NotFound, null, new List<string>());
+                    return new ApiResponse<string>(false, "Email does not exist", StatusCodes.Status404NotFound, null, new List<string>());
                 }
 
-                string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+				if (!user.EmailConfirmed)
+				{
+					return new ApiResponse<string>(false, "User email not confirmed.", StatusCodes.Status404NotFound, null, new List<string>());
+				}
+
+				string token = await _userManager.GeneratePasswordResetTokenAsync(user);
                
-                token = HttpUtility.UrlEncode(token);
+              //  token = HttpUtility.UrlEncode(token);
 
                 user.PasswordResetToken = token;
-                user.ResetTokenExpires = DateTime.UtcNow.AddHours(24);
+                user.ResetTokenExpires = DateTime.UtcNow.AddHours(1);
 
                 await _userManager.UpdateAsync(user);
 
-                var resetPasswordUrl = "https://localhost:7226/api/Authentication/reset-password?email=" +Uri.EscapeDataString(email) + "&token=" + token;
-                //var resetPasswordUrl = "https://localhost:7226/api/Authentication/reset-password?email=" + email + "&token=" + token;
+                var resetPasswordUrl = "http://localhost:3000/confirmpassword?email=" +email + "&token=" + token;
 
 
                 var mailRequest = new MailRequest
@@ -384,7 +407,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 		{
 			if (userid == null || token== null)
 			{
-				return ApiResponse<string>.Failed("userid or token cannot be null", StatusCodes.Status400BadRequest, new List<string>() { });
+				return ApiResponse<string>.Failed("User id or token cannot be null", StatusCodes.Status400BadRequest, new List<string>() { });
 			}
 
 			var user = await _userManager.FindByIdAsync(userid);
@@ -392,6 +415,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			{
                 return ApiResponse<string>.Failed("Invalid User", StatusCodes.Status404NotFound, new List<string>() { });
             }
+            token = token.Replace(" ", "+");
 
 			var result = await _userManager.ConfirmEmailAsync(user, token);
 			if (result.Succeeded)
@@ -400,7 +424,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
             }
 			else
 			{
-                return ApiResponse<string>.Failed("Email confirmation failed", StatusCodes.Status500InternalServerError, new List<string>() { });
+                return ApiResponse<string>.Failed("Failed. " + result.Errors.ToArray()[0].Description, StatusCodes.Status500InternalServerError, new List<string>() { });
             }
 		}
     }

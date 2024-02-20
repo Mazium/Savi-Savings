@@ -64,8 +64,10 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				// Add the user to the group
 				await _unitOfWork.GroupMembersRepository.AddAsync(user);
 				await _unitOfWork.SaveChangesAsync();
+
 				if (groupMembers.Count + 1 == 5)
 				{
+					group.GroupStatus = GroupStatus.Ongoing;
 					group.ActualStartDate = DateTime.Now;
 					var frequency = group.Frequency;
 					if (frequency.Equals(SavingFrequency.Daily))
