@@ -11,7 +11,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
 
         Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetAllPublicGroupsAsync();
 		Task<ApiResponse<IEnumerable<GroupResponseDto>>> ListOngoingGroupSavingsAccountsAsync();
-        Task<ApiResponse<List<GroupResponseDto>>> GetGroupsByUserId(string userId);
+        Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetGroupsByUserId(string userId);
 		Task<ApiResponse<GroupResponseDto>> GetGroupDetailByIdAsync(string groupId);
         Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id);
         Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup();

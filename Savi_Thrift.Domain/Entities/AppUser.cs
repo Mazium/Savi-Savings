@@ -16,6 +16,6 @@ namespace Savi_Thrift.Domain.Entities
         public ICollection<CardDetail> CardDetails { get; set; }
 		public ICollection<Saving> Savings { get; set; }
 		public ICollection<UserTransaction> UserTransactions { get; set; }
-		public ICollection<GroupTransaction> GroupTransactions { get; set; }
+		public ICollection<GroupTransactions> GroupTransactions { get; set; }
 	}
 }
