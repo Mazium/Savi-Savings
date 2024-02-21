@@ -1,6 +1,6 @@
 ﻿namespace Savi_Thrift.Domain.Entities
 {
-    public class GroupSavingsFunding :BaseEntity
+    public class GroupTransactions : BaseEntity
     {
         public string UserId { get; set; }
         public string ActionId { get; set; }

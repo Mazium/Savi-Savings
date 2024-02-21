@@ -5,7 +5,7 @@ using Savi_Thrift.Persistence.Context;
 
 namespace Savi_Thrift.Persistence.Repositories
 {
-    public class GroupTransactionRepository : GenericRepository<UserTransaction>, IGroupTransactionRepository
+    public class GroupTransactionRepository : GenericRepository<GroupTransactions>, IGroupTransactionRepository
     {
         private readonly SaviDbContext _saviDbContext;
 
@@ -13,13 +13,7 @@ namespace Savi_Thrift.Persistence.Repositories
         {
             _saviDbContext = saviDbContext;
         }
-        public async Task<List<GroupTransaction>> GetNewGroupTransactions()
-        {
-            DateTime today = DateTime.Today;
-            var newUsers = await _saviDbContext.GroupTransactions.Where(u => u.CreatedAt.Date == today)
-                               .ToListAsync();
-            return newUsers;
-        }
+        
 
     }
 }

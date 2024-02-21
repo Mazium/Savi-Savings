@@ -18,11 +18,12 @@ namespace Savi_Thrift.Persistence.Repositories
 			WalletFundingRepository = new WalletFundingRepository(_saviDbContext);
             KycRepository = new KycRepository(_saviDbContext);
             GroupMembersRepository = new GroupMembersRepository(_saviDbContext);
-
+			GroupTransactionRepository = new GroupTransactionRepository(_saviDbContext);
             UserTransactionRepository = new UserTransactionRepository(_saviDbContext);
 
         }
 
+		public IGroupTransactionRepository GroupTransactionRepository { get; set; }
 		public IWalletRepository WalletRepository { get; set; }
 		public ISavingRepository SavingRepository { get; set; }
 		public IUserRepository UserRepository { get; set; }

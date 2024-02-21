@@ -15,7 +15,6 @@ using Savi_Thrift.Persistence.Context;
 using Savi_Thrift.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Hangfire;
 
 namespace Savi_Thrift.Persistence.Extensions
@@ -42,9 +41,9 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IKycService, KycService>();
 			services.AddScoped<IWalletService, WalletService>();
             services.AddTransient<WalletService>();
-
-            // Register Email services
-            var emailSettings = new EmailSettings();
+			services.AddScoped<IGroupTransactionService, GroupTransactionService>();
+			// Register Email services
+			var emailSettings = new EmailSettings();
 			configuration.GetSection("EmailSettings").Bind(emailSettings);
 			services.AddSingleton(emailSettings);
 			services.AddTransient<IEmailServices, EmailServices>();

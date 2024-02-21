@@ -9,7 +9,7 @@ namespace Savi_Thrift.Persistence.Context
         public SaviDbContext(DbContextOptions<SaviDbContext> options) : base(options) { }
 
         public DbSet<CardDetail> CardDetails { get; set; }
-        public DbSet<GroupTransaction> GroupTransactions {get; set;}
+        public DbSet<GroupTransactions> GroupTransactions {get; set;}
         public DbSet<KYC> KYCs { get; set; }
         public DbSet<Actions> Actions { get; set; }
         public DbSet<Saving> Savings { get; set; }
@@ -18,7 +18,7 @@ namespace Savi_Thrift.Persistence.Context
         public DbSet<UserTransaction> UserTransactions { get; set; }
         public DbSet<GroupSavings> GroupSavings { get; set; }
 
-        public DbSet<GroupSavingsFunding> GroupSavingsFunding { get; set; }
+        public DbSet<GroupTransactions> GroupSavingsFunding { get; set; }
 
         public DbSet<GroupSavingsMembers> GroupSavingsMembers { get; set; }
 

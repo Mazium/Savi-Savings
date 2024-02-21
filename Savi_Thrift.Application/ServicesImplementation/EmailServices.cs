@@ -2,6 +2,7 @@
 using MailKit.Security;
 using Microsoft.Extensions.Logging;
 using MimeKit;
+using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities.Helper;
 
@@ -11,14 +12,16 @@ namespace Savi_Thrift.Infrastructure.Services
     {
         private readonly EmailSettings _emailSettings;
         private readonly ILogger<EmailServices> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EmailServices(ILogger<EmailServices> Logger, EmailSettings emailSettings)
+        public EmailServices(ILogger<EmailServices> Logger, EmailSettings emailSettings, IUnitOfWork unitOfWork)
         {
             _emailSettings = emailSettings;
             _logger = Logger;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task SendEmailAsync(string link, string email)
+        public async Task<string> SendEmailAsync(string link, string email,string id)
         {
             try
             {
@@ -41,11 +44,18 @@ namespace Savi_Thrift.Infrastructure.Services
                 await client.AuthenticateAsync(_emailSettings.Email, _emailSettings.Password);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
+                return "success";
             }
             catch (Exception ex)
             {
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(id);
+                if(user != null)
+                {
+                     _unitOfWork.UserRepository.DeleteAsync(user);
+                    await _unitOfWork.SaveChangesAsync();
+                }
                 _logger.LogError(ex, "Error occurred while sending email.");
-                throw new Exception("Error occurred while sending email. Please try again later.", ex);
+                return "Error occurred while sending email. Check your internet connection.";
             }
         }
 
