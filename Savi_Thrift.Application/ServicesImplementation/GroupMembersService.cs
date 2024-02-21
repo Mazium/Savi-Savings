@@ -64,9 +64,39 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				// Add the user to the group
 				await _unitOfWork.GroupMembersRepository.AddAsync(user);
 				await _unitOfWork.SaveChangesAsync();
+
+				var today = DateTime.Now;
+
 				if (groupMembers.Count + 1 == 5)
 				{
-					group.ActualStartDate = DateTime.Now;
+					group.GroupStatus = GroupStatus.Ongoing;
+					group.ActualStartDate = today;
+
+					var currentRuntime = group.RunTime;
+					
+					//string date = currentRuntime.Year.ToString() + "-" + currentRuntime.Month.ToString() +"-"+currentRuntime.Day.ToString();
+
+					
+					string time = currentRuntime.Hour.ToString() + "-" + currentRuntime.Minute.ToString();
+
+					string newRuntime = today.Date.ToString() + " " + time;
+					string newNextRuntime = string.Empty;
+
+					switch (group.Frequency)
+					{
+						case SavingFrequency.Daily:
+							newNextRuntime = today.AddDays(1).Date.ToString()+" "+time;
+							break;
+						case SavingFrequency.Weekly:
+							newNextRuntime = today.AddDays(7).Date.ToString() + " " + time;
+							break;
+						case SavingFrequency.Monthly:
+							newNextRuntime = today.AddMonths(1).Date.ToString() + " " + time;
+							break;
+					}
+
+					group.NextRunTime = DateTime.Parse(newNextRuntime);
+					group.RunTime = DateTime.Parse(newRuntime);
 					var frequency = group.Frequency;
 					if (frequency.Equals(SavingFrequency.Daily))
 					{

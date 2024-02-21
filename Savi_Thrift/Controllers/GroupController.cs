@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.Interfaces.Services;
+using Savi_Thrift.Application.ServicesImplementation;
 using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Controllers
@@ -42,6 +43,13 @@ namespace Savi_Thrift.Controllers
 
             return StatusCode(response.StatusCode, response);
         }
+
+		[HttpGet("get-recent-group")]
+		public async Task<IActionResult> GetRecentGoup()
+		{
+			return Ok(await _groupService.GetRecentGroup());
+		}
+
 
 		[HttpGet]
 		[Route("GetGroupsByUserId")]

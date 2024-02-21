@@ -9,7 +9,8 @@ namespace Savi_Thrift.Application.Interfaces.Services
 {
     public interface IEmailServices
     {
-        Task SendEmailAsync(string link, string email);
-        Task SendMailAsync(MailRequest mailRequest);
+        Task<string> SendEmailAsync(string link, string email, string id);
+
+		Task SendMailAsync(MailRequest mailRequest);
     }
 }

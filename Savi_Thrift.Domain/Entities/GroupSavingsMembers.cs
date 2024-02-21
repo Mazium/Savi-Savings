@@ -1,4 +1,6 @@
-﻿namespace Savi_Thrift.Domain.Entities
+﻿
+
+namespace Savi_Thrift.Domain.Entities
 {
     public class GroupSavingsMembers :BaseEntity
     {

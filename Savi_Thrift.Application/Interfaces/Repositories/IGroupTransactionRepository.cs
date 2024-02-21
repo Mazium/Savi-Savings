@@ -1,14 +1,10 @@
-﻿using Savi_Thrift.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application.Interfaces.Repositories
 {
-    public interface IGroupTransactionRepository
+    public interface IGroupTransactionRepository : IGenericRepository<GroupTransactions>
     {
-        Task<List<GroupTransaction>> GetNewGroupTransactions();
     }
 }

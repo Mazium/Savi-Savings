@@ -13,18 +13,5 @@ namespace Savi_Thrift.Persistence.Repositories
         {
             _saviDbContext = saviDbContext;
         }
-
-
-        public async Task<List<GroupSavings>> GetNewGroupSavings()
-        {
-            DateTime today = DateTime.Today;
-            DateTime tomorrow = today.AddDays(1);
-            var newGroupSavings = await _saviDbContext.GroupSavings
-                .Where(u => u.CreatedAt >= today && u.CreatedAt < tomorrow)
-                .ToListAsync();
-
-            return newGroupSavings;
-        }
-
     }
 }

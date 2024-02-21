@@ -22,7 +22,7 @@ namespace Savi_Thrift.Domain.Entities
         public DateTime? NextRunTime { get; set; }
         public bool IsOpen { get; set; }
 
-        public ICollection<GroupSavingsFunding> GroupSavingsFundings{ get; set; }
+        public ICollection<GroupTransactions> GroupSavingsFundings{ get; set; }
 
         public ICollection<GroupSavingsMembers> GroupSavingsMembers { get; set; }
 

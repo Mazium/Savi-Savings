@@ -100,11 +100,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
 		{
 			try
 			{
-				var allGroups = await _unitOfWork.GroupSavingsRepository.FindAsync(x => x.IsOpen == true && x.IsDeleted == false);
+				var allGroups = await _unitOfWork.GroupSavingsRepository.FindAsync(x => x.IsOpen == true && x.IsDeleted == false && x.GroupStatus==GroupStatus.Waiting);
 
 				foreach (var groupEntity in allGroups)
 				{
-					groupEntity.GroupSavingsMembers = await _unitOfWork.GroupMembersRepository.FindAsync(x=>x.GroupSavingsId == groupEntity.Id);
+					groupEntity.GroupSavingsMembers = await _unitOfWork.GroupMembersRepository.FindAsync(x => x.GroupSavingsId == groupEntity.Id);
 				}
 
 				var groupResponses = _mapper.Map<IEnumerable<GroupResponseDto>>(allGroups);
@@ -119,32 +119,43 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-		public async Task<ApiResponse<List<GroupResponseDto>>> GetGroupsByUserId(string userId)
+		public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetGroupsByUserId(string userId)
 		{
+
+
+
 			try
 			{
-				var myGroupMembers = await _unitOfWork.GroupMembersRepository.FindAsync(x => x.UserId == userId && x.IsDeleted == false);
-				var myGroups = new List<GroupResponseDto>();
+				// Retrieve all ongoing group savings accounts and filter them where GroupStatus is 'Ongoing'
+				var ongoingGroups = await _unitOfWork.GroupSavingsRepository.FindAsync(g => g.GroupStatus == GroupStatus.Ongoing);
 
-				foreach (var group in myGroupMembers)
+				List <GroupSavings> userActiveGroups = new();
+
+				foreach (var ongoingGroup in ongoingGroups)
 				{
-					var groupSaving = await _unitOfWork.GroupSavingsRepository.GetByIdAsync(group.GroupSavingsId);
-					if (groupSaving.GroupSavingsMembers.Count() == 5)
+					var myGroupMembers = await _unitOfWork.GroupMembersRepository.FindAsync(x => x.UserId == userId && x.IsDeleted == false && x.GroupSavingsId==ongoingGroup.Id);
+					if(myGroupMembers.Count() > 0)
 					{
-						var groupResponse = _mapper.Map<GroupResponseDto>(groupSaving);
-						myGroups.Add(groupResponse);
+						userActiveGroups.Add(ongoingGroup);
 					}
-
 				}
-				var groupResponses = _mapper.Map<List<GroupResponseDto>>(myGroups);
+				var groupResponses = _mapper.Map<IEnumerable<GroupResponseDto>>(userActiveGroups);
 
-				return ApiResponse<List<GroupResponseDto>>.Success(groupResponses, "All user groups retrieved successfully", 200);
+				return ApiResponse<IEnumerable<GroupResponseDto>>.Success(
+					groupResponses,
+					"Ongoing group saving accounts retrieved successfully",
+					200
+				);
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Error occurred while getting all groups");
+				_logger.LogError(ex, "Error occurred while getting ongoing group savings accounts");
 
-				return ApiResponse<List<GroupResponseDto>>.Failed("Failed to get all groups", 500, new List<string> { ex.Message });
+				return ApiResponse<IEnumerable<GroupResponseDto>>.Failed(
+					"Failed to get ongoing group saving accounts",
+					500,
+					new List<string> { ex.Message }
+				);
 			}
 		}
 
@@ -220,11 +231,16 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
         public async Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup()
         {
-            var groupEntity = await _unitOfWork.GroupSavingsRepository.GetNewGroupSavings();
-            if(groupEntity.Count < 0)
-                return ApiResponse<List<GroupResponseDto>>.Failed($"Group not found", 404, null);
-            var groupResponses = _mapper.Map<List<GroupResponseDto>>(groupEntity);
-            return ApiResponse<List<GroupResponseDto>>.Success(groupResponses, $"Explore Group Saving Details", 200);
+
+			var today = DateTime.Today;
+			var newGroupSavings = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.CreatedAt >=today && u.CreatedAt<today.AddDays(1));
+	
+            if(newGroupSavings.Count == 0)
+               return ApiResponse<List<GroupResponseDto>>.Failed("No recent groups found", StatusCodes.Status404NotFound, null);
+
+            var groupResponses = _mapper.Map<List<GroupResponseDto>>(newGroupSavings);
+
+            return ApiResponse<List<GroupResponseDto>>.Success(groupResponses, "Recent groups successfully retrieved", StatusCodes.Status200OK);
         }
 
         public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)

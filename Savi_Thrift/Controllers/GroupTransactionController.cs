@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Savi_Thrift.Application.DTO.GroupTransaction;
 using Savi_Thrift.Application.Interfaces.Services;
-using Savi_Thrift.Application.ServicesImplementation;
 
 namespace Savi_Thrift.Controllers
 {
@@ -16,13 +16,16 @@ namespace Savi_Thrift.Controllers
            _groupTransactionService = groupTransactionService;
         }
 
-        [HttpGet("group-recent-transaction")]
-        public async Task<IActionResult> GetGroupRecentTranaction()
+        [HttpPost("fund-group")]
+        public async Task<IActionResult> FundGroup([FromBody] GroupFundDto groupFundDto)
         {
-            var transaction = await _groupTransactionService.GetGroupRecentTransaction();
-            if(transaction != null) 
-                return Ok(transaction);
-            return BadRequest(transaction);
+            return Ok(await _groupTransactionService.FundGroup(groupFundDto));
         }
-    }
+
+        [HttpGet("get-group-transactions")]
+		public async Task<IActionResult> GetGroupTransaction(string groupId)
+		{
+			return Ok(await _groupTransactionService.GetGroupTransactions(groupId));
+		}
+	}
 }
