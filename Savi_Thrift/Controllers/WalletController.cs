@@ -85,6 +85,23 @@ namespace Savi_Thrift.Controllers
             return Ok(result);
         }
 
+     
+        [HttpGet("total-wallet-balance/{userId}")]
+        public async Task<IActionResult> GetTotalWalletBalance(string userId)
+        {
+            var response = await _walletService.GetTotalWalletBalance(userId);
+
+            if (response.Succeeded)
+            {
+                return Ok(response.Data);
+            }
+
+            return NotFound(response.Message);
+
+        }
+
+
+
 
 
 

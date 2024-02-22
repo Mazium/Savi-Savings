@@ -268,5 +268,35 @@ namespace Savi_Thrift.Application.ServicesImplementation
             };
         }
 
+        public async Task<ApiResponse<decimal>> GetTotalWalletBalance(string userId)
+        {
+            try
+            {
+                var wallet = await _unitOfWork.WalletRepository.FindAsync(w => w.UserId == userId);
+
+                if (wallet.Count == 0)
+                {
+                    return ApiResponse<decimal>.Failed("User does not have a wallet", StatusCodes.Status404NotFound, new List<string>());
+                }
+
+                decimal totalBalance = wallet.Sum(w => w.Balance);
+
+                return ApiResponse<decimal>.Success(totalBalance, "Total wallet balance retrieved successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while getting total wallet balance for the user ({userId})");
+
+                return ApiResponse<decimal>.Failed("Failed to get total wallet balance", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+
+
+
+
+            }
+        }
+
+
     }
+
 }
+
