@@ -21,6 +21,7 @@ namespace Savi_Thrift.Persistence.Context
         public DbSet<GroupTransactions> GroupSavingsFunding { get; set; }
 
         public DbSet<GroupSavingsMembers> GroupSavingsMembers { get; set; }
+        public DbSet<DefaultingUser> DefaultingUsers { get; set; }
 
 
 

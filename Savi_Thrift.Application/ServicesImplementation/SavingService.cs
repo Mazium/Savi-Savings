@@ -6,9 +6,6 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Application.DTO.Wallet;
-using Savi_Thrift.Domain.Enums;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -43,15 +40,15 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			try
 			{
-				var avartar = await _cloudinaryServices.UploadImage(createGoalDto.Avatar);
-				if (avartar == null)
+				var avatar = await _cloudinaryServices.UploadImage(createGoalDto.Avatar);
+				if (avatar == null)
 				{
 					return ApiResponse<GoalResponseDto>.Failed("Failed to upload image to cloudinary",
 						StatusCodes.Status500InternalServerError, new List<string>());
 				}
 
 				var saving = _mapper.Map<Saving>(createGoalDto);
-				saving.Avatar = avartar.Url;
+				saving.Avatar = avatar.Url;
 				await _unitOfWork.SavingRepository.AddAsync(saving);
 				await _unitOfWork.SaveChangesAsync();
 

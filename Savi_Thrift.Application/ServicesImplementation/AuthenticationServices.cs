@@ -53,14 +53,15 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				var wallet = await _walletService.GetWalletByUserId(existingUser.Id);
                 string wallletNumber = wallet.Data.WalletNumber;
                 string userId = existingUser.Id;
+                var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
 
-                string[] response = new string[] {userEmail,wallletNumber, payload.GivenName+" "+ payload.FamilyName, userId };
+                string[] response = new string[] {userEmail,wallletNumber, user.FirstName+" "+ user.LastName, userId };
 
 
                 if (existingUser != null)
                 {
                     await _signInManager.SignInAsync(existingUser, isPersistent: false);
-                    return ApiResponse<string[]>.Success(response, "User authenticated successfully via Google", StatusCodes.Status200OK);
+                    return ApiResponse<string[]>.Success(response, "User Logged in successfully", StatusCodes.Status200OK);
                 }
                 else
                 {
@@ -179,7 +180,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				switch (result)
 				{
 					case { Succeeded: true }:
-						var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+						var role = (await _userManager.GetRolesAsync(user)).First();
 						var response = new LoginResponseDto
 						{
 							JWToken = GenerateJwtToken(user, role)
@@ -202,7 +203,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 			catch (Exception ex)
 			{
-				return ApiResponse<LoginResponseDto>.Failed("Some error occurred while loggin in." + ex.InnerException, StatusCodes.Status500InternalServerError, new List<string>());
+				return ApiResponse<LoginResponseDto>.Failed("Some error occurred while login in." + ex.Message, StatusCodes.Status500InternalServerError, new List<string>() { ex.Message});
 			}
 		}
 		private string GenerateJwtToken(AppUser contact, string roles)

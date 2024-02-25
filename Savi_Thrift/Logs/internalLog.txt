@@ -6231,3 +6231,638 @@
 2024-02-21 00:02:30.5232 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log
 2024-02-21 00:02:30.5378 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log
 2024-02-21 00:02:30.5378 Info FileTarget(Name=efcoreDBQuery): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery-2024-02-20.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log
+2024-02-21 08:55:55.9176 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 08:55:55.9312 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 08:55:55.9312 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 08:55:55.9312 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 08:55:55.9312 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 08:55:55.9312 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 08:55:55.9543 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 08:55:55.9728 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 08:55:55.9935 Info Configuration initialized.
+2024-02-21 08:55:56.4217 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 08:55:56.4348 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 10:49:36.5901 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 10:49:36.6052 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 10:49:36.6052 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 10:49:36.6052 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 10:49:36.6052 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 10:49:36.6052 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 10:49:36.6329 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 10:49:36.6489 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 10:49:36.6652 Info Configuration initialized.
+2024-02-21 10:49:36.9971 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 10:49:37.0070 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 11:12:29.5732 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 11:12:29.6019 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 11:12:29.6019 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 11:12:29.6019 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 11:12:29.6019 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 11:12:29.6106 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 11:12:29.6738 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 11:12:29.7391 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:12:29.8429 Info Configuration initialized.
+2024-02-21 11:12:31.1879 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:12:31.2099 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 11:22:50.0912 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 11:22:50.1174 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 11:22:50.1174 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 11:22:50.1174 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 11:22:50.1259 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 11:22:50.1259 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 11:22:50.1795 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 11:22:50.2178 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:22:50.2585 Info Configuration initialized.
+2024-02-21 11:22:50.8038 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:22:50.8211 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 11:24:51.7682 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 11:24:51.7890 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 11:24:51.7890 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 11:24:51.7890 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 11:24:51.7890 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 11:24:51.7890 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 11:24:51.8368 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 11:24:51.8753 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:24:51.9072 Info Configuration initialized.
+2024-02-21 11:24:52.4785 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:24:52.4989 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 11:26:57.8826 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 11:26:57.9019 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 11:26:57.9019 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 11:26:57.9019 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 11:26:57.9019 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 11:26:57.9019 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 11:26:57.9513 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 11:26:57.9854 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:26:58.0176 Info Configuration initialized.
+2024-02-21 11:26:58.8114 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:26:58.8477 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 11:28:11.1186 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 11:28:11.1416 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 11:28:11.1416 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 11:28:11.1416 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 11:28:11.1416 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 11:28:11.1416 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 11:28:11.1948 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 11:28:11.2502 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:28:11.3092 Info Configuration initialized.
+2024-02-21 11:28:11.9022 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 11:28:11.9177 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 12:18:20.6912 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 12:18:20.7174 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 12:18:20.7188 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 12:18:20.7188 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 12:18:20.7188 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 12:18:20.7188 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 12:18:20.7803 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 12:18:20.8357 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 12:18:20.8924 Info Configuration initialized.
+2024-02-21 12:18:21.5029 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 12:18:21.5222 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 12:52:44.1142 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 12:52:44.1425 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 12:52:44.1425 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 12:52:44.1425 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 12:52:44.1455 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 12:52:44.1455 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 12:52:44.1995 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 12:52:44.2419 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 12:52:44.2693 Info Configuration initialized.
+2024-02-21 12:52:44.8572 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 12:52:44.8717 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 13:02:01.4850 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 13:02:01.5038 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 13:02:01.5038 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 13:02:01.5038 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 13:02:01.5038 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 13:02:01.5038 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 13:02:01.5481 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 13:02:01.5793 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 13:02:01.6103 Info Configuration initialized.
+2024-02-21 13:02:02.3555 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 13:02:02.3739 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-21 13:09:59.5000 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-21 13:09:59.5230 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-21 13:09:59.5230 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-21 13:09:59.5230 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-21 13:09:59.5230 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-21 13:09:59.5363 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-21 13:09:59.6028 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-21 13:09:59.6602 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 13:09:59.7007 Info Configuration initialized.
+2024-02-21 13:10:00.3215 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-21 13:10:00.3425 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 08:05:59.1945 Info FileTarget(Name=efcoreDBCommand): Deleting old archive file: 'C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.6.log'.
+2024-02-22 08:05:59.1945 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.5.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.6.log
+2024-02-22 08:05:59.2029 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.4.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.5.log
+2024-02-22 08:05:59.2029 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.3.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.4.log
+2024-02-22 08:05:59.2029 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.2.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.3.log
+2024-02-22 08:05:59.2029 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.2.log
+2024-02-22 08:05:59.2029 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.1.log
+2024-02-22 08:05:59.2241 Info FileTarget(Name=efcoreDBCommand): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand-2024-02-21.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.0.log
+2024-02-22 08:20:15.6342 Info FileTarget(Name=efcoreDBQuery): Deleting old archive file: 'C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.6.log'.
+2024-02-22 08:20:15.6342 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.5.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.6.log
+2024-02-22 08:20:15.6342 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.4.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.5.log
+2024-02-22 08:20:15.6421 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.3.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.4.log
+2024-02-22 08:20:15.6421 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.3.log
+2024-02-22 08:20:15.6421 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log
+2024-02-22 08:20:15.6421 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log
+2024-02-22 08:20:15.6421 Info FileTarget(Name=efcoreDBQuery): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery-2024-02-21.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log
+2024-02-22 08:27:25.9224 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 08:27:25.9577 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 08:27:25.9577 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 08:27:25.9577 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 08:27:25.9577 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 08:27:25.9577 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 08:27:26.0167 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 08:27:26.0620 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 08:27:26.1046 Info Configuration initialized.
+2024-02-22 08:27:27.1412 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 08:27:27.1604 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 08:28:45.5043 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 08:28:45.5280 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 08:28:45.5280 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 08:28:45.5280 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 08:28:45.5280 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 08:28:45.5332 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 08:28:45.5879 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 08:28:45.6308 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 08:28:45.6698 Info Configuration initialized.
+2024-02-22 08:28:46.2156 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 08:28:46.2330 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 10:37:53.7786 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 10:37:53.7834 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 10:37:53.7834 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 10:37:53.7834 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 10:37:53.7834 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 10:37:53.7834 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 10:37:53.7982 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 10:37:53.7982 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 10:37:53.8213 Info Configuration initialized.
+2024-02-22 10:37:53.9160 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 10:37:53.9254 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 10:37:53.9559 Info Shutdown() called. Logger closing...
+2024-02-22 10:37:53.9559 Info Closing old configuration.
+2024-02-22 10:37:53.9559 Info Logger has been closed down.
+2024-02-22 10:38:15.2878 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 10:38:15.2920 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 10:38:15.2920 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 10:38:15.2920 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 10:38:15.2920 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 10:38:15.2920 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 10:38:15.3059 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 10:38:15.3059 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 10:38:15.3285 Info Configuration initialized.
+2024-02-22 10:38:15.4159 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 10:38:15.4159 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 10:38:15.4431 Info Shutdown() called. Logger closing...
+2024-02-22 10:38:15.4431 Info Closing old configuration.
+2024-02-22 10:38:15.4431 Info Logger has been closed down.
+2024-02-22 10:51:22.8940 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 10:51:22.9082 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 10:51:22.9082 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 10:51:22.9082 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 10:51:22.9082 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 10:51:22.9082 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 10:51:22.9332 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 10:51:22.9491 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 10:51:22.9646 Info Configuration initialized.
+2024-02-22 10:51:23.3052 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 10:51:23.3155 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 11:45:13.4153 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 11:45:13.4260 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 11:45:13.4260 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 11:45:13.4260 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 11:45:13.4260 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 11:45:13.4260 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 11:45:13.4524 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 11:45:13.4697 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 11:45:13.4697 Info Configuration initialized.
+2024-02-22 11:45:13.8247 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 11:45:13.8355 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 11:54:06.8159 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 11:54:06.8315 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 11:54:06.8315 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 11:54:06.8315 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 11:54:06.8315 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 11:54:06.8315 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 11:54:06.8698 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 11:54:06.9020 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 11:54:06.9280 Info Configuration initialized.
+2024-02-22 11:54:07.5005 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 11:54:07.5005 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:07:59.8434 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:07:59.8650 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:07:59.8650 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:07:59.8650 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:07:59.8650 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:07:59.8650 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:07:59.9121 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:07:59.9575 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:08:00.0021 Info Configuration initialized.
+2024-02-22 12:08:00.7536 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:08:00.7951 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:08:52.1701 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:08:52.2017 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:08:52.2017 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:08:52.2017 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:08:52.2017 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:08:52.2106 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:08:52.3196 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:08:52.3697 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:08:52.4068 Info Configuration initialized.
+2024-02-22 12:08:52.9701 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:08:52.9901 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:11:43.3953 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:11:43.4161 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:11:43.4161 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:11:43.4161 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:11:43.4161 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:11:43.4161 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:11:43.4850 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:11:43.5453 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:11:43.5973 Info Configuration initialized.
+2024-02-22 12:11:44.3187 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:11:44.3438 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:22:27.5710 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:22:27.6028 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:22:27.6028 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:22:27.6028 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:22:27.6028 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:22:27.6093 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:22:27.6911 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:22:27.7792 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:22:27.8420 Info Configuration initialized.
+2024-02-22 12:22:28.6041 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:22:28.6340 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:29:52.8408 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:29:52.8631 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:29:52.8631 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:29:52.8631 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:29:52.8631 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:29:52.8631 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:29:52.9149 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:29:52.9508 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:29:52.9802 Info Configuration initialized.
+2024-02-22 12:29:53.5434 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:29:53.5616 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:39:44.6441 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:39:44.6650 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:39:44.6650 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:39:44.6650 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:39:44.6650 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:39:44.6650 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:39:44.7157 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:39:44.7503 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:39:44.7798 Info Configuration initialized.
+2024-02-22 12:39:45.4315 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:39:45.4530 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:40:42.4991 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:40:42.5160 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:40:42.5160 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:40:42.5160 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:40:42.5160 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:40:42.5203 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:40:42.5574 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:40:42.5830 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:40:42.6087 Info Configuration initialized.
+2024-02-22 12:40:43.2382 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:40:43.2382 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 12:42:47.5642 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 12:42:47.6565 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 12:42:47.6584 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 12:42:47.6584 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 12:42:47.6584 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 12:42:47.6716 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 12:42:47.7638 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 12:42:47.8260 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:42:47.8936 Info Configuration initialized.
+2024-02-22 12:42:48.5937 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 12:42:48.6191 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 13:09:36.2558 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 13:09:36.2863 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 13:09:36.2863 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 13:09:36.2863 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 13:09:36.2863 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 13:09:36.2863 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 13:09:36.3390 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 13:09:36.3904 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 13:09:36.4394 Info Configuration initialized.
+2024-02-22 13:09:37.3107 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 13:09:37.3413 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 13:37:33.4906 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 13:37:33.5126 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 13:37:33.5126 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 13:37:33.5126 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 13:37:33.5156 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 13:37:33.5156 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 13:37:33.5712 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 13:37:33.6098 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 13:37:33.6442 Info Configuration initialized.
+2024-02-22 13:37:34.2574 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 13:37:34.2804 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 14:12:44.5461 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 14:12:44.5688 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 14:12:44.5688 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 14:12:44.5688 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 14:12:44.5688 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 14:12:44.5688 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 14:12:44.6318 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 14:12:44.6609 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:12:44.6912 Info Configuration initialized.
+2024-02-22 14:12:45.2510 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:12:45.2776 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 14:22:50.8532 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 14:22:50.8756 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 14:22:50.8756 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 14:22:50.8756 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 14:22:50.8784 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 14:22:50.8784 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 14:22:50.9329 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 14:22:50.9825 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:22:51.0218 Info Configuration initialized.
+2024-02-22 14:22:51.7246 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:22:51.7553 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 14:34:06.6393 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 14:34:06.6687 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 14:34:06.6687 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 14:34:06.6737 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 14:34:06.6737 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 14:34:06.6737 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 14:34:06.7407 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 14:34:06.8016 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:34:06.8654 Info Configuration initialized.
+2024-02-22 14:34:07.8062 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:34:07.8572 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 14:53:12.3740 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 14:53:12.3886 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 14:53:12.3904 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 14:53:12.3904 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 14:53:12.3904 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 14:53:12.3904 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 14:53:12.4290 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 14:53:12.4644 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:53:12.4959 Info Configuration initialized.
+2024-02-22 14:53:12.8721 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:53:12.8896 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 14:54:37.3969 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 14:54:37.4186 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 14:54:37.4186 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 14:54:37.4186 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 14:54:37.4214 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 14:54:37.4214 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 14:54:37.4659 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 14:54:37.4952 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:54:37.5206 Info Configuration initialized.
+2024-02-22 14:54:37.9487 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 14:54:37.9487 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 15:12:27.3524 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 15:12:27.3708 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 15:12:27.3708 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 15:12:27.3708 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 15:12:27.3708 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 15:12:27.3759 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 15:12:27.4239 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 15:12:27.4604 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 15:12:27.4827 Info Configuration initialized.
+2024-02-22 15:12:27.8558 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 15:12:27.8691 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-22 16:23:39.2515 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-22 16:23:39.2752 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-22 16:23:39.2752 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-22 16:23:39.2752 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-22 16:23:39.2752 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-22 16:23:39.2804 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-22 16:23:39.3297 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-22 16:23:39.3748 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 16:23:39.4162 Info Configuration initialized.
+2024-02-22 16:23:40.0596 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-22 16:23:40.0834 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 08:51:28.2618 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 08:51:28.2898 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 08:51:28.2898 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 08:51:28.2898 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 08:51:28.2898 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 08:51:28.2898 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 08:51:28.3448 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 08:51:28.3869 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 08:51:28.4206 Info Configuration initialized.
+2024-02-23 08:51:29.1483 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 08:51:29.1674 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 09:03:08.1173 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 09:03:08.1463 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 09:03:08.1463 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 09:03:08.1463 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 09:03:08.1463 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 09:03:08.1463 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 09:03:08.1993 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 09:03:08.2480 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:03:08.2856 Info Configuration initialized.
+2024-02-23 09:03:09.2901 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:03:09.3190 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 09:19:30.6893 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 09:19:30.7153 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 09:19:30.7153 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 09:19:30.7153 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 09:19:30.7153 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 09:19:30.7153 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 09:19:30.7603 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 09:19:30.7957 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:19:30.8266 Info Configuration initialized.
+2024-02-23 09:19:31.5073 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:19:31.5294 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 09:19:52.4635 Info Shutdown() called. Logger closing...
+2024-02-23 09:19:52.4635 Info Closing old configuration.
+2024-02-23 09:19:52.5558 Info Logger has been closed down.
+2024-02-23 09:20:22.3568 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 09:20:22.3802 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 09:20:22.3811 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 09:20:22.3811 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 09:20:22.3811 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 09:20:22.3811 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 09:20:22.4323 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 09:20:22.4657 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:20:22.4914 Info Configuration initialized.
+2024-02-23 09:20:23.0982 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:20:23.1203 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 09:23:42.4756 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 09:23:42.4933 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 09:23:42.4933 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 09:23:42.4933 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 09:23:42.4933 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 09:23:42.4933 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 09:23:42.5295 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 09:23:42.5733 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:23:42.6067 Info Configuration initialized.
+2024-02-23 09:23:43.1583 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:23:43.1777 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 09:37:17.7890 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 09:37:17.8090 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 09:37:17.8090 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 09:37:17.8090 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 09:37:17.8090 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 09:37:17.8090 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 09:37:17.8607 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 09:37:17.9021 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:37:17.9460 Info Configuration initialized.
+2024-02-23 09:37:18.5703 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:37:18.5912 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 09:54:59.2123 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 09:54:59.2374 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 09:54:59.2374 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 09:54:59.2374 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 09:54:59.2374 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 09:54:59.2445 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 09:54:59.3071 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 09:54:59.3715 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:54:59.4398 Info Configuration initialized.
+2024-02-23 09:55:00.1844 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 09:55:00.2145 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 19:11:28.2804 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 19:11:28.3071 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 19:11:28.3071 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 19:11:28.3071 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 19:11:28.3071 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 19:11:28.3071 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 19:11:28.3635 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 19:11:28.4115 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 19:11:28.4483 Info Configuration initialized.
+2024-02-23 19:11:29.1995 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 19:11:29.2257 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 22:27:08.3783 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 22:27:08.4030 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 22:27:08.4030 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 22:27:08.4030 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 22:27:08.4030 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 22:27:08.4030 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 22:27:08.4530 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 22:27:08.4912 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 22:27:08.5278 Info Configuration initialized.
+2024-02-23 22:27:09.2150 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 22:27:09.2384 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 23:38:28.5287 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 23:38:28.5443 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 23:38:28.5443 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 23:38:28.5443 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 23:38:28.5443 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 23:38:28.5443 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 23:38:28.5829 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 23:38:28.6106 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:38:28.6365 Info Configuration initialized.
+2024-02-23 23:38:28.9960 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:38:29.0058 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 23:39:17.5814 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 23:39:17.5932 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 23:39:17.5932 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 23:39:17.5932 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 23:39:17.5932 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 23:39:17.5932 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 23:39:17.6228 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 23:39:17.6521 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:39:17.6824 Info Configuration initialized.
+2024-02-23 23:39:18.1612 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:39:18.1731 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 23:47:38.5792 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 23:47:38.5973 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 23:47:38.5973 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 23:47:38.5990 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 23:47:38.5990 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 23:47:38.5990 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 23:47:38.6336 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 23:47:38.6639 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:47:38.6921 Info Configuration initialized.
+2024-02-23 23:47:39.1647 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:47:39.1647 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-23 23:53:12.8065 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-23 23:53:12.8243 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-23 23:53:12.8243 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-23 23:53:12.8243 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-23 23:53:12.8243 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-23 23:53:12.8243 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-23 23:53:12.8634 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-23 23:53:12.8927 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:53:12.9449 Info Configuration initialized.
+2024-02-23 23:53:13.3642 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-23 23:53:13.3642 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-24 00:00:37.6687 Info FileTarget(Name=efcoreDBQuery): Deleting old archive file: 'C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.6.log'.
+2024-02-24 00:00:37.6710 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.5.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.6.log
+2024-02-24 00:00:37.6710 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.4.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.5.log
+2024-02-24 00:00:37.6710 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.3.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.4.log
+2024-02-24 00:00:37.6710 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.3.log
+2024-02-24 00:00:37.6710 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log
+2024-02-24 00:00:37.6710 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log
+2024-02-24 00:00:37.6884 Info FileTarget(Name=efcoreDBQuery): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery-2024-02-23.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log
+2024-02-24 00:00:37.7366 Info FileTarget(Name=efcoreDBCommand): Deleting old archive file: 'C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.6.log'.
+2024-02-24 00:00:37.7366 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.5.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.6.log
+2024-02-24 00:00:37.7366 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.4.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.5.log
+2024-02-24 00:00:37.7366 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.3.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.4.log
+2024-02-24 00:00:37.7489 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.2.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.3.log
+2024-02-24 00:00:37.7489 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.2.log
+2024-02-24 00:00:37.7489 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.1.log
+2024-02-24 00:00:37.7489 Info FileTarget(Name=efcoreDBCommand): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand-2024-02-23.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.0.log
+2024-02-24 08:11:10.8681 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-24 08:11:10.8928 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-24 08:11:10.8928 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-24 08:11:10.8928 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-24 08:11:10.8928 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-24 08:11:10.8964 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-24 08:11:10.9383 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-24 08:11:10.9727 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-24 08:11:11.0066 Info Configuration initialized.
+2024-02-24 08:11:11.6971 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-24 08:11:11.7176 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-24 20:17:40.1510 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-24 20:17:40.1705 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-24 20:17:40.1705 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-24 20:17:40.1705 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-24 20:17:40.1705 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-24 20:17:40.1705 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-24 20:17:40.1998 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-24 20:17:40.2180 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-24 20:17:40.2381 Info Configuration initialized.
+2024-02-24 20:17:40.7533 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-24 20:17:40.7651 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-25 07:01:21.7843 Info FileTarget(Name=efcoreDBCommand): Deleting old archive file: 'C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.6.log'.
+2024-02-25 07:01:21.8273 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.5.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.6.log
+2024-02-25 07:01:21.8273 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.4.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.5.log
+2024-02-25 07:01:21.8344 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.3.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.4.log
+2024-02-25 07:01:21.8344 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.2.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.3.log
+2024-02-25 07:01:21.8344 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.2.log
+2024-02-25 07:01:21.8344 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.1.log
+2024-02-25 07:01:21.8344 Info FileTarget(Name=efcoreDBCommand): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand-2024-02-24.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBCommand.0.log
+2024-02-25 07:02:53.9958 Info FileTarget(Name=efcoreDBQuery): Deleting old archive file: 'C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.6.log'.
+2024-02-25 07:02:53.9958 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.5.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.6.log
+2024-02-25 07:02:53.9958 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.4.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.5.log
+2024-02-25 07:02:54.0149 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.3.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.4.log
+2024-02-25 07:02:54.0149 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.3.log
+2024-02-25 07:02:54.0216 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.2.log
+2024-02-25 07:02:54.0216 Info Roll archive C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.1.log
+2024-02-25 07:02:54.0216 Info FileTarget(Name=efcoreDBQuery): Archiving C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery-2024-02-24.log to C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\Logs\SAVILogs\savi_thrif-efcoreDBQuery.0.log
+2024-02-25 14:50:50.6931 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-25 14:50:50.7174 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-25 14:50:50.7174 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-25 14:50:50.7174 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-25 14:50:50.7174 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-25 14:50:50.7174 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-25 14:50:50.7628 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-25 14:50:50.7912 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-25 14:50:50.8179 Info Configuration initialized.
+2024-02-25 14:50:51.3291 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-25 14:50:51.3370 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-25 14:50:51.4286 Info Shutdown() called. Logger closing...
+2024-02-25 14:50:51.4286 Info Closing old configuration.
+2024-02-25 14:50:51.4488 Info Logger has been closed down.
+2024-02-25 14:51:09.8371 Info Registered target NLog.Targets.FileTarget(Name=customLog)
+2024-02-25 14:51:09.8371 Info Registered target NLog.Targets.FileTarget(Name=efcoreLog)
+2024-02-25 14:51:09.8371 Info Registered target NLog.Targets.FileTarget(Name=dbUpdateExcept)
+2024-02-25 14:51:09.8371 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBCommand)
+2024-02-25 14:51:09.8371 Info Registered target NLog.Targets.FileTarget(Name=efcoreDBQuery)
+2024-02-25 14:51:09.8371 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-02-25 14:51:09.8599 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.7.2287. Product version: 5.2.7+a1ef7cd83b5a6a172142a6850f0ced4e759a4b3b. GlobalAssemblyCache: False
+2024-02-25 14:51:09.8761 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-25 14:51:09.8905 Info Configuration initialized.
+2024-02-25 14:51:10.0285 Info Validating config: Targets=6, ConfigItems=97, FilePath=C:\Users\HP\source\repos\Internship\Savi_SQ017_GROUPB_BE\Savi_Thrift\bin\Debug\net6.0\NLog.config
+2024-02-25 14:51:10.0413 Warn Logger: Microsoft.Hosting.Lifetime configured with duplicate output to target: ConsoleTarget(Name=lifetimeConsole). LoggingRule with NamePattern='Microsoft.Hosting.Lifetime' and Level=Info has been skipped.
+2024-02-25 14:51:10.0699 Info Shutdown() called. Logger closing...
+2024-02-25 14:51:10.0699 Info Closing old configuration.
+2024-02-25 14:51:10.0902 Info Logger has been closed down.

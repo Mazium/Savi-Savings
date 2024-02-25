@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Savi_Thrift.Persistence.Context;
 
@@ -11,9 +12,10 @@ using Savi_Thrift.Persistence.Context;
 namespace Savi_Thrift.Persistence.Migrations
 {
     [DbContext(typeof(SaviDbContext))]
-    partial class SaviDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240222093754_UpdatedMembersTable")]
+    partial class UpdatedMembersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,9 +216,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastLogin")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -309,43 +308,6 @@ namespace Savi_Thrift.Persistence.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("CardDetails");
-                });
-
-            modelBuilder.Entity("Savi_Thrift.Domain.Entities.DefaultingUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("ActualDebitDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("AmountDefaulted")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DefaultingPaymentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("GroupSavingId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RecipientUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DefaultingUsers");
                 });
 
             modelBuilder.Entity("Savi_Thrift.Domain.Entities.GroupSavings", b =>

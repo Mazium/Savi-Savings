@@ -22,10 +22,22 @@ namespace Savi_Thrift.Controllers
             return Ok(await _groupTransactionService.FundGroup(groupFundDto));
         }
 
-        [HttpGet("get-group-transactions")]
+		[HttpPost("Auto-fund-group")]
+		public async Task<IActionResult> AutoFundGroup(string groupId)
+		{
+			return Ok(await _groupTransactionService.AutoFundGroup(groupId));
+		}
+
+		[HttpGet("get-group-transactions")]
 		public async Task<IActionResult> GetGroupTransaction(string groupId)
 		{
 			return Ok(await _groupTransactionService.GetGroupTransactions(groupId));
+		}
+
+		[HttpGet("get-total-transactions")]
+		public async Task<IActionResult> GetTotalGroupSavings(string userId)
+		{
+			return Ok(await _groupTransactionService.TotalGroupSavings(userId));
 		}
 	}
 }

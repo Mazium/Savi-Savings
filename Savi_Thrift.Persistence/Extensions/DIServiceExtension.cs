@@ -40,6 +40,7 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IAuthenticationServices, AuthenticationServices>();
 			services.AddScoped<IKycService, KycService>();
 			services.AddScoped<IWalletService, WalletService>();
+			services.AddScoped<IRecurringGroupJobs, RecurringGroupJobs>();
             services.AddTransient<WalletService>();
 			services.AddScoped<IGroupTransactionService, GroupTransactionService>();
 			// Register Email services
