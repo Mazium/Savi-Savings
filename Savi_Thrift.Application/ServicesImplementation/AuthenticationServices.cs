@@ -109,17 +109,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
                 {
                     await _userManager.AddToRoleAsync(appUser, "User");
                     token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-					//token = HttpUtility.UrlEncode(token);
-					//var resul = await _userManager.ConfirmEmailAsync(appUser, token);
-     //               if (resul.Succeeded)
-     //               {
-					//	Console.WriteLine("success = " + resul);
-     //               }
-     //               else
-     //               {
-					//	Console.WriteLine("failed = " + resul);
-					//}
-					//	Console.WriteLine("token encoded= "+ token);
+				
 
 					var createWalletDto = new CreateWalletDto
                     {
@@ -181,6 +171,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				{
 					case { Succeeded: true }:
 						var role = (await _userManager.GetRolesAsync(user)).First();
+                        user.LastLogin=DateTime.Now;
+                        _unitOfWork.UserRepository.Update(user);
+                        await _unitOfWork.SaveChangesAsync();
 						var response = new LoginResponseDto
 						{
 							JWToken = GenerateJwtToken(user, role)

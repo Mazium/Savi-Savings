@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Savi_Thrift.Application.DTO.GroupTransaction;
@@ -48,24 +49,42 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			decimal amountCollected = 0;
 
+			GroupSavingsMembers collector = null;
+
+			foreach (var member in groupMembers)
+			{
+				if (!member.HasCollected)
+				{
+					collector = member;
+					break;
+				}
+			}
+			if (collector == null)
+			{
+				return ApiResponse<List<GroupTransactionResponseDto>>.Failed("No group collector available.", StatusCodes.Status404NotFound, new List<string>());
+			}
+
+			
+
 			foreach (var member in groupMembers)
 			{
 				var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.UserId == member.UserId);
 				if (wallets.Count < 0)
 				{
-					//add to defaulting user
+
+					AddDefaultingUsers(member.UserId, groupId, collector.UserId, group.ContributionAmount);
 				}
 				else
 				{
 					var wallet = wallets.First();
 					if (wallet.Balance < contributionAmount)
 					{
-						//add to defaulting user
+						AddDefaultingUsers(member.UserId, groupId, collector.UserId, group.ContributionAmount);
 					}
 					else
 					{
 						var previousGroupTransactions = await _unitOfWork.GroupTransactionRepository
-							.FindAsync(x => x.GroupSavingsId == groupId && x.UserId == member.UserId && x.CreatedAt.Year == group.RunTime.Year 
+							.FindAsync(x => x.GroupSavingsId == groupId && x.UserId == member.UserId && x.CreatedAt.Year == group.RunTime.Year
 							&& x.CreatedAt.Month == group.RunTime.Month && x.CreatedAt.Day == group.RunTime.Day);
 						if (previousGroupTransactions.Count == 0)
 						{
@@ -96,33 +115,26 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			if (amountCollected > 0)
 			{
-				foreach (var member in groupMembers)
+				var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.UserId == collector.UserId);
+				if (wallets.Count > 0)
 				{
-					if (!member.HasCollected)
+					var wallet = wallets.First();
+					wallet.Balance += amountCollected;
+
+					collector.HasCollected = true;
+					_unitOfWork.GroupMembersRepository.Update(collector);
+					await _unitOfWork.SaveChangesAsync();
+
+					var transaction = new GroupTransactions
 					{
-						var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.UserId == member.UserId);
-						if (wallets.Count > 0)
-						{
-							var wallet = wallets.First();
-							wallet.Balance += amountCollected;
+						ActionId = "1",
+						Amount = amountCollected,
+						GroupSavingsId = groupId,
+						UserId = collector.UserId,
+					};
 
-							member.HasCollected = true;
-							_unitOfWork.GroupMembersRepository.Update(member);
-							await _unitOfWork.SaveChangesAsync();
-
-							var transaction = new GroupTransactions
-							{
-								ActionId = "1",
-								Amount = amountCollected,
-								GroupSavingsId = groupId,
-								UserId = member.UserId,
-							};
-
-							await _unitOfWork.GroupTransactionRepository.AddAsync(transaction);
-							await _unitOfWork.SaveChangesAsync();
-							break;
-						}
-					}
+					await _unitOfWork.GroupTransactionRepository.AddAsync(transaction);
+					await _unitOfWork.SaveChangesAsync();
 				}
 			}
 
@@ -143,12 +155,29 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 			group.RunTime = runtime;
 			_unitOfWork.GroupSavingsRepository.Update(group);
-			
+
 			await _unitOfWork.SaveChangesAsync();
-			_backgroundJobClient.Schedule<IRecurringGroupJobs>((job) => job.FundNow(group.Id), runtime);			
+			_backgroundJobClient.Schedule<IRecurringGroupJobs>((job) => job.FundNow(group.Id), runtime);
 
 			return ApiResponse<List<GroupTransactionResponseDto>>.Success(listOfTransactions, "Group automatic funding has completed successfully.", StatusCodes.Status200OK);
 
+		}
+
+		private async void AddDefaultingUsers(string userId, string groupId, string collectorId, decimal contributionAmount )
+		{
+
+			var defaultingUsers = new DefaultingUser()
+			{
+				AppUserId = userId,
+				GroupSavingId = groupId,
+				RecipientUserId = collectorId,
+				AmountDefaulted = contributionAmount,
+				ActualDebitDate = DateTime.Now,
+				DefaultingPaymentStatus = 0,
+
+			};
+			await _unitOfWork.SaveChangesAsync();
+			await _unitOfWork.DefaultingUserRepository.AddAsync(defaultingUsers);
 		}
 
 		public async Task<ApiResponse<GroupTransactionResponseDto>> FundGroup(GroupFundDto groupFundDto)
@@ -290,9 +319,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 			catch (Exception ex)
 			{
-				return ApiResponse<decimal>.Failed("Error Occurred", StatusCodes.Status404NotFound, new List<string>() { ex.Message});
+				return ApiResponse<decimal>.Failed("Error Occurred", StatusCodes.Status404NotFound, new List<string>() { ex.Message });
 			}
-			
+
 
 		}
 	}

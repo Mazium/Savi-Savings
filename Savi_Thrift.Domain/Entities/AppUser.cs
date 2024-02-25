@@ -12,7 +12,7 @@ namespace Savi_Thrift.Domain.Entities
         public DateTime? ResetTokenExpires { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public DateTime DateModified {  get; set; }
-        public DateTime LastLogin { get; set; }
+        public DateTime LastLogin { get; set; } = DateTime.Now;
         public ICollection<GroupSavings> GroupSavings { get; set; }
         public ICollection<CardDetail> CardDetails { get; set; }
 		public ICollection<Saving> Savings { get; set; }

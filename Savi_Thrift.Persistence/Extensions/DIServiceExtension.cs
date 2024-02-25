@@ -79,6 +79,8 @@ namespace Savi_Thrift.Persistence.Extensions
 
             services.AddScoped<IUserTransactionServices, UserTransactionServices>();
 
+			services.AddScoped<IDefaultingUserService , DefaultingUserService>();
+
 			
 			services.AddAuthentication(options =>
 			{
