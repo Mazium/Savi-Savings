@@ -266,8 +266,49 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-	
+        public async Task<ApiResponse<decimal>> TotalSavingsGroup(string groupId)
+        {
+            try
+            {
+                var groupEntity = await _unitOfWork.GroupSavingsRepository
+                    .FindAsync(g => g.Id == groupId && g.GroupStatus == GroupStatus.Ongoing);
 
-	}
+                if (groupEntity == null)
+                {
+                    return ApiResponse<decimal>.Failed($"Group with ID {groupId} not found or is inactive", StatusCodes.Status404NotFound, null);
+
+                }
+
+                var listOfSavings = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.Id == groupId);
+                if (!listOfSavings.Any())
+                {
+                    return ApiResponse<decimal>.Failed("No Savings Found", StatusCodes.Status404NotFound, new List<string>());
+
+
+                }
+
+                decimal total = 0;
+                foreach (var savings in listOfSavings)
+                {
+                    total += savings.ContributionAmount;
+                }
+
+
+                return ApiResponse<decimal>.Success(total, "TotalSavingBalance for the group retrieved successfully", StatusCodes.Status200OK);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while getting total savings for the group ({groupId})");
+
+                return ApiResponse<decimal>.Failed("Failed to get total savings for the group", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+
+            }
+        }
+
+
+
+
+    }
 }
 
