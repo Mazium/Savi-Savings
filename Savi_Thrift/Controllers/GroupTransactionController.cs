@@ -34,6 +34,12 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _groupTransactionService.GetGroupTransactions(groupId));
 		}
 
+		[HttpGet("get-group-transactions-by-userId")]
+		public async Task<IActionResult> GetGroupTransactionByUserId(string userId)
+		{
+			return Ok(await _groupTransactionService.GetGroupTransactionsByUserId(userId));
+		}
+
 		[HttpGet("get-total-transactions")]
 		public async Task<IActionResult> GetTotalGroupSavings(string userId)
 		{
