@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
-using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.DTO.GroupTransaction;
-using Savi_Thrift.Application.DTO.Saving;
-using Savi_Thrift.Application.DTO.UserTransaction;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
-using static Google.Apis.Requests.BatchRequest;
+using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -16,12 +15,170 @@ namespace Savi_Thrift.Application.ServicesImplementation
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-		public GroupTransactionService(IUnitOfWork unitOfWork, IMapper mapper)
+		private readonly IBackgroundJobClient _backgroundJobClient;
+		public GroupTransactionService(IUnitOfWork unitOfWork, IMapper mapper, IBackgroundJobClient backgroundJobClient)
 		{
 			_mapper = mapper;
 			_unitOfWork = unitOfWork;
+			_backgroundJobClient = backgroundJobClient;
 		}
 
+
+		public async Task<ApiResponse<List<GroupTransactionResponseDto>>> AutoFundGroup(string groupId)
+		{
+			var findGroup = await _unitOfWork.GroupSavingsRepository.FindAsync(x => x.IsDeleted == false && x.GroupStatus == GroupStatus.Ongoing && x.Id == groupId);
+			if (findGroup.Count == 0)
+			{
+				return ApiResponse<List<GroupTransactionResponseDto>>.Failed("This group is not currently running.", StatusCodes.Status404NotFound, new List<string>());
+			}
+			var group = findGroup.First();
+
+			var contributionAmount = group.ContributionAmount;
+
+			//find all members of the group
+
+			var groupMembers = await _unitOfWork.GroupMembersRepository.FindAsync(x => x.GroupSavingsId == groupId);
+
+			var collected = groupMembers.Where(x => x.HasCollected == true).ToList();
+			if (collected.Count == 5)
+			{
+				return ApiResponse<List<GroupTransactionResponseDto>>.Failed("This group contribution round is complete.", StatusCodes.Status404NotFound, new List<string>());
+			}
+
+			var listOfTransactions = new List<GroupTransactionResponseDto>();
+
+			decimal amountCollected = 0;
+
+			GroupSavingsMembers collector = null;
+
+			foreach (var member in groupMembers)
+			{
+				if (!member.HasCollected)
+				{
+					collector = member;
+					break;
+				}
+			}
+			if (collector == null)
+			{
+				return ApiResponse<List<GroupTransactionResponseDto>>.Failed("No group collector available.", StatusCodes.Status404NotFound, new List<string>());
+			}
+
+			
+
+			foreach (var member in groupMembers)
+			{
+				var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.UserId == member.UserId);
+				if (wallets.Count < 0)
+				{
+
+					AddDefaultingUsers(member.UserId, groupId, collector.UserId, group.ContributionAmount);
+				}
+				else
+				{
+					var wallet = wallets.First();
+					if (wallet.Balance < contributionAmount)
+					{
+						AddDefaultingUsers(member.UserId, groupId, collector.UserId, group.ContributionAmount);
+					}
+					else
+					{
+						var previousGroupTransactions = await _unitOfWork.GroupTransactionRepository
+							.FindAsync(x => x.GroupSavingsId == groupId && x.UserId == member.UserId && x.CreatedAt.Year == group.RunTime.Year
+							&& x.CreatedAt.Month == group.RunTime.Month && x.CreatedAt.Day == group.RunTime.Day);
+						if (previousGroupTransactions.Count == 0)
+						{
+							wallet.Balance -= contributionAmount;
+							_unitOfWork.WalletRepository.Update(wallet);
+							amountCollected += contributionAmount;
+							await _unitOfWork.SaveChangesAsync();
+
+							var transaction = new GroupTransactions
+							{
+								ActionId = "2",
+								Amount = contributionAmount,
+								GroupSavingsId = groupId,
+								UserId = member.UserId,
+							};
+
+							await _unitOfWork.GroupTransactionRepository.AddAsync(transaction);
+							await _unitOfWork.SaveChangesAsync();
+
+							var transactionDto = _mapper.Map<GroupTransactionResponseDto>(transaction);
+							listOfTransactions.Add(transactionDto);
+						}
+
+					}
+				}
+			}
+			groupMembers = groupMembers.OrderBy(x => x.Position).ToList();
+
+			if (amountCollected > 0)
+			{
+				var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.UserId == collector.UserId);
+				if (wallets.Count > 0)
+				{
+					var wallet = wallets.First();
+					wallet.Balance += amountCollected;
+
+					collector.HasCollected = true;
+					_unitOfWork.GroupMembersRepository.Update(collector);
+					await _unitOfWork.SaveChangesAsync();
+
+					var transaction = new GroupTransactions
+					{
+						ActionId = "1",
+						Amount = amountCollected,
+						GroupSavingsId = groupId,
+						UserId = collector.UserId,
+					};
+
+					await _unitOfWork.GroupTransactionRepository.AddAsync(transaction);
+					await _unitOfWork.SaveChangesAsync();
+				}
+			}
+
+
+			DateTime runtime = group.RunTime;
+			switch (group.Frequency)
+			{
+				case SavingFrequency.Daily:
+					runtime = group.RunTime.AddDays(1);
+					break;
+				case SavingFrequency.Monthly:
+					runtime = group.RunTime.AddMonths(1);
+					break;
+				case SavingFrequency.Weekly:
+					runtime = group.RunTime.AddDays(7);
+					break;
+
+			}
+			group.RunTime = runtime;
+			_unitOfWork.GroupSavingsRepository.Update(group);
+
+			await _unitOfWork.SaveChangesAsync();
+			_backgroundJobClient.Schedule<IRecurringGroupJobs>((job) => job.FundNow(group.Id), runtime);
+
+			return ApiResponse<List<GroupTransactionResponseDto>>.Success(listOfTransactions, "Group automatic funding has completed successfully.", StatusCodes.Status200OK);
+
+		}
+
+		private async void AddDefaultingUsers(string userId, string groupId, string collectorId, decimal contributionAmount )
+		{
+
+			var defaultingUsers = new DefaultingUser()
+			{
+				AppUserId = userId,
+				GroupSavingId = groupId,
+				RecipientUserId = collectorId,
+				AmountDefaulted = contributionAmount,
+				ActualDebitDate = DateTime.Now,
+				DefaultingPaymentStatus = 0,
+
+			};
+			await _unitOfWork.SaveChangesAsync();
+			await _unitOfWork.DefaultingUserRepository.AddAsync(defaultingUsers);
+		}
 
 		public async Task<ApiResponse<GroupTransactionResponseDto>> FundGroup(GroupFundDto groupFundDto)
 		{
@@ -117,22 +274,52 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 				var transactions = await _unitOfWork.GroupTransactionRepository.FindAsync(x => x.IsDeleted == false && x.GroupSavingsId == groupId);
 				var response = _mapper.Map<List<GroupUserTransactionResponseDto>>(transactions);
-				
+
 				foreach (var transaction in response)
 				{
 					var user = await _unitOfWork.UserRepository.GetByIdAsync(transaction.UserId);
-					if(user != null)
+					if (user != null)
 					{
 						transaction.Firstname = user.FirstName;
 						transaction.Avatar = user.ImageUrl;
 					}
 				}
-				
+
 				return ApiResponse<List<GroupUserTransactionResponseDto>>.Success(response, "Group transactions retrieved", StatusCodes.Status200OK);
 			}
 			catch (Exception ex)
 			{
 				return ApiResponse<List<GroupUserTransactionResponseDto>>.Failed(new List<string>() { ex.Message });
+			}
+
+
+		}
+
+		public async Task<ApiResponse<decimal>> TotalGroupSavings(string userId)
+		{
+			try
+			{
+				var user = await _unitOfWork.UserRepository.GetByIdAsync(userId);
+				if (user == null)
+				{
+					return ApiResponse<decimal>.Failed("user does not exist.", StatusCodes.Status404NotFound, new List<string>());
+				}
+				var transactions = await _unitOfWork.GroupTransactionRepository.FindAsync(u => u.UserId == userId && u.ActionId == "2");
+				if (transactions.Count == 0)
+				{
+					return ApiResponse<decimal>.Success(0, "No transactions", StatusCodes.Status200OK);
+				}
+				decimal totalSavings = 0;
+				foreach (var transaction in transactions)
+				{
+					totalSavings += transaction.Amount;
+				}
+
+				return ApiResponse<decimal>.Success(totalSavings, "Total Transactions Retrieved Successfully", StatusCodes.Status200OK);
+			}
+			catch (Exception ex)
+			{
+				return ApiResponse<decimal>.Failed("Error Occurred", StatusCodes.Status404NotFound, new List<string>() { ex.Message });
 			}
 
 

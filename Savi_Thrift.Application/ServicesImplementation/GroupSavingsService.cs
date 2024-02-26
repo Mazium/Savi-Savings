@@ -7,8 +7,6 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Enums;
-using Savi_Thrift.Application.DTO.UserTransaction;
-using Savi_Thrift.Application.DTO;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {

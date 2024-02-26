@@ -9,5 +9,7 @@ namespace Savi_Thrift.Domain.Entities
         public bool IsGroupOwner { get; set; }
         public string Position { get; set;}
         public DateTime LastSavingDate { get;set; }
+
+        public bool HasCollected { get; set; }
     }
 }

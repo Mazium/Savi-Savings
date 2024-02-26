@@ -20,6 +20,7 @@ namespace Savi_Thrift.Persistence.Repositories
             GroupMembersRepository = new GroupMembersRepository(_saviDbContext);
 			GroupTransactionRepository = new GroupTransactionRepository(_saviDbContext);
             UserTransactionRepository = new UserTransactionRepository(_saviDbContext);
+			DefaultingUserRepository = new DefaultingUserRepository(_saviDbContext);
 
         }
 
@@ -33,6 +34,7 @@ namespace Savi_Thrift.Persistence.Repositories
         public IWalletFundingRepository WalletFundingRepository { get; set; }
         public IKycRepository KycRepository { get; private set; }
 		public IUserTransactionRepository UserTransactionRepository { get; set; }
+		public IDefaultingUserRepository DefaultingUserRepository { get; set; }
 
 
 
