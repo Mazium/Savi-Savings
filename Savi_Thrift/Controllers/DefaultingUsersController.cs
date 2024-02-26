@@ -21,5 +21,11 @@ namespace Savi_Thrift.Controllers
 		{
 			return Ok(await _defaultingUserService.GetDefaultingUsers(groupSavingsId));
 		}
-    }
+
+		[HttpGet("GetAllDefaultingUsers")]
+		public async Task<IActionResult> GetAllDefaultingUsers()
+		{
+			return Ok(await _defaultingUserService.GetAllDefaultingUsers());
+		}
+	}
 }

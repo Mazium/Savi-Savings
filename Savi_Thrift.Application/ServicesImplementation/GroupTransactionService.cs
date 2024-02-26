@@ -8,6 +8,7 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain.Enums;
+using System.Collections.Generic;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -261,7 +262,59 @@ namespace Savi_Thrift.Application.ServicesImplementation
 		{
 			throw new NotImplementedException();
 		}
+		public async Task<ApiResponse<List<GroupUserTransactionResponseDto>>> GetGroupTransactionsByUserId(string userId)
+		{
+			try
+			{
+				var myGroups = await _unitOfWork.GroupMembersRepository.FindAsync(x=>x.UserId == userId);
 
+				if (myGroups.Count==0)
+				{
+					return ApiResponse<List<GroupUserTransactionResponseDto>>.Failed("User not part of any group", StatusCodes.Status404NotFound, new List<string>() { });
+				}
+				List <GroupTransactions> groupTransactions = new ();
+				
+				foreach (var myGroup in myGroups)
+				{
+					var transactions = await _unitOfWork.GroupTransactionRepository.FindAsync(x => x.GroupSavingsId == myGroup.GroupSavingsId);
+					if (transactions.Count > 0)
+					{
+						foreach(var transaction in transactions)
+						{
+							groupTransactions.Add (transaction);
+						}
+					}
+				}
+				groupTransactions = groupTransactions.OrderByDescending(x => x.CreatedAt).ToList();
+
+
+				//return ApiResponse<List<GroupUserTransactionResponseDto>>.Failed("Group id does not exist", StatusCodes.Status404NotFound, new List<string>() { });
+				var response = _mapper.Map<List<GroupUserTransactionResponseDto>>(groupTransactions);
+
+				foreach (var transaction in response)
+				{
+					var user = await _unitOfWork.UserRepository.GetByIdAsync(transaction.UserId);
+					if (user != null)
+					{
+						var gname = await _unitOfWork.GroupSavingsRepository.GetByIdAsync(transaction.GroupSavingsId);
+						if(gname != null)
+						{
+							transaction.GroupName = gname.GroupName;
+						}
+						transaction.Fullname = user.FirstName+" "+user.LastName;
+						transaction.Avatar = user.ImageUrl;
+					}
+				}
+
+				return ApiResponse<List<GroupUserTransactionResponseDto>>.Success(response, "User group transactions retrieved successfully", StatusCodes.Status200OK);
+			}
+			catch (Exception ex)
+			{
+				return ApiResponse<List<GroupUserTransactionResponseDto>>.Failed(new List<string>() { ex.Message });
+			}
+
+
+		}
 		public async Task<ApiResponse<List<GroupUserTransactionResponseDto>>> GetGroupTransactions(string groupId)
 		{
 			try
@@ -273,6 +326,9 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				}
 
 				var transactions = await _unitOfWork.GroupTransactionRepository.FindAsync(x => x.IsDeleted == false && x.GroupSavingsId == groupId);
+
+				transactions = transactions.OrderByDescending(x => x.CreatedAt).ToList();
+
 				var response = _mapper.Map<List<GroupUserTransactionResponseDto>>(transactions);
 
 				foreach (var transaction in response)
@@ -280,8 +336,19 @@ namespace Savi_Thrift.Application.ServicesImplementation
 					var user = await _unitOfWork.UserRepository.GetByIdAsync(transaction.UserId);
 					if (user != null)
 					{
-						transaction.Firstname = user.FirstName;
+						transaction.Fullname = user.FirstName +" "+user.LastName;
 						transaction.Avatar = user.ImageUrl;
+					}
+					var gname = await _unitOfWork.GroupSavingsRepository.GetByIdAsync(transaction.GroupSavingsId);
+					if (gname != null)
+					{
+						transaction.GroupName = gname.GroupName;
+					}
+					var transmem = await _unitOfWork.GroupMembersRepository.FindAsync(x=>x.GroupSavingsId==transaction.GroupSavingsId && x.UserId==transaction.UserId);
+					if(transmem.Count>0)
+					{
+						var trans = transmem.First();
+						transaction.Position = trans.Position;
 					}
 				}
 
