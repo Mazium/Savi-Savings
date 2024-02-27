@@ -8,9 +8,10 @@ using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Enums;
 
+
 namespace Savi_Thrift.Application.ServicesImplementation
 {
-	public class GroupSavingsService : IGroupSavingsService
+    public class GroupSavingsService : IGroupSavingsService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly ILogger<GroupSavingsService> _logger;
@@ -25,7 +26,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_mapper = mapper;
 			_cloudinaryServices = cloudinaryServices;
 		}
-
 
 		public async Task<ApiResponse<GroupResponseDto>> CreateGroupAsync(GroupCreationDto groupCreationDto, string userId)
 		{
@@ -93,7 +93,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			}
 		}
-
 		public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetAllPublicGroupsAsync()
 		{
 			try
@@ -116,12 +115,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				return ApiResponse<IEnumerable<GroupResponseDto>>.Failed("Failed to get all groups", 500, new List<string> { ex.Message });
 			}
 		}
-
 		public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetGroupsByUserId(string userId)
 		{
-
-
-
 			try
 			{
 				// Retrieve all ongoing group savings accounts and filter them where GroupStatus is 'Ongoing'
@@ -156,8 +151,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				);
 			}
 		}
-
-
 		public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> ListOngoingGroupSavingsAccountsAsync()
 		{
 			try
@@ -186,8 +179,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				);
 			}
 		}
-
-
 		public async Task<ApiResponse<GroupResponseDto>> GetGroupDetailByIdAsync(string groupId)
 		{
 			try
@@ -226,21 +217,15 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				);
 			}
 		}
-
         public async Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup()
         {
 
 			var today = DateTime.Today;
-			var newGroupSavings = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.CreatedAt >=today && u.CreatedAt<today.AddDays(1));
-	
-            if(newGroupSavings.Count == 0)
-               return ApiResponse<List<GroupResponseDto>>.Failed("No recent groups found", StatusCodes.Status404NotFound, null);
-
+			var newGroupSavings = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >=today && u.CreatedAt<today.AddDays(1));
             var groupResponses = _mapper.Map<List<GroupResponseDto>>(newGroupSavings);
 
             return ApiResponse<List<GroupResponseDto>>.Success(groupResponses, "Recent groups successfully retrieved", StatusCodes.Status200OK);
         }
-
         public async Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id)
         {
             try
@@ -265,49 +250,39 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 			}
 		}
+        public async Task<ApiResponse<List<GroupResponseDto>>> GetAllGroups()
+        {
+            var groups = await _unitOfWork.GroupSavingsRepository.GetAllAsync();
+            if (groups.Count == 0)
+                return ApiResponse<List<GroupResponseDto>>.Failed("No group found", StatusCodes.Status404NotFound, null);
 
-        public async Task<ApiResponse<decimal>> TotalSavingsGroup(string groupId)
+            var result = _mapper.Map<List<GroupResponseDto>>(groups);
+             
+            
+            return new ApiResponse<List<GroupResponseDto>>(result, "Users retrieved successfully");
+        }
+        public async Task<ApiResponse<decimal>> TotalSavingsGroup(string userId)
         {
             try
             {
-                var groupEntity = await _unitOfWork.GroupSavingsRepository
-                    .FindAsync(g => g.Id == groupId && g.GroupStatus == GroupStatus.Ongoing);
-
-                if (groupEntity == null)
-                {
-                    return ApiResponse<decimal>.Failed($"Group with ID {groupId} not found or is inactive", StatusCodes.Status404NotFound, null);
-
-                }
-
-                var listOfSavings = await _unitOfWork.GroupSavingsRepository.FindAsync(u => u.Id == groupId);
-                if (!listOfSavings.Any())
-                {
-                    return ApiResponse<decimal>.Failed("No Savings Found", StatusCodes.Status404NotFound, new List<string>());
-
-
-                }
-
-                decimal total = 0;
-                foreach (var savings in listOfSavings)
-                {
-                    total += savings.ContributionAmount;
-                }
-
-
-                return ApiResponse<decimal>.Success(total, "TotalSavingBalance for the group retrieved successfully", StatusCodes.Status200OK);
+				var groupsData = await GetGroupsByUserId(userId) ;
+				var groups = groupsData.Data;
+                List<GroupSavings> userActiveGroups = new();
+				decimal totalSavings = 0;
+				foreach(var group in groups)
+				{
+					totalSavings += group.ContributionAmount;
+				}
+               
+                return ApiResponse<decimal>.Success(totalSavings, "TotalSavingBalance for the group retrieved successfully", StatusCodes.Status200OK);
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error occurred while getting total savings for the group ({groupId})");
-
                 return ApiResponse<decimal>.Failed("Failed to get total savings for the group", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
 
             }
         }
-
-
-
 
     }
 }

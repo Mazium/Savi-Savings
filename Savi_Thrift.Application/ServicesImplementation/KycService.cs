@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Savi_Thrift.Application.DTO;
+using Savi_Thrift.Application.DTO.Kyc;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Common.Utilities;
@@ -10,7 +10,7 @@ using Savi_Thrift.Domain.Entities;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
-	public class KycService : IKycService
+    public class KycService : IKycService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;

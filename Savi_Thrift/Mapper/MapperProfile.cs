@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
-using Savi_Thrift.Application.DTO;
 using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.DTO.DefaultUser;
 using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.DTO.GroupTransaction;
+using Savi_Thrift.Application.DTO.Kyc;
 using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Domain.Entities;
-using System.Text.RegularExpressions;
-
 namespace Savi_Thrift.Mapper
 {
     public class MapperProfile : Profile
@@ -33,6 +31,7 @@ namespace Savi_Thrift.Mapper
             CreateMap<GroupTransactions, GroupTransactionResponseDto>().ReverseMap();
 			CreateMap<GroupTransactions, GroupUserTransactionResponseDto>().ReverseMap();
             CreateMap<DefaultingUser, DefaultUserDto>().ReverseMap();
+            CreateMap<AppUser, NewUserResponseDto>().ReverseMap();
 		}  
     }
 }

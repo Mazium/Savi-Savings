@@ -35,5 +35,11 @@ namespace Savi_Thrift.Controllers
                 return NotFound(newUsers);
             return Ok(newUsers);
         }
+
+        [HttpGet("dashboard-user-data")]
+        public async Task<IActionResult> GetDashboardUserData()
+        {           
+            return Ok(await _userService.AdminDashboardUserInfo());
+        }
     }
 }
