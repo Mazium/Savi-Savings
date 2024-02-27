@@ -39,7 +39,7 @@ namespace Savi_Thrift.Common.Utilities
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user, "SuperAdmin").Wait();
+                    userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
         }

@@ -109,8 +109,25 @@ namespace Savi_Thrift.Controllers
             return NotFound(response?.Errors ?? new List<string> { "Error retrieving group detail" });
         }
 
+        [HttpGet("total-savings/{groupId}")]
+        public async Task<IActionResult> TotalSavingsGroup(string groupId)
+        {
+            try
+            {
+                var response = await _groupService.TotalSavingsGroup(groupId);
 
+                if (response.Succeeded)
+                {
+                    return Ok(response.Data); // Return the total savings value
+                }
 
+                return NotFound(response?.Errors ?? new List<string> { "Error retrieving Total Group Savings" });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+            }
+        }
 
 
 

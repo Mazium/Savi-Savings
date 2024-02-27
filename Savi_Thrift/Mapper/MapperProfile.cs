@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Savi_Thrift.Application.DTO.AppUser;
+using Savi_Thrift.Application.DTO.DefaultUser;
 using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.DTO.GroupTransaction;
 using Savi_Thrift.Application.DTO.Kyc;
@@ -31,6 +32,7 @@ namespace Savi_Thrift.Mapper
             CreateMap<Saving, GetPersonalSavingsDTO>().ReverseMap();
             CreateMap<GroupTransactions, GroupTransactionResponseDto>().ReverseMap();
 			CreateMap<GroupTransactions, GroupUserTransactionResponseDto>().ReverseMap();
+            CreateMap<DefaultingUser, DefaultUserDto>().ReverseMap();
             CreateMap<AppUser, NewUserResponseDto>().ReverseMap();
 		}  
     }

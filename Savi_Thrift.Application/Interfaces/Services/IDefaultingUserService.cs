@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Savi_Thrift.Application.DTO.DefaultUser;
+using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services
 {
-    internal class IDefaultingUserService
-    {
-    }
+	public interface IDefaultingUserService
+	{
+		Task<ApiResponse<List<DefaultUserDto>>> GetDefaultingUsers(string groupSavingsId);
+		Task<ApiResponse<List<DefaultUserDto>>> GetAllDefaultingUsers();
+	}
 }

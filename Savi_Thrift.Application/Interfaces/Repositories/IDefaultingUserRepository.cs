@@ -2,7 +2,7 @@
 
 namespace Savi_Thrift.Application.Interfaces.Repositories
 {
-    public interface IDefaultingUserRepository: IGenericRepository<DefaultingUsers>
-    {
-    }
+	public interface IDefaultingUserRepository: IGenericRepository<DefaultingUser>
+	{
+	}
 }
