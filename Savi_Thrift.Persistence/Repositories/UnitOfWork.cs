@@ -34,12 +34,9 @@ namespace Savi_Thrift.Persistence.Repositories
         public IWalletFundingRepository WalletFundingRepository { get; set; }
         public IKycRepository KycRepository { get; private set; }
 		public IUserTransactionRepository UserTransactionRepository { get; set; }
-<<<<<<< HEAD
-        public IDefaultingUserRepository DefaultingUserRepository { get; set; }
-=======
-		public IDefaultingUserRepository DefaultingUserRepository { get; set; }
->>>>>>> develop
 
+        public IDefaultingUserRepository DefaultingUserRepository { get; set; }
+		
 
 
         public async Task<int> SaveChangesAsync()

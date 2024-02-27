@@ -17,7 +17,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
         Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup();
         Task<ApiResponse<List<GroupResponseDto>>> GetAllGroups();
 
-        Task<ApiResponse<decimal>> TotalSavingsGroup(string groupId);
+        Task<ApiResponse<decimal>> TotalSavingsGroup(string userId);
 
 
     }

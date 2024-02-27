@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.Execution;
 using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Savi_Thrift.Application.DTO.GroupTransaction;
@@ -7,11 +6,7 @@ using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
-<<<<<<< HEAD
-=======
 using Savi_Thrift.Domain.Enums;
-using System.Collections.Generic;
->>>>>>> develop
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -26,9 +21,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_unitOfWork = unitOfWork;
 			_backgroundJobClient = backgroundJobClient;
 		}
-
-<<<<<<< HEAD
-=======
 
 		public async Task<ApiResponse<List<GroupTransactionResponseDto>>> AutoFundGroup(string groupId)
 		{
@@ -186,7 +178,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			await _unitOfWork.DefaultingUserRepository.AddAsync(defaultingUsers);
 		}
 
->>>>>>> develop
 		public async Task<ApiResponse<GroupTransactionResponseDto>> FundGroup(GroupFundDto groupFundDto)
 		{
 			try
@@ -367,7 +358,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 
 		}
-
 		public async Task<ApiResponse<decimal>> TotalGroupSavings(string userId)
 		{
 			try

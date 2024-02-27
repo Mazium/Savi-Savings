@@ -7,8 +7,6 @@ using Savi_Thrift.Application.DTO.Kyc;
 using Savi_Thrift.Application.DTO.Saving;
 using Savi_Thrift.Application.DTO.Wallet;
 using Savi_Thrift.Domain.Entities;
-using System.Text.RegularExpressions;
-
 namespace Savi_Thrift.Mapper
 {
     public class MapperProfile : Profile

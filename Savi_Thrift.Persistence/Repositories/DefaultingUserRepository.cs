@@ -4,15 +4,9 @@ using Savi_Thrift.Persistence.Context;
 
 namespace Savi_Thrift.Persistence.Repositories
 {
-<<<<<<< HEAD
-    public class DefaultingUserRepository: GenericRepository<DefaultingUsers>, IDefaultingUserRepository
+    public class DefaultingUserRepository : GenericRepository<DefaultingUser>, IDefaultingUserRepository
     {
         public DefaultingUserRepository(SaviDbContext saviDbContext) : base(saviDbContext) { }
     }
-=======
-	public class DefaultingUserRepository : GenericRepository<DefaultingUser>, IDefaultingUserRepository
-	{
-		public DefaultingUserRepository (SaviDbContext saviDbContext) : base(saviDbContext) {}
-	}
->>>>>>> develop
+
 }
