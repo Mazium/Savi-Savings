@@ -1,6 +1,6 @@
 ﻿using Savi_Thrift.Domain.Enums;
 
-namespace Savi_Thrift.Application.DTO
+namespace Savi_Thrift.Application.DTO.Kyc
 {
     public class KycResponseDto
     {

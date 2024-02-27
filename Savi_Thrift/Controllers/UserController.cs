@@ -31,13 +31,16 @@ namespace Savi_Thrift.Controllers
         [HttpGet("all-new-Users")]
         public async Task<IActionResult> GetAllNewUsers()
         {
-            return Ok(await _userService.GetNewUsers());
+            var newUsers = await _userService.GetNewUsers();
+            if (newUsers == null)
+                return NotFound(newUsers);
+            return Ok(newUsers);
         }
 
-		[HttpPatch("update-photo")]
-		public async Task<IActionResult> UpdatePhoto([FromForm] UpdatePhotoDto updatePhotoDto)
-		{
-			return Ok(await _userService.UpdatePhoto(updatePhotoDto));
-		}
-	}
+        [HttpGet("dashboard-user-data")]
+        public async Task<IActionResult> GetDashboardUserData()
+        {           
+            return Ok(await _userService.AdminDashboardUserInfo());
+        }
+    }
 }

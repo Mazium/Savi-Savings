@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Savi_Thrift.Application.DTO
+namespace Savi_Thrift.Application.DTO.Kyc
 {
     public class GetAllKycsDto
     {

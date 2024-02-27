@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Savi_Thrift.Application.DTO;
+using Savi_Thrift.Application.DTO.Kyc;
 using Savi_Thrift.Application.Interfaces.Services;
 
 namespace Savi_Thrift.Controllers
