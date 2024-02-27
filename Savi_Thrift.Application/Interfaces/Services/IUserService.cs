@@ -9,6 +9,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
         Task<ApiResponse<bool>> DeleteUser(string id);
         Task<ApiResponse<List<NewUserResponseDto>>> GetNewUsers();
 
+		Task<ApiResponse<string>> UpdatePhoto(UpdatePhotoDto updatePhotoDto);
 
-    }
+	}
 }

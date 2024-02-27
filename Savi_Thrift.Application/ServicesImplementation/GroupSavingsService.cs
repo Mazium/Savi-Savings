@@ -119,9 +119,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 		public async Task<ApiResponse<IEnumerable<GroupResponseDto>>> GetGroupsByUserId(string userId)
 		{
-
-
-
 			try
 			{
 				// Retrieve all ongoing group savings accounts and filter them where GroupStatus is 'Ongoing'

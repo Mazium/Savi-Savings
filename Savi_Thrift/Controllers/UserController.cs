@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Savi_Thrift.Application.DTO;
+using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
 
@@ -30,10 +31,13 @@ namespace Savi_Thrift.Controllers
         [HttpGet("all-new-Users")]
         public async Task<IActionResult> GetAllNewUsers()
         {
-            var newUsers = await _userService.GetNewUsers();
-            if (newUsers == null)
-                return NotFound(newUsers);
-            return Ok(newUsers);
+            return Ok(await _userService.GetNewUsers());
         }
-    }
+
+		[HttpPatch("update-photo")]
+		public async Task<IActionResult> UpdatePhoto([FromForm] UpdatePhotoDto updatePhotoDto)
+		{
+			return Ok(await _userService.UpdatePhoto(updatePhotoDto));
+		}
+	}
 }
