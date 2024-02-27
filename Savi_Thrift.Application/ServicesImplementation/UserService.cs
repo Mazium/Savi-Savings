@@ -3,6 +3,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Savi_Thrift.Application.DTO.AppUser;
+using Savi_Thrift.Application.DTO.Group;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
@@ -49,20 +50,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
         public async Task<ApiResponse<List<NewUserResponseDto>>> GetNewUsers()
         {
-            var newUsers = await _unitOfWork.UserRepository.GetNewUsers();
-            var users = new List<NewUserResponseDto>();
-            foreach (var user in newUsers)
-            {
-                var registerResponseDto = new NewUserResponseDto
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    DateModified = user.DateModified,
-                };
-
-                users.Add(registerResponseDto);
-            }
+            DateTime today = DateTime.Today;
+            var newUsers = await _unitOfWork.UserRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= today && u.CreatedAt < today.AddDays(1));
+            if (newUsers.Count == 0)
+                return ApiResponse<List<NewUserResponseDto>>.Failed("No new user found", StatusCodes.Status404NotFound, null);
+            var users = _mapper.Map<List<NewUserResponseDto>>(newUsers);          
             return ApiResponse<List<NewUserResponseDto>>.Success(users, "List of New Users", StatusCodes.Status200OK);
         }
 

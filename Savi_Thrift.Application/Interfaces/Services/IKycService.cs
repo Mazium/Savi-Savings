@@ -1,4 +1,4 @@
-﻿using Savi_Thrift.Application.DTO;
+﻿using Savi_Thrift.Application.DTO.Kyc;
 using Savi_Thrift.Domain;
 
 namespace Savi_Thrift.Application.Interfaces.Services

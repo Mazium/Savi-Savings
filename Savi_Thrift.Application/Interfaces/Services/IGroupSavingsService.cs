@@ -15,6 +15,7 @@ namespace Savi_Thrift.Application.Interfaces.Services
 		Task<ApiResponse<GroupResponseDto>> GetGroupDetailByIdAsync(string groupId);
         Task<ApiResponse<GroupResponseDto>> ExploreGroupSavingDetailsAsync(string id);
         Task<ApiResponse<List<GroupResponseDto>>> GetRecentGroup();
+        Task<ApiResponse<List<GroupResponseDto>>> GetAllGroups();
 
     }
 }

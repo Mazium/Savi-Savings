@@ -2,7 +2,7 @@
 
 namespace Savi_Thrift.Application.Interfaces.Repositories
 {
-    public interface IGroupMembersRepository : IGenericRepository<GroupSavingsMembers>
+    public interface IDefaultingUserRepository: IGenericRepository<DefaultingUsers>
     {
     }
 }

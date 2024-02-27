@@ -16,12 +16,6 @@ namespace Savi_Thrift.Persistence.Repositories
             _saviDbContext = saviDbContext;
         }
 
-        public async Task<List<AppUser>> GetNewUsers()
-        {
-            DateTime today = DateTime.Today;
-            var newUsers = await _saviDbContext.Users.Where(u => u.CreatedAt.Date == today)
-                               .ToListAsync();
-            return newUsers;
-        }
+       
     }
 }

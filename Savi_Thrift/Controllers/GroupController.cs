@@ -50,8 +50,13 @@ namespace Savi_Thrift.Controllers
 			return Ok(await _groupService.GetRecentGroup());
 		}
 
+        [HttpGet("get-all-group")]
+        public async Task<IActionResult> GetAllGoup()
+        {
+            return Ok(await _groupService.GetAllGroups());
+        }
 
-		[HttpGet]
+        [HttpGet]
 		[Route("GetGroupsByUserId")]
 		public async Task<IActionResult> GetGroupsByUserId(string userId)
 		{

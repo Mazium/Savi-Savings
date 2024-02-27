@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Savi_Thrift.Application.DTO.AppUser;
 using Savi_Thrift.Application.DTO.GroupTransaction;
-using Savi_Thrift.Application.DTO.Saving;
-using Savi_Thrift.Application.DTO.UserTransaction;
 using Savi_Thrift.Application.Interfaces.Repositories;
 using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Domain.Entities;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
-	public class GroupTransactionService : IGroupTransactionService
+    public class GroupTransactionService : IGroupTransactionService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
@@ -21,7 +17,6 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			_mapper = mapper;
 			_unitOfWork = unitOfWork;
 		}
-
 
 		public async Task<ApiResponse<GroupTransactionResponseDto>> FundGroup(GroupFundDto groupFundDto)
 		{
