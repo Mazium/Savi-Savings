@@ -9,5 +9,6 @@ namespace Savi_Thrift.Application.Interfaces.Services
 	public interface IRecurringGroupJobs
 	{
 		Task<string> FundNow(string groupId);
+		Task<string> AutoFundPersonalSavings(string goalId);
 	}
 }

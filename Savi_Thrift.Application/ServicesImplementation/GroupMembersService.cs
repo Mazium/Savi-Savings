@@ -45,11 +45,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
 					return ApiResponse<GroupSavingDetailsResponseDto>.Failed("Group not found", 404, null);
 				}
 
-				//var kyc = await _unitOfWork.KycRepository.FindAsync(x => x.AppUserId == userGroupDto.UserId);
-				//if (kyc.Count == 0)
-				//{
-				//	return ApiResponse<GroupSavingDetailsResponseDto>.Failed("KYC verification failed. Please complete your KYC before joining group", StatusCodes.Status401Unauthorized, null);
-				//}
+				var kyc = await _unitOfWork.KycRepository.FindAsync(x => x.AppUserId == userGroupDto.UserId);
+				if (kyc.Count == 0)
+				{
+					return ApiResponse<GroupSavingDetailsResponseDto>.Failed("KYC verification failed. Please complete your KYC before joining group", StatusCodes.Status401Unauthorized, null);
+				}
 
 				var groupcount = await _unitOfWork.GroupMembersRepository.FindAsync(u => u.GroupSavingsId == userGroupDto.GroupSavingsId);
 				if (groupcount.Count == 5)
@@ -70,19 +70,8 @@ namespace Savi_Thrift.Application.ServicesImplementation
 
 				string position = "";
 				List<string> list = new List<string>();
-				//foreach (var member in groupMembers)
-				//{
-				//	list.Add(member.Position);
-				//}
 				list.AddRange(groupMembers.Select(member => member.Position));
-				//for (int i = 1; i < 6; i++)
-				//{
-				//	if (!list.Contains(i.ToString()))
-				//	{
-				//		position = i.ToString();
-				//		break;
-				//	}
-				//}
+
 				position = Enumerable.Range(1, 5).Select(i => i.ToString()).Except(list).FirstOrDefault();
 
 

@@ -8,8 +8,8 @@ namespace Savi_Thrift.Application.Interfaces.Services
 		Task<ApiResponse<List<RegisterResponseDto>>> GetUsers();
         Task<ApiResponse<bool>> DeleteUser(string id);
         Task<ApiResponse<List<NewUserResponseDto>>> GetNewUsers();
-        Task<ApiResponse<int[]>> AdminDashboardUserInfo();
-
+        Task<ApiResponse<decimal[]>> AdminDashboardUserInfo();
+		Task<ApiResponse<NewUserResponseDto>> GetUserById(string userId);
 		Task<ApiResponse<string>> UpdatePhoto(UpdatePhotoDto updatePhotoDto);
 
 	}
