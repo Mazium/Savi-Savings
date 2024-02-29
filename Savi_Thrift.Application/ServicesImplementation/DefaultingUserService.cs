@@ -89,7 +89,7 @@ namespace Savi_Thrift.Application.ServicesImplementation
         public async Task<ApiResponse<List<DefaultUserDto>>> GetTodayDefaultingUsers()
         {
             DateTime today = DateTime.Today;
-            var newUsers = await _unitOfWork.DefaultingUserRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt.Day == today.Day && u.CreatedAt.Month == today.Month && u.CreatedAt.Year==today.Month);
+            var newUsers = await _unitOfWork.DefaultingUserRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt.Day == today.Day && u.CreatedAt.Month == today.Month && u.CreatedAt.Year==today.Year);
             var users = _mapper.Map<List<DefaultUserDto>>(newUsers);
             return ApiResponse<List<DefaultUserDto>>.Success(users, "List of New Defaulting Users Retrieved Successfully", StatusCodes.Status200OK);
         }

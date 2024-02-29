@@ -256,6 +256,11 @@ namespace Savi_Thrift.Application.ServicesImplementation
             if (groups.Count == 0)
                 return ApiResponse<List<GroupResponseDto>>.Failed("No group found", StatusCodes.Status404NotFound, null);
 
+			foreach(var group in groups)
+			{
+				var members = await _unitOfWork.GroupMembersRepository.FindAsync(x=>x.GroupSavingsId==group.Id);
+				group.GroupSavingsMembers = members;
+			}
             var result = _mapper.Map<List<GroupResponseDto>>(groups);
              
             

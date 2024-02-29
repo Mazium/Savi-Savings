@@ -111,8 +111,6 @@ namespace Savi_Thrift.Controllers
 		[HttpPost("fund-personal-saving")]
         public async Task<IActionResult> FundPersonalGoal(FundsPersonalGoalDto personalGoalDto)
         {
-           //  _backgroundJobClient.Schedule<ISavingService>(service => service
-           //.FundsPersonalGoal(personalGoalDto), TimeSpan.FromMinutes(1));
                 return Ok(await _savingService.FundsPersonalGoal(personalGoalDto));
             
         }

@@ -11,5 +11,6 @@
         public DateTime CreatedAt { get; set; }
         public DateTime LastLogin { get; set; }
         public string IsDeleted { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

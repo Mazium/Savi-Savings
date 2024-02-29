@@ -6,6 +6,8 @@ using Savi_Thrift.Application.Interfaces.Services;
 using Savi_Thrift.Domain.Entities;
 using Savi_Thrift.Domain;
 using Savi_Thrift.Application.DTO.Wallet;
+using Hangfire;
+using Savi_Thrift.Domain.Enums;
 
 namespace Savi_Thrift.Application.ServicesImplementation
 {
@@ -15,13 +17,15 @@ namespace Savi_Thrift.Application.ServicesImplementation
 		private readonly IMapper _mapper;
 		private readonly IWalletService _walletService;
 		private readonly ICloudinaryServices<SavingService> _cloudinaryServices;
+		private readonly IBackgroundJobClient _backgroundJobClient;
 
-		public SavingService(IUnitOfWork unitOfWork, IMapper mapper, IWalletService walletService, ICloudinaryServices<SavingService> cloudinaryServices)
+		public SavingService(IUnitOfWork unitOfWork, IMapper mapper, IWalletService walletService, ICloudinaryServices<SavingService> cloudinaryServices, IBackgroundJobClient backgroundJobClient)
 		{
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
 			_walletService = walletService;
 			_cloudinaryServices = cloudinaryServices;
+			_backgroundJobClient = backgroundJobClient;
 		}
 
 		public async Task<ApiResponse<GoalResponseDto>> CreateGoal(CreateGoalDto createGoalDto)
@@ -51,6 +55,22 @@ namespace Savi_Thrift.Application.ServicesImplementation
 				saving.Avatar = avatar.Url;
 				await _unitOfWork.SavingRepository.AddAsync(saving);
 				await _unitOfWork.SaveChangesAsync();
+				if (createGoalDto.IsAutomatic)
+				{
+
+					if (createGoalDto.Frequency == SavingFrequency.Daily)
+					{
+						RecurringJob.AddOrUpdate<IRecurringGroupJobs>(saving.Id, (job) => job.AutoFundPersonalSavings(saving.Id), Cron.Daily);
+					}
+					else if (createGoalDto.Frequency == SavingFrequency.Weekly)
+					{
+						RecurringJob.AddOrUpdate<IRecurringGroupJobs>(saving.Id, (job) => job.AutoFundPersonalSavings(saving.Id), Cron.Weekly);
+					}
+					else if (createGoalDto.Frequency == SavingFrequency.Monthly)
+					{
+						RecurringJob.AddOrUpdate<IRecurringGroupJobs>(saving.Id, (job) => job.AutoFundPersonalSavings(saving.Id), Cron.Monthly);
+					}
+				}
 
 				var reponseDto = _mapper.Map<GoalResponseDto>(saving);
 				return ApiResponse<GoalResponseDto>.Success(reponseDto, "Goal Created Successfully", StatusCodes.Status200OK);
@@ -217,9 +237,175 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
-        
 
-        public async Task<ApiResponse<SavingsResponseDto>> WithdrawFundsFromGoalToWallet(CreditWalletFromGoalDto creditDto)
+		public async Task<ApiResponse<decimal>> GetAllUsersSavingBalance()
+		{
+
+			try
+			{
+				var listOfSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false);
+				if (!listOfSavings.Any())
+				{
+					return ApiResponse<decimal>.Failed("No Savings Found", StatusCodes.Status404NotFound, new List<string>());
+
+				}
+				decimal total = 0;
+				foreach (var savings in listOfSavings)
+				{
+					total += savings.Balance;
+				}
+				return ApiResponse<decimal>.Success(total, "TotalSavingBalance Retrieved Successfully", StatusCodes.Status200OK);
+			}
+
+			catch (Exception ex)
+			{
+				return ApiResponse<decimal>.Failed("Error occurred while retrieving savings balance", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+
+			}
+		}
+
+		public async Task<ApiResponse<decimal>> GetMonthlySavingBalancePercentage()
+		{
+			try
+			{
+				DateTime now = DateTime.Now;
+				DateTime thisMonth = new DateTime(now.Year, now.Month, 1);
+				DateTime nextMonth = thisMonth.AddMonths(1);
+
+				var listOfSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= thisMonth && u.CreatedAt < nextMonth);
+
+				// Calculate total savings for the month
+				decimal thismonth = listOfSavings.Sum(s => s.Balance);
+
+				DateTime today = DateTime.Today;
+				DateTime firstDayOfLastMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
+				DateTime lastDayOfLastMonth = firstDayOfLastMonth.AddMonths(1).AddDays(-1);
+
+				var listSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= firstDayOfLastMonth && u.CreatedAt <= lastDayOfLastMonth);
+
+				decimal lastmonth = listSavings.Sum(s => s.Balance);
+				decimal val = 0;
+				if (thismonth != 0 & lastmonth != 0)
+				{
+					val = (thismonth - lastmonth / lastmonth) * 100;
+				}
+				if (lastmonth == 0 && thismonth != 0)
+				{
+					val = 100;
+				}
+				if (lastmonth > thismonth)
+				{
+					if (val != 0)
+					{
+						var pl = "-" + val;
+						val = Decimal.Parse(pl);
+					}
+				}
+
+
+				return ApiResponse<decimal>.Success(val, "TotalSavingBalance Retrieved Successfully", StatusCodes.Status200OK);
+			}
+
+			catch (Exception ex)
+			{
+				return ApiResponse<decimal>.Failed("Error occurred while retrieving savings balance", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+
+			}
+		}
+
+
+		public async Task<ApiResponse<decimal>> GetMonthlySavingPercentage()
+		{
+			try
+			{
+				DateTime now = DateTime.Now;
+				DateTime thisMonth = new DateTime(now.Year, now.Month, 1);
+				DateTime nextMonth = thisMonth.AddMonths(1);
+
+				var listOfSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= thisMonth && u.CreatedAt < nextMonth);
+
+				// Calculate total savings for the month
+				decimal thismonth = listOfSavings.Sum(s => s.Balance);
+
+				DateTime today = DateTime.Today;
+				DateTime firstDayOfLastMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
+				DateTime lastDayOfLastMonth = firstDayOfLastMonth.AddMonths(1).AddDays(-1);
+
+				var listSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= firstDayOfLastMonth && u.CreatedAt <= lastDayOfLastMonth);
+
+				decimal lastmonth = listSavings.Sum(s => s.Balance);
+				decimal val = 0;
+				if (thismonth != 0 & lastmonth != 0)
+				{
+					val = (thismonth - lastmonth / lastmonth) * 100;
+				}
+				if (lastmonth == 0 && thismonth != 0)
+				{
+					val = 100;
+				}
+				if (lastmonth > thismonth)
+				{
+					if (val != 0)
+					{
+						var pl = "-" + val;
+						val = Decimal.Parse(pl);
+					}
+				}
+				return ApiResponse<decimal>.Success(val, "TotalSavingBalance Retrieved Successfully", StatusCodes.Status200OK);
+			}
+			catch (Exception ex)
+			{
+				return ApiResponse<decimal>.Failed("Error occurred while retrieving savings balance", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+			}
+		}
+
+		public async Task<ApiResponse<decimal>> GetMonthlyGroupCreationPercentage()
+		{
+			try
+			{
+				DateTime now = DateTime.Now;
+				DateTime thisMonth = new DateTime(now.Year, now.Month, 1);
+				DateTime nextMonth = thisMonth.AddMonths(1);
+
+				var listOfSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= thisMonth && u.CreatedAt < nextMonth);
+
+				// Calculate total savings for the month
+				decimal thismonth = listOfSavings.Count;
+
+				DateTime today = DateTime.Today;
+				DateTime firstDayOfLastMonth = new DateTime(today.Year, today.Month, 1).AddMonths(-1);
+				DateTime lastDayOfLastMonth = firstDayOfLastMonth.AddMonths(1).AddDays(-1);
+
+				var listSavings = await _unitOfWork.SavingRepository.FindAsync(u => u.IsDeleted == false && u.CreatedAt >= firstDayOfLastMonth && u.CreatedAt <= lastDayOfLastMonth);
+
+				decimal lastmonth = listSavings.Count;
+				decimal val = 0;
+				if (thismonth != 0 & lastmonth != 0)
+				{
+					val = (thismonth - lastmonth / lastmonth) * 100;
+				}
+				if (lastmonth == 0 && thismonth != 0)
+				{
+					val = 100;
+				}
+				if (lastmonth > thismonth)
+				{
+					if (val != 0)
+					{
+						var pl = "-" + val;
+						val = Decimal.Parse(pl);
+					}
+				}
+				return ApiResponse<decimal>.Success(val, "TotalSavingBalance Retrieved Successfully", StatusCodes.Status200OK);
+			}
+			catch (Exception ex)
+			{
+				return ApiResponse<decimal>.Failed("Error occurred while retrieving savings balance", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
+			}
+		}
+
+
+		public async Task<ApiResponse<SavingsResponseDto>> WithdrawFundsFromGoalToWallet(CreditWalletFromGoalDto creditDto)
 		{
 			try
 			{
@@ -294,6 +480,73 @@ namespace Savi_Thrift.Application.ServicesImplementation
 			}
 		}
 
+		public async Task<ApiResponse<DebitResponseDto>> AutoFundPersonalGoal(string goalId)
+		{
+			try
+			{
+				var goals = await _unitOfWork.SavingRepository.FindAsync(u => u.Id == goalId);
+				if (goals.Count == 0)
+				{
+					return ApiResponse<DebitResponseDto>.Failed(new List<string>() { "Invalid goal saving Id." });
+				}
+				var goal = goals.First();
+				DateTime end_date = goal.TargetDate;
+				DateTime today = DateTime.Now;
+				if (today > end_date)
+				{
+					RecurringJob.RemoveIfExists(goalId);
+					return ApiResponse<DebitResponseDto>.Failed(new List<string>() { "Savings target date has passed. This job is ended." });
+				}
+
+				var wallets = await _unitOfWork.WalletRepository.FindAsync(x => x.WalletNumber == goal.WalletNumber);
+				if (wallets.Count == 0)
+				{
+					return ApiResponse<DebitResponseDto>.Failed(new List<string>() { "Invalid wallet number." });
+				}
+
+				var wallet = wallets.First();
+				if (wallet.Balance < goal.GoalAmount)
+				{
+					return ApiResponse<DebitResponseDto>.Failed(new List<string>() { "Insufficient balance in wallet." });
+				}
+
+				decimal newBalance = wallet.Balance - goal.GoalAmount;
+				wallet.Balance = newBalance;
+				_unitOfWork.WalletRepository.Update(wallet);
+				await _unitOfWork.SaveChangesAsync();
+
+				var userTransaction = new UserTransaction
+				{
+					ActionId = 2,
+					Amount = goal.GoalAmount,
+					WalletNumber = wallet.WalletNumber,
+					Description = "Automatically Funded " + goal.Title,
+					SavingsId = goal.Id,
+					UserId = wallet.UserId
+				};
+
+				await _unitOfWork.UserTransactionRepository.AddAsync(userTransaction);
+				await _unitOfWork.SaveChangesAsync();
+
+				var savings = await _unitOfWork.SavingRepository.GetByIdAsync(goalId);
+				savings.Balance = savings.Balance + goal.GoalAmount;
+				_unitOfWork.SavingRepository.Update(savings);
+				await _unitOfWork.SaveChangesAsync();
+
+				var debitResponse = new DebitResponseDto
+				{
+					WalletNumber = wallet.WalletNumber,
+					Balance = newBalance,
+					Message = "Your goal has been funded successfully.",
+				};
+				return ApiResponse<DebitResponseDto>.Success(debitResponse, "Goal funded automatically", StatusCodes.Status200OK);
+			}
+			catch (Exception e)
+			{
+				// Handle exceptions and return an error response
+				return ApiResponse<DebitResponseDto>.Failed("Error auto funding goal.", StatusCodes.Status500InternalServerError, new List<string> { e.Message });
+			}
+		}
 
 		public async Task<ApiResponse<DebitResponseDto>> FundsPersonalGoal(FundsPersonalGoalDto personalGoalDto)
 		{
