@@ -27,6 +27,9 @@ try
 	// Register SaviThrift services using the extension class
 	builder.Services.AddDependencies(configuration);
 
+    builder.Services.AddStackExchangeRedisCache(options =>
+     options.Configuration = builder.Configuration.GetConnectionString("cache"));
+
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +48,7 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.ApplyMigrations();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Savi_Thrift v1"));
     }
     using (var scope = app.Services.CreateScope())
@@ -65,10 +69,11 @@ try
 
     app.UseHangfireDashboard();
 
+   
+
     app.MapHangfireDashboard("/hangfire");
 
-    //RecurringJob.AddOrUpdate(() => Console.WriteLine("Hello from Hangfire"), "* * * * *");
-
+  
     app.Run();
 }
 catch (Exception ex)
@@ -77,7 +82,7 @@ catch (Exception ex)
 }
 finally
 {
-    NLog.LogManager.Shutdown();
+    LogManager.Shutdown();
 }
 
 

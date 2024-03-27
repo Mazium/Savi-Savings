@@ -8,39 +8,58 @@ namespace Savi_Thrift.Common.Utilities
     {
         public static async Task SeedRolesAndSuperAdmin(IServiceProvider serviceProvider)
         {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
-
-            // Seed roles
-            if (!await roleManager.RoleExistsAsync("Admin"))
+            try
             {
-                var role = new IdentityRole("Admin");
-                await roleManager.CreateAsync(role);
-            }
+                var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
-            if (!await roleManager.RoleExistsAsync("User"))
-            {
-                var role = new IdentityRole("User");
-                await roleManager.CreateAsync(role);
-            }
-
-            if (userManager.FindByNameAsync("Admin").Result == null)
-            {
-                var user = new AppUser
+                // Seed roles
+                if (!await roleManager.RoleExistsAsync("Admin"))
                 {
-                    UserName = "Admin",
-                    Email = "admin@gmail.com",
-                    EmailConfirmed = true,
-                    FirstName = "Admin",
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                var result = userManager.CreateAsync(user, "Password@123").Result;
-
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                    var role = new IdentityRole("Admin");
+                    await roleManager.CreateAsync(role);
                 }
+
+                if (!await roleManager.RoleExistsAsync("User"))
+                {
+                    var role = new IdentityRole("User");
+                    await roleManager.CreateAsync(role);
+                }
+
+                if (userManager.FindByNameAsync("Admin").Result == null)
+                {
+                    var user = new AppUser
+                    {
+                        UserName = "Admin",
+                        Email = "admin@gmail.com",
+                        EmailConfirmed = true,
+                        FirstName = "Admin",
+                        CreatedAt = DateTime.UtcNow
+                    };
+
+                    var result = userManager.CreateAsync(user, "Password@123").Result;
+
+                    if (result.Succeeded)
+                    {
+                        userManager.AddToRoleAsync(user, "Admin").Wait();
+                    }
+                }
+            }   
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+                        
+        }
+
+        private static void LogException(Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                LogException(ex.InnerException); // Recursively log inner exceptions
             }
         }
 

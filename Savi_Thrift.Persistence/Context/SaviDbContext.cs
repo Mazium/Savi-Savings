@@ -24,11 +24,13 @@ namespace Savi_Thrift.Persistence.Context
         public DbSet<DefaultingUser> DefaultingUsers { get; set; }
 
 
+       
 
 
 
 
-    }
+
+        }
 
 
 

@@ -1,5 +1,4 @@
 ﻿using CloudinaryDotNet;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,16 +15,21 @@ using Savi_Thrift.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Hangfire;
+using Hangfire.PostgreSql;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Builder;
 
 namespace Savi_Thrift.Persistence.Extensions
 {
     public static class DIServiceExtension
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration configuration)
-        {
+		{
 			// Register DbContext
 			services.AddDbContext<SaviDbContext>(options =>
-				options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+				options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+			
+
 
 			// Register Identity
 			services.AddIdentity<AppUser, IdentityRole>()
@@ -82,6 +86,8 @@ namespace Savi_Thrift.Persistence.Extensions
 			services.AddScoped<IDefaultingUserService , DefaultingUserService>();
 
 			
+
+			
 			services.AddAuthentication(options =>
 			{
 				options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -111,24 +117,27 @@ namespace Savi_Thrift.Persistence.Extensions
             });
 
             //configure Hangfire
-            var hangFireConnectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddHangfire(x =>
+            {
+                string connectionString = configuration.GetConnectionString("DefaultConnection");
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                     throw new InvalidOperationException("Connection string is null or empty.");
+                }
+                else
+                {
+                    x.UsePostgreSqlStorage(connectionString);
+                }
+            });
+            services.AddHangfireServer();
+        }
+        public static void ApplyMigrations(this IApplicationBuilder app)
+        {
+            using IServiceScope scope = app.ApplicationServices.CreateScope();
+            using SaviDbContext dbContext =
+                scope.ServiceProvider.GetRequiredService<SaviDbContext>();
 
-            services.AddHangfire(config => config
-                     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-                     .UseSimpleAssemblyNameTypeSerializer()
-                     .UseRecommendedSerializerSettings()
-                     .UseSqlServerStorage(hangFireConnectionString, new Hangfire.SqlServer.SqlServerStorageOptions
-                     {
-                         CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                         SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                         QueuePollInterval = TimeSpan.Zero,
-                         UseRecommendedIsolationLevel = true,
-                         DisableGlobalLocks = true
-                     }));
-
-
-
-
+            dbContext.Database.Migrate();
         }
     }
 }

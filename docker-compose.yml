@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  savi_thrift:
+    image: ${DOCKER_REGISTRY-}savithrift
+    container_name: savi_thrift.api
+    build:
+      context: .
+      dockerfile: Savi_Thrift/Dockerfile
+    ports:
+        - "7226:7226"
+        - "5226:5226"
+
+  savi_thrift.database:
+    image: postgres:latest
+    container_name: savi_thrift.database
+    environment:
+     - POSTGRES_DB=saviDB
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=1234
+    volumes:
+     - ./.containers/savi-db:/var/lib/postgresql/data
+    ports:
+     - "5432:5432"
+
+  savi_thrift.cache:
+    image: redis:latest
+    restart: always
+    ports:
+     - "6379:6379"
+ 
+    
